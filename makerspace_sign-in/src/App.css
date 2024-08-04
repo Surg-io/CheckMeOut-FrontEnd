@@ -1,35 +1,85 @@
-
 #MakerSpaceHeader
 {
-  display:flex;
+  display:grid;
   background-color: #005696;
-   border:solid black 3px;
-    border-radius: 2px;
-   width:auto;
-   max-height: 210px;
-   
-   
-
+  border:solid black 2px;
+  border-radius: 2px;
+  width:auto;
+  min-width: 1850px;
+  grid-template-columns: 150px auto auto auto;
+  grid-template-rows: 180px;
+  column-gap: 20px;
 }
-#MoorparkCollegeLogo
+#MenuToggle
 {
+  /*padding-top: 10px;
+  align-self: center;
+  justify-self: left;
+  margin-left: 40px;
+  width: 75px;*/
+  position: absolute;
+  top: 70px;
+  left:50px;
+  width: 60px;
   
-   width: 360px; 
-   height: 198px;  
+}
+#MenuToggle:hover
+{
+  filter:opacity(50%);
 }
 #MoorparkCollegetxt
 {
+  position: relative;
+  right: -40px;
+  color:#74B3DF;
   align-self: center;
-  font-size: 70px;
+  font-size: 410%;
   text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: "Nanum Myeongjo",Georgia, 'Times New Roman', Times, serif;
+  grid-column-start: 2;
+}
+#HeaderPhoto
+{
+  /* padding-left: 100px;
+   width: 360px; 
+   height: 198px; For Moopark College Logo*/
+  position: relative;
+  right: -15px;
+  top: 7px;
+  justify-self: center;
+  align-self:center;
+  grid-column-start: 3;
+  width:320px;
 }
 #Makerspacetxt
 {
-  text-align: center;
-  align-self: stretch;
-  font-size: 140px;
-  padding-left: 120px;
+  justify-self: center;
+  align-self: center;
+  margin-right: 30px;
+  font-size: 890%;
+  font-family:"Love Ya Like A Sister", fantasy;
+  font-stretch: expanded;
+  color: white;
+}
+#SidebarMenu
+{
+  display: grid;
+  position: absolute;
+  top: 0;
+  justify-self:left;
+  max-width: 160px;
+  grid-template-rows: auto;
+  border:solid rgb(252, 9, 9) 2px;
+  background-color:gainsboro;
+}
+#SidebarPhoto
+{
+  width:200px;
+}
+.SidebarLinks
+{
+  list-style: none;
+  
 }
 
 

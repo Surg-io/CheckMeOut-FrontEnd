@@ -1,28 +1,28 @@
 import React from 'react'
 import {Outlet,Link} from "react-router-dom"
 
-function SidebarMenu(props) {
+function SidebarMenu() {
   return (
-    <div>
-        <img id='SidebarLogo' src={require('../Images/MSLogo.png')} alt="MakerSpace Logo"/>
+    <div id="SidebarMenu">
+        <img id='SidebarPhoto' src={require('../Images/MSLogo.png')} alt="MakerSpace Logo"/>
         <nav>
-          <ul id="SidebarLinks">
-            <li>
+          <ul >
+            <li className='SidebarLinks'>
               <Link to="/">Home</Link>
             </li>
-            <li>
+            <li className='SidebarLinks'>
               <Link to="/Equipment">Equipment</Link>
             </li>
-            <li>
+            <li className='SidebarLinks'>
               <Link to="/Register">Register</Link>
-            </li>
-            <li>
+            </li >
+            <li className='SidebarLinks'>
               <Link to="/Meet_the_Team">Meet_the_Team</Link>
             </li>
-            <li>
+            <li className='SidebarLinks'>
               <Link to="/CoursesPage">CoursesPage</Link>
             </li>
-            <li>
+            <li className='SidebarLinks'>
               <Link to="/FAQ">FAQ</Link>
             </li>
         </ul>

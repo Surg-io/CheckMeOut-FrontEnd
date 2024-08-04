@@ -7,7 +7,6 @@ class TemplatePage extends Component { //Renders the Contents for Every Page. As
     return (
       <div>
         <MCMakerspace/> 
-        <SidebarMenu/>
       </div>
     )
   }
