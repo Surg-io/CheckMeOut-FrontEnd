@@ -3,8 +3,8 @@ import {Outlet,Link} from "react-router-dom"
 
 function SidebarMenu(props) {
   return (
-    <>
-        <img id="SidebarLogo" src='/yusrc/Images/MSLogo.png' alt="MakerSpace Logo"/>
+    <div>
+        <img id='SidebarLogo' src={require('../Images/MSLogo.png')} alt="MakerSpace Logo"/>
         <nav>
           <ul id="SidebarLinks">
             <li>
@@ -29,7 +29,7 @@ function SidebarMenu(props) {
         
         </nav>
         <Outlet/>
-    </>
+    </div>
   )
 }
 

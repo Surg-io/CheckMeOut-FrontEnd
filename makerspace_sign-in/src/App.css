@@ -1,38 +1,36 @@
-.App {
+
+#MakerSpaceHeader
+{
+  display:flex;
+  background-color: #005696;
+   border:solid black 3px;
+    border-radius: 2px;
+   width:auto;
+   max-height: 210px;
+   
+   
+
+}
+#MoorparkCollegeLogo
+{
+  
+   width: 360px; 
+   height: 198px;  
+}
+#MoorparkCollegetxt
+{
+  align-self: center;
+  font-size: 70px;
   text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#Makerspacetxt
+{
+  text-align: center;
+  align-self: stretch;
+  font-size: 140px;
+  padding-left: 120px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

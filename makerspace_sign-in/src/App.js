@@ -11,6 +11,8 @@ import CoursesPage from './Components/CoursesPage';
 import FAQPage from './Components/FAQPage';
 import SidebarMenu from './Components/SidebarMenu';
 import ErrorPage from './Components/ErrorPage';
+
+
 function App() {
   return (
     <div className="App">
