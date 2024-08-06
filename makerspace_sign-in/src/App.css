@@ -7,7 +7,7 @@
   width:auto;
   min-width: 1850px;
   grid-template-columns: 150px auto auto auto;
-  grid-template-rows: 180px;
+  grid-template-rows: 180px auto auto auto ;
   column-gap: 20px;
 }
 #MenuToggle
@@ -44,8 +44,8 @@
    width: 360px; 
    height: 198px; For Moopark College Logo*/
   position: relative;
-  right: -15px;
-  top: 7px;
+  right: -20px;
+  top: -60px;
   justify-self: center;
   align-self:center;
   grid-column-start: 3;
@@ -63,24 +63,54 @@
 }
 #SidebarMenu
 {
-  display: grid;
+  display:grid;
   position: absolute;
   top: 0;
   justify-self:left;
-  max-width: 160px;
-  grid-template-rows: auto;
-  border:solid rgb(252, 9, 9) 2px;
-  background-color:gainsboro;
+  min-height: 910px;
+  background-color:#74B3DF;
+  border: solid black 2pt;
+  align-items: start;
+  grid-template-columns: 160px;
+  grid-template-rows: auto auto auto;
 }
 #SidebarPhoto
 {
+  position: relative;
+  bottom: -220px;
+  margin-left: -10%;
   width:200px;
+  
 }
 .SidebarLinks
 {
   list-style: none;
-  
+  margin: 20px auto auto -30px;
+  font-family: "Love Ya Like A Sister", Impact; 
+  font-size: 20px;
 }
+.SidebarLinks > a:link
+{
+  color:black
+}
+.SidebarLinks > a:visited
+{
+  color:black
+}
+.SidebarLinks > a:hover
+{
+  color:white
+}
+.SidebarLinks > a:active
+{
+  color:blue
+}
+
+.NoUnderlineLink
+{
+  text-decoration: none;
+}
+
 
 
 

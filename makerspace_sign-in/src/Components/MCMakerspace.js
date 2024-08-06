@@ -1,17 +1,19 @@
 import React,{Component} from 'react'
 import { useState } from 'react'
 import SidebarMenu from './SidebarMenu'
+import {Outlet,Link} from "react-router-dom"
 function MCMakerspace(){
 
   const [open,setOpen] = useState(false)
   const ToggleMenu = () => {setOpen(!open)}
 
+
+
   return (
     <div>
-       
       <div id='MakerSpaceHeader'>
         <div id="MoorparkCollegetxt">MOORPARK <br/>     COLLEGE</div>
-        <img id="HeaderPhoto" src={require('../Images/MSLogo.png')} alt="Moorpark College Logo"/> 
+        <Link to="/"><img id="HeaderPhoto" src={require('../Images/MSLogo.png')} alt="Moorpark College Logo"/></Link>
         <div id="Makerspacetxt">MakerSpace</div>
       </div>
       <div>
