@@ -2,13 +2,11 @@ import React,{Component} from 'react'
 import { useState } from 'react'
 import SidebarMenu from './SidebarMenu'
 import {Outlet,Link} from "react-router-dom"
-function MCMakerspace(){
+
+function MakerSpaceHeader(){
 
   const [open,setOpen] = useState(false)
   const ToggleMenu = () => {setOpen(!open)}
-
-
-
   return (
     <div>
       <div id='MakerSpaceHeader'>
@@ -27,4 +25,4 @@ function MCMakerspace(){
     
 }
 
-export default MCMakerspace
+export default MakerSpaceHeader

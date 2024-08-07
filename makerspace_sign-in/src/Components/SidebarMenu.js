@@ -1,5 +1,5 @@
 import React from 'react'
-import {Outlet,Link} from "react-router-dom"
+import {Link} from "react-router-dom"
 
 
 
@@ -7,9 +7,8 @@ import {Outlet,Link} from "react-router-dom"
 function SidebarMenu() {
   return (
     <div id="SidebarMenu">
-        
         <nav>
-          <ul style={{listStyle:"None", marginTop:"182px"}}>
+          <ul style={{listStyle:"None", marginTop:"190px"}}>
             <li className='SidebarLinks'>
               <Link className='NoUnderlineLink' to="/">Home</Link>
             </li>
@@ -29,10 +28,8 @@ function SidebarMenu() {
               <Link className='NoUnderlineLink' to="/FAQ">FAQ</Link>
             </li>
         </ul>
-        
         </nav>
         <img id='SidebarPhoto' src={require('../Images/logo1.png')} alt="College Logo"/>
-        <Outlet/>
     </div>
   )
 }

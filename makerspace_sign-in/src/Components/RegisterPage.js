@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MCMakerspace from './MCMakerspace'
+import MCMakerspace from './MakerSpaceHeader'
 import SidebarMenu from './SidebarMenu'
 
 class RegisterPage extends Component {

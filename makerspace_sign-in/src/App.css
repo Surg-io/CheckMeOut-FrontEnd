@@ -85,9 +85,10 @@
 .SidebarLinks
 {
   list-style: none;
-  margin: 20px auto auto -30px;
-  font-family: "Love Ya Like A Sister", Impact; 
+  margin: 10px auto auto -30px; 
+  font-family: "Alkatra", Impact; 
   font-size: 20px;
+  grid-row-start: 2;
 }
 .SidebarLinks > a:link
 {
