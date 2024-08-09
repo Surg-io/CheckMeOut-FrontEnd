@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import Content from './Content'
 
 class MeetTheTeamPage extends Component {
   render() {
     return (
-      <>
-      <h1>Meet_the_Team</h1>
-    </>
+      <div className='PageContent'>
+      <Content Header={"Meet The Team"}/>
+    </div>
     )
   }
 }

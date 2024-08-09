@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import MCMakerspace from './MakerSpaceHeader'
-import SidebarMenu from './SidebarMenu'
+import Content from './Content'
 
 class RegisterPage extends Component {
   render() {
     return (
-      <>
-        <h1>Register</h1>
-      </>
+      <div className='PageContent'>
+      <Content Header={"Register"}/>
+    </div>
     )
   }
 }

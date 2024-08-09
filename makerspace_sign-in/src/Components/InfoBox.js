@@ -1,11 +1,11 @@
 import React from 'react'
 
-function InfoBox({Header, Message}) {
+function InfoBox({Header,Text}) {
   return (
-    <>
-        <div class="InfoBoxHeader">{Header}</div>
-        <div class="InfoBoxText">{Message}</div>
-    </>
+    <div className='InfoBox' >
+        <div class="InfoBoxHeader Header ">{Header}</div>
+        <div class="InfoBoxContent">{Text}</div>
+    </div>
   )
 }
 

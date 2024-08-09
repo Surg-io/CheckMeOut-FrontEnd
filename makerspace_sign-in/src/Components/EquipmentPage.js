@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-
+import Content from './Content'
 class EquipmentPage extends Component {
   render() {
     return (
-      <>
-        <h1>EquipmentPage</h1>
-      </>
+      <div className='PageContent'>
+      <Content Header={"Equipment"}/>
+    </div>
     )
   }
 }
