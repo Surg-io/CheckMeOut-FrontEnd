@@ -116,12 +116,34 @@
 
 .PageContent
 {
-
   border:solid black 2px;
   min-height: 75vh;
   background-color: #D4F2FF;
   padding: 2em 3em 2em 3em;
   max-width: 100vw;
+}
+.Form
+{
+  display: flexbox;
+  flex-direction:column;
+  text-align: center;
+  flex-wrap:wrap;
+  background-color: gainsboro;
+  border: solid black .2em;
+  border-radius: 2%;
+  margin: auto 40% auto 40%;
+  min-width: 210px;
+}
+.RegisterForm
+{
+  border-radius: 2%;
+  padding: 1vw;
+  margin-top: -1.5vw;
+
+}
+input
+{
+  margin: .5em;
 }
 .InfoBox
 {
@@ -129,6 +151,7 @@
   height: 12em;
   border: solid black .2em;
   background-color: gainsboro;
+  border-radius: 2%;
 }
 #SideInfo
 {
@@ -150,6 +173,7 @@
   text-align:justify;
   margin-right: 25em;
   border: dashed black .08em;
+  max-height:max-content;
 }
 .ContentHeader
 {
