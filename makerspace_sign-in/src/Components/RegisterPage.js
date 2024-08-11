@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Content from './Content'
-
+import RegisterForm from './RegisterForm'
 class RegisterPage extends Component {
   render() {
     return (
@@ -10,70 +10,8 @@ class RegisterPage extends Component {
         all for your use!
         {/*<span style={{fontWeight:"bold"}}> All incoming users must register!</span>*/}
       </p>}/>
-      <div className='Form'>
-        <h1 className='Header'> Sign Up!</h1>
-        <form >
-        
-        <div className='RegisterForm' style={{fontFamily:"Zilla Slab"}}>
-          
-          <label>First Name</label><input type="text" /><br />
-          <label>Last Name</label><input type="text" /><br />
-          <label>Email</label> <input type="text" /><br />
-          <label>Student ID</label> <input type="text" /><br />
-          <label>Major </label> 
-          <select name='Major'>
-          <option value={"Accounting"}> Accounting </option>
-          <option value={"Aerospace Engineering"}> Aerospace Engineering </option>
-          <option value={"African American Studies"}> African American Studies </option>
-          <option value={"Anthropology"}> Anthropology </option>
-          <option value={"Art History"}> Art History </option>
-          <option value={"Asian American Studies"}> Asian American Studies </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          <option value={"CS"}> Computer Science </option>
-          </select><br />
-          <input type="submit"/>
-          
-          
-        </div>
-
-      </form>
+      <RegisterForm />
       </div>
-      
-
-    </div>
     )
   }
 }
