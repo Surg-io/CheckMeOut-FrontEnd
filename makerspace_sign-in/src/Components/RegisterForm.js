@@ -10,13 +10,28 @@ function RegisterForm() {
     function HandleSubmit(e)
     {
         e.preventDefault(); {/*Prevents the default behavior of the submit button, which is to refresh the page*/ }
-        const form = e.target; {/*Put the User data into a variable*/ } 
-        const formData = new FormData(form); {/*Create a "FormData" object using the user input*/ }
-        const formJson = Object.fromEntries(formData.entries()); {/*Create a JS object, which is in key value pairs, from our FormData object. It just so happens to be in JSON format*/ }
-        console.log(formJson); {/*Print to the log the JSON "file", or the new JS Object */ }
-
+        if(validate()) 
+        {
+            const form = e.target; {/*Put the User data into a variable*/ } 
+            const formData = new FormData(form); {/*Create a "FormData" object using the user input*/ }
+            const formJson = Object.fromEntries(formData.entries()); {/*Create a JS object, which is in key value pairs, from our FormData object. It just so happens to be in JSON format*/ }
+            console.log(formJson); {/*Print to the log the JSON "file", aka the new JS Object u made */ }
+           
+        }
+        else
+        {
+            alert(`Make sure to choose a Major!`);
+        } 
     }
 
+    const validate = () => 
+    {
+        if(Major === "None")
+        {
+            return false
+        }
+        return true;
+    }
 
   return (
     <div className='Form' onSubmit={HandleSubmit}> {/*When the submit button at the bottom is clicked, run the HandleSubmit function or else you will lose user input*/ }
@@ -25,13 +40,13 @@ function RegisterForm() {
         
         <div className='RegisterForm' style={{fontFamily:"Zilla Slab"}}>
           
-          <label>First Name</label><input name='FN' value={FN} onChange={e => FNChange(e.target.value)}  required pattern="/[A-Za-Z]/" minLength="1" maxLength="25" type="text" /><br />
-          <label>Last Name</label><input name='LN' value={LN} onChange={e => LNChange(e.target.value)} required pattern="/[A-Za-Z]/" minLength="1" maxLength="40" type="text" /><br />
-          <label>Email</label> <input name='Email' value={Email} onChange={e => EmailChange(e.target.value)} required pattern='/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/' type="text" /><br />
-          <label>Student ID</label> <input name='ID' value={ID} onChange={e => {IDChange(e.target.value); console.log(e.target.value)}} required pattern="/\d/" minLength="9" maxLength="9" type="text" /><br />
+          <label>First Name</label><input name='FN' value={FN} onChange={e => FNChange(e.target.value)}  required placeholder="Ex: Peter" pattern='^[a-zA-Z]{1,25}$'  minLength="1" maxLength="25" type="text" /><br />
+          <label>Last Name</label><input name='LN' value={LN} onChange={e => LNChange(e.target.value)} required placeholder="Ex: Anteater"  pattern='^[a-zA-Z]{1,40}$'  minLength="1" maxLength="40" type="text" /><br />
+          <label>Email</label> <input name='Email' value={Email} onChange={e => EmailChange(e.target.value)} required placeholder="Ex: name@my.vcccd.edu" pattern='^[\w]+@([\w]+\.[\w]+){1,4}$' type="text" /><br />
+          <label>Student ID</label> <input name='ID' value={ID} onChange={e => {IDChange(e.target.value); console.log(e.target.value)}} placeholder="Ex: 123456879" required pattern='[0-9]{9}' minLength="9" maxLength="9" type="text" /><br />
           <label>Major </label> 
           <select name='Major' value={Major} onChange={e=> MajorChange(e.target.value)} required>
-            <option value="None"> None </option>   {/*MC class registration website does it like this ¯\_(ツ)_/¯ */}
+            <option  value="None"> None </option>   {/*MC class registration website does it like this ¯\_(ツ)_/¯ */}
     <option value="AB">AB Automotive Body Repair & Paint</option>
     <option value="AC">AC AirConditioning&Refrigeration</option>
     <option value="ACCT">ACCT Accounting</option>
