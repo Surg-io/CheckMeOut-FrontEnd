@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
+import { QRCodeSVG } from 'qrcode.react';
+
 function RegisterForm() {
     const [FN, FNChange] = useState(""); {/*State Variables for the inputs*/}
     const [LN,LNChange] = useState("");
@@ -16,7 +18,6 @@ function RegisterForm() {
             const formData = new FormData(form); {/*Create a "FormData" object using the user input*/ }
             const formJson = Object.fromEntries(formData.entries()); {/*Create a JS object, which is in key value pairs, from our FormData object. It just so happens to be in JSON format*/ }
             console.log(formJson); {/*Print to the log the JSON "file", aka the new JS Object u made */ }
-           
         }
         else
         {
@@ -171,6 +172,7 @@ function RegisterForm() {
         </div>
 
       </form>
+      
     </div>
   )
 }

@@ -116,6 +116,8 @@
 
 .PageContent
 {
+  display: flexbox;
+  flex-direction: row;
   border:solid black 2px;
   min-height: 75vh;
   background-color: #D4F2FF;
@@ -131,8 +133,9 @@
   background-color: gainsboro;
   border: solid black .2em;
   border-radius: 2%;
-  margin: auto 40% auto 40%;
+  margin: 2% auto auto 10%;
   min-width: 210px;
+  max-width: fit-content
 }
 .RegisterForm
 {
