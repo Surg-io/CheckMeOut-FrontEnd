@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react';
 
 function RegisterForm() {
-    const [FN, FNChange] = useState(""); {/*State Variables for the inputs*/}
+    const [FN, FNChange] = useState(""); /*State Variables for the inputs*/
     const [LN,LNChange] = useState("");
     const [Email,EmailChange] = useState("");
     const [ID,IDChange] = useState("");
@@ -11,13 +11,17 @@ function RegisterForm() {
 
     function HandleSubmit(e)
     {
-        e.preventDefault(); {/*Prevents the default behavior of the submit button, which is to refresh the page*/ }
+        e.preventDefault(); //Prevents the default behavior of the submit button, which is to refresh the page
         if(validate()) 
         {
-            const form = e.target; {/*Put the User data into a variable*/ } 
-            const formData = new FormData(form); {/*Create a "FormData" object using the user input*/ }
-            const formJson = Object.fromEntries(formData.entries()); {/*Create a JS object, which is in key value pairs, from our FormData object. It just so happens to be in JSON format*/ }
-            console.log(formJson); {/*Print to the log the JSON "file", aka the new JS Object u made */ }
+            const form = e.target; /*Put the User data into a variable*/ 
+            const formData = new FormData(form); /*Create a "FormData" object using the user input*/ 
+            const formJson = Object.fromEntries(formData.entries()); /*Create a JS object, which is in key value pairs, from our FormData object. It just so happens to be in JSON format*/ 
+            console.log(typeof(formJson)); /*Print to the log the JSON "file", aka the new JS Object u made */ 
+            console.log("Sending Info");
+            fetch("http://localhost:8000/registeruser",{method:"POST",body:JSON.stringify(formJson), mode:"cors"}) //Uses CORS Policy
+            .then(response => console.log(response)) //The HTTP request will return a response. We can pass this response as an argument to a function that will log the response in the console
+            .catch(error => console.error(error)); //If the HTTP request returns an error rather than a proper response, this line will recieve that error as an argument and the function will log the error.
         }
         else
         {
@@ -37,17 +41,17 @@ function RegisterForm() {
   return (
     <div className='Form' onSubmit={HandleSubmit}> {/*When the submit button at the bottom is clicked, run the HandleSubmit function or else you will lose user input*/ }
         <h1 className='Header'> Sign Up!</h1>
-        <form >  {/*Consider moving the whole form into a new component as every adjustment to the "value" of each input triggers a rerender*/}
+        <form  >  {/*Consider moving the whole form into a new component as every adjustment to the "value" of each input triggers a rerender*/}
         
         <div className='RegisterForm' style={{fontFamily:"Zilla Slab"}}>
           
           <label>First Name</label><input name='FN' value={FN} onChange={e => FNChange(e.target.value)}  required placeholder="Ex: Peter" pattern='^[a-zA-Z]{1,25}$'  minLength="1" maxLength="25" type="text" /><br />
           <label>Last Name</label><input name='LN' value={LN} onChange={e => LNChange(e.target.value)} required placeholder="Ex: Anteater"  pattern='^[a-zA-Z]{1,40}$'  minLength="1" maxLength="40" type="text" /><br />
           <label>Email</label> <input name='Email' value={Email} onChange={e => EmailChange(e.target.value)} required placeholder="Ex: name@my.vcccd.edu" pattern='^[\w]+@([\w]+\.[\w]+){1,4}$' type="text" /><br />
-          <label>Student ID</label> <input name='ID' value={ID} onChange={e => {IDChange(e.target.value); console.log(e.target.value)}} placeholder="Ex: 123456879" required pattern='[0-9]{9}' minLength="9" maxLength="9" type="text" /><br />
+          <label>Student ID</label> <input name='ID' value={ID} onChange={e => {IDChange(e.target.value); }} placeholder="Ex: 123456879" required pattern='[0-9]{9}' minLength="9" maxLength="9" type="text" /><br />
           <label>Major </label> 
           <select name='Major' value={Major} onChange={e=> MajorChange(e.target.value)} required>
-            <option  value="None"> None </option>   {/*MC class registration website does it like this ¯\_(ツ)_/¯ */}
+            <option value="None"> None </option>   {/*MC class registration website does it like this ¯\_(ツ)_/¯ */}
     <option value="AB">AB Automotive Body Repair & Paint</option>
     <option value="AC">AC AirConditioning&Refrigeration</option>
     <option value="ACCT">ACCT Accounting</option>
@@ -162,6 +166,7 @@ function RegisterForm() {
     <option value="THA">THA Theatre Arts</option>
     <option value="THTR">THTR Theatre</option>
     <option value="TTHA">TTHA Technical Theatre</option>
+    <option value="UD">UD Undeclared</option>
     <option value="WEL">WEL Welding</option>
     <option value="WS">WS Water Science</option>
     <option value="ZOO">ZOO Zoology</option>
