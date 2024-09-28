@@ -19,7 +19,10 @@ function RegisterForm() {
             const formJson = Object.fromEntries(formData.entries()); /*Create a JS object, which is in key value pairs, from our FormData object. It just so happens to be in JSON format*/ 
             console.log(typeof(formJson)); /*Print to the log the JSON "file", aka the new JS Object u made */ 
             console.log("Sending Info");
-            fetch("http://localhost:8000/registeruser",{method:"POST",body:JSON.stringify(formJson), mode:"cors"}) //Uses CORS Policy
+            //Fetch is an async function using .then and .catch. See async.
+            fetch("http://localhost:8000/registeruser",{headers: //MODIFICATIONS OF HEADERS REQUIRES ENFORCEMENT OF CORS ON THE HEADERS
+              {'content-type': 'application/json', }, //This is required as the parsing function in Expreess(bodyParser)needs the content type to match(bodyParser.json() only looks at jsons).Default Content type is text
+              method:"POST",body:JSON.stringify(formJson)})
             .then(response => console.log(response)) //The HTTP request will return a response. We can pass this response as an argument to a function that will log the response in the console
             .catch(error => console.error(error)); //If the HTTP request returns an error rather than a proper response, this line will recieve that error as an argument and the function will log the error.
         }
