@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Content from './Content'
 import RegisterForm from './RegisterForm'
+import { QRCodeSVG } from 'qrcode.react';
 class RegisterPage extends Component {
   render() {
     return (
@@ -12,6 +13,7 @@ class RegisterPage extends Component {
         <span style={{fontStyle: "italic"}}>Fill out the form below to generate a QRCode that you can use to check into the MakerSpace. A copy will also be sent to your email in case you lose it! </span><br />
       </p>}/>
       <RegisterForm />
+      
       
       </div>
     )

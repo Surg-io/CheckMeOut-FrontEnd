@@ -30,6 +30,7 @@ function RegisterForm() {
         {
             alert(`Make sure to choose a Major!`);
         } 
+        
     }
 
     const validate = () => 
@@ -50,10 +51,10 @@ function RegisterForm() {
           
           <label>First Name</label><input name='FN' value={FN} onChange={e => FNChange(e.target.value)}  required placeholder="Ex: Peter" pattern='^[a-zA-Z]{1,25}$'  minLength="1" maxLength="25" type="text" /><br />
           <label>Last Name</label><input name='LN' value={LN} onChange={e => LNChange(e.target.value)} required placeholder="Ex: Anteater"  pattern='^[a-zA-Z]{1,40}$'  minLength="1" maxLength="40" type="text" /><br />
-          <label>Email</label> <input name='Email' value={Email} onChange={e => EmailChange(e.target.value)} required placeholder="Ex: name@my.vcccd.edu" pattern='^[\w]+@([\w]+\.[\w]+){1,4}$' type="text" /><br />
-          <label>Student ID</label> <input name='ID' value={ID} onChange={e => {IDChange(e.target.value); }} placeholder="Ex: 123456879" required pattern='[0-9]{9}' minLength="9" maxLength="9" type="text" /><br />
+          <label>Email</label> <input name='Email' value={Email} onChange={e => EmailChange(e.target.value)} required placeholder="Ex: name@my.vcccd.edu" pattern='^[\w]+@my\.vcccd\.edu$' type="text" /><br />
+          <label>Student ID</label> <input name='ID' value={ID} onChange={e => {IDChange(e.target.value); }} required placeholder="Ex: 123456879"  pattern='[0-9]{9}' minLength="9" maxLength="9" type="text" /><br />
           <label>Major </label> 
-          <select name='Major' value={Major} onChange={e=> MajorChange(e.target.value)} required>
+          <select name='Major' value={Major} onChange={e=> MajorChange(e.target.value)}>
             <option value="None"> None </option>   {/*MC class registration website does it like this ¯\_(ツ)_/¯ */}
     <option value="AB">AB Automotive Body Repair & Paint</option>
     <option value="AC">AC AirConditioning&Refrigeration</option>
@@ -175,13 +176,12 @@ function RegisterForm() {
     <option value="ZOO">ZOO Zoology</option>
           </select><br />
           <input type="submit"/>
-          
-          
         </div>
-
       </form>
-      
+      {//<QRCodeSVG value={"123456789"}/>  VALUES MUST BE IN STRING FORM IN ORDER FOR THE VALUE TO BE READ
+      }
     </div>
+    
   )
 }
 

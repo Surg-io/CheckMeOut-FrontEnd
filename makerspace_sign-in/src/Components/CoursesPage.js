@@ -5,7 +5,8 @@ class CoursesPage extends Component {
   render() {
     return (
       <div className='PageContent'>
-      <Content Header={"Make Space for MakerSpace"} Text={<p>Our non-credit workshops/courses are for learners of all ages! Discover new skills in these short, hands-on, and 
+      <Content Header={"Make Space for MakerSpace"} 
+      Text={<p>Our non-credit workshops/courses are for learners of all ages! Discover new skills in these short, hands-on, and 
         free MakerSpace courses. Take one, two, or all of them! <br />
         <a style={{}}className="NoUnderlineLink" href='https://ssb.vcccd.edu/prod/pw_pub_sched.P_Simple_SEARCH'>MakerSpace course are listed in the schedule of classes under MakerSpace(MAKR)</a><br />
         <a className="NoUnderlineLink" href='https://www.moorparkcollege.edu/apply-and-enroll'> View to Enroll as a Moorpark College Student in a non-credit class</a><br /><br />
