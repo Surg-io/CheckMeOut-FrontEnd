@@ -2,16 +2,24 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
+import HeaderHome from '../components/HeaderHome';
+import Icon from '../components/Icon';
+import HomeMenu from '../components/HomeMenu';
+import Footer from '../components/Footer';
+import './MainLayout.css';
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 const MainLayout = () => (
   <Layout>
-    <Header></Header>
+    <HeaderHome>
+      <Icon />
+      <HomeMenu />
+    </HeaderHome>
     <Content style={{ padding: '50px', minHeight: '80vh' }}>
       <Outlet /> {/* Renders child components */}
     </Content>
-    <Footer style={{ textAlign: 'center' }}>Footer ©2024</Footer>
+    <Footer />
   </Layout>
 );
 
