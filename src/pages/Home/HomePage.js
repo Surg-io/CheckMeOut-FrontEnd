@@ -6,11 +6,12 @@ import Placeholder from '../../components/Placeholder';
 
 const HomePage = () => {
   const menuItem = <HomeMenu />;
-
+  const children = <
   return (
-    <MainLayout menuItems={[menuItem]}>
-      <Placeholder />
-    </MainLayout>
+    <div id="homepage">
+      <MainLayout menuItems={[menuItem]} url={'url("/images/people-repairing-computer-chips.jpg")'} children={Placeholder}>
+      </MainLayout>
+    </div>
   );
 };
 

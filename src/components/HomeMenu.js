@@ -1,7 +1,6 @@
 // src/components/HomeMenu.js
 import React from 'react';
-import { Menu } from 'antd';
-import { Button } from 'antd/es/radio';
+import { Menu, Button } from 'antd';
 import { Space } from "antd";
 
 const labels = ["Space", "Equipment", "Contact", "FAQ"];
@@ -21,14 +20,16 @@ const HomeMenu = () => (
       defaultSelectedKeys={['1']}
       items={items}
       style={{
-        display: 'flex',
-        alignItems: 'center',
+        alignItems: 'end',
         height: '40px',
-        borderBottom: 'none',
+        overflow: 'visible',
+        flexGrow: 1,
       }}
     />
-    <Button type="primary">Sign Up</Button>
-    <Button type="default">Login</Button>
+    <Space size='middle'>
+      <Button type="primary">Sign Up</Button>
+      <Button type="default">Login</Button>
+    </Space>
   </Space>
 );
 
