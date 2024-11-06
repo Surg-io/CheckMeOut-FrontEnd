@@ -1,7 +1,6 @@
 // src/components/HomeMenu.js
 import React from 'react';
-import { Menu, Button } from 'antd';
-import { Space } from "antd";
+import { Menu, Button, Row, Col } from 'antd';
 
 const labels = ["Space", "Equipment", "Contact", "FAQ"];
 const items = labels.map((label, index) => ({
@@ -10,27 +9,33 @@ const items = labels.map((label, index) => ({
 }));
 {/* TODO:Change the width of nav bar menu items, show all elements */}
 const HomeMenu = () => (
-  <Space style={{
-    flex: 1,
-    justifyContent: 'flex-end',
-    }}>
-    <Menu
-      theme="light"
-      mode="horizontal"
-      defaultSelectedKeys={['1']}
-      items={items}
-      style={{
-        alignItems: 'end',
-        height: '40px',
-        overflow: 'visible',
-        flexGrow: 1,
-      }}
-    />
-    <Space size='middle'>
-      <Button type="primary">Sign Up</Button>
-      <Button type="default">Login</Button>
-    </Space>
-  </Space>
+  <Row align="middle" style={{ width: '100%', padding: '0 20px 0 20px' }}>
+    <Col flex="auto">
+      <Menu
+        theme="light"
+        mode="horizontal"
+        defaultSelectedKeys={['1']}
+        items={items}
+        style={{
+          height: '60px',
+          alignItems: 'center',
+          overflow: 'visible',
+          lineHeight: '60px'
+        }}
+      />
+    </Col>
+    
+    <Col>
+      <Row align="middle" style={{ width: '100%'}}>
+        <Col style={{margin:'0 10px'}}>
+          <Button type="primary">Sign Up</Button>
+        </Col>
+        <Col style={{margin:'0 10px'}}>
+          <Button type="default">Login</Button>
+        </Col>
+      </Row>
+    </Col>
+  </Row>
 );
 
 

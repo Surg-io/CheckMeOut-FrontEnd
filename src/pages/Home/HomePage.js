@@ -2,14 +2,33 @@
 import React from 'react';
 import MainLayout from '../../layouts/MainLayout';
 import HomeMenu from '../../components/HomeMenu';
-import Placeholder from '../../components/Placeholder';
-
+import { Flex } from 'antd';
+import { blue, gold } from '@ant-design/colors';
+import './HomePage.css'
+{/**TODO: Bcackground img streches as window stretches, weird */}
 const HomePage = () => {
   const menuItem = <HomeMenu />;
-  const children = <
+  const children =
+    <div className="background-container">
+      <div className="blurred-background"></div>
+      <div className='content'>
+        <Flex vertical gap='small' style={{
+          width: '50%',
+          margin: '100px 250px'
+        }}>
+          <h1 className='Slogan_heading' style={{color:blue[6]}}>Dream,</h1>
+          <h1 className='Slogan_heading' style={{color:blue[6]}}>Design,</h1>
+          <h1 className='Slogan_heading' style={{color:blue[6]}}>Build.</h1>
+          <h1 className='Slogan_heading' style={{color:gold[5]}}>— Your project</h1>
+          <h1 className='Slogan_heading' style={{color:gold[5]}}>Starts Here.</h1>
+        </Flex>
+      </div>;
+
+      
+    </div>
   return (
     <div id="homepage">
-      <MainLayout menuItems={[menuItem]} url={'url("/images/people-repairing-computer-chips.jpg")'} children={Placeholder}>
+      <MainLayout menuItems={[menuItem]} url={'url("/images/people-repairing-computer-chips.jpg")'} children={[children]}>
       </MainLayout>
     </div>
   );
