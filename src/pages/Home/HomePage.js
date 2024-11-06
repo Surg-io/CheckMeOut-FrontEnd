@@ -2,7 +2,7 @@
 import React from 'react';
 import MainLayout from '../../layouts/MainLayout';
 import HomeMenu from '../../components/HomeMenu';
-import { Flex } from 'antd';
+import { Flex, Button } from 'antd';
 import { blue, gold } from '@ant-design/colors';
 import './HomePage.css'
 {/**TODO: Bcackground img streches as window stretches, weird */}
@@ -21,6 +21,14 @@ const HomePage = () => {
           <h1 className='Slogan_heading' style={{color:blue[6]}}>Build.</h1>
           <h1 className='Slogan_heading' style={{color:gold[5]}}>— Your project</h1>
           <h1 className='Slogan_heading' style={{color:gold[5]}}>Starts Here.</h1>
+          <Button type='primary' size='large' style={{
+            fontFamily: 'Montserrat',
+            fontSize: '24px',
+            width: '9em',
+            height: '70px',
+            margin:'50px 0px 0px 0px'
+            }}>Reserve Now
+          </Button>
         </Flex>
       </div>;
 
