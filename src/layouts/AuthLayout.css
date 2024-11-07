@@ -1,0 +1,26 @@
+/* Flex container */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: auto;
+    width: 50vw;               /* Set width to 50% of viewport width */
+    margin: 0 auto;            /* Center the container horizontally */
+    padding-top: 20vh;         /* Offset 20vh from the top */
+    box-sizing: border-box;
+}
+
+/* Icon and form styling */
+.login-form {
+    width: 100%;               /* Make form fill the container width */
+    margin-bottom: 20px;       /* Spacing between icon and form */
+    background: transparent;
+}
+
+.layout {
+    min-height: 100vh;         /* Ensure the layout takes up the full viewport height */
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+}

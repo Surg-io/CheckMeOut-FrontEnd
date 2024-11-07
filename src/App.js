@@ -7,6 +7,7 @@ import MainLayout from "./layouts/MainLayout";
 
 // Pages
 import HomePage from "./pages/Home/HomePage";
+import Auth from "./pages/Auth/Auth";
 
 // Mock authentication check
 const isAuthenticated = true; // Replace with actual authentication logic
@@ -15,7 +16,7 @@ const isAuthenticated = true; // Replace with actual authentication logic
 const App = () => {
   // TODO: Add conditional branches
   return (
-    <HomePage/>
+    <Auth/>
   );
 };
 

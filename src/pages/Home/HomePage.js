@@ -36,7 +36,10 @@ const HomePage = () => {
     </div>
   return (
     <div id="homepage">
-      <MainLayout menuItems={[menuItem]} url={'url("/images/people-repairing-computer-chips.jpg")'} children={[children]}>
+      <MainLayout
+        menuItem={menuItem}
+        url={'url("/images/people-repairing-computer-chips.jpg")'}
+        children={[children]}>
       </MainLayout>
     </div>
   );
