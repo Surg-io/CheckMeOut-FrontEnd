@@ -8,6 +8,7 @@ import { Menu } from 'antd';
 import AuthLayout from '../../layouts/AuthLayout';
 import LoginForm from '../../components/LoginForm';
 import RegisterForm from '../../components/RegisterForm';
+import './Auth.css'
 
 {/**Allow switching between login and sign up */}
 const labels = ["Login", "Sign Up"];
