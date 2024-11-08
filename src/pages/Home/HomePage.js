@@ -9,10 +9,19 @@ import MainLayout from '../../layouts/MainLayout';
 import HomeMenu from '../../components/HomeMenu';
 import { Flex, Button } from 'antd';
 import { blue, gold } from '@ant-design/colors';
+import { useNavigate } from 'react-router-dom';
 import './HomePage.css'
 
 const HomePage = () => {
-  const menuItem = <HomeMenu />;
+  const navigate = useNavigate();
+  const handleLoginClick = () => {
+    navigate('/auth', { state: { form: 'login' } });
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/auth', { state: { form: 'signup' } });
+  };
+  const menuItem = <HomeMenu onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>;
   const children =
     <div className="container"> {/**Separately contain background and main content */}
       <div className="blurred-background"></div>

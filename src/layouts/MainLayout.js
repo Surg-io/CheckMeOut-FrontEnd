@@ -14,7 +14,7 @@ const { Content } = Layout;
 const MainLayout = ({ menuItem,children }) => (
   <Layout>
     <Header>
-      <Icon size={1}/>
+      <Icon size={1} clickable={true}/>
       {menuItem} {/* Render the menuitem inside the page header*/}
     </Header>
     <Content>

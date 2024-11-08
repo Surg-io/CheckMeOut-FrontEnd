@@ -11,7 +11,7 @@ const items = labels.map((label, index) => ({
   label: label,
 }));
 
-const HomeMenu = () => (
+const HomeMenu = ({onLoginClick, onRegisterClick}) => (
   <Row align="middle" style={{ width: '100%', padding: '0 20px 0 20px' }}>   {/**Separates the subpage from auth buttons*/}
     <Col flex="auto">
       <Menu
@@ -31,10 +31,10 @@ const HomeMenu = () => (
     <Col>
       <Row align="middle" style={{ width: '100%'}}>
         <Col style={{margin:'0 10px'}}>
-          <Button type="primary">Sign Up</Button>
+          <Button onClick={onRegisterClick} type="primary">Sign Up</Button>
         </Col>
         <Col style={{margin:'0 10px'}}>
-          <Button type="default">Login</Button>
+          <Button onClick={onLoginClick} type="default">Login</Button>
         </Col>
       </Row>
     </Col>

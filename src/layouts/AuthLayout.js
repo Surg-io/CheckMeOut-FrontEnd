@@ -13,7 +13,7 @@ const LoginLayout = ({menu, children}) => (
   <Layout className='layout'>
     <Content>
       <Flex className='container'>
-        <Icon size={1.5}/>  {/**Scale the Icon and name */}
+        <Icon size={1.5} clickable={true}/>  {/**Scale the Icon and name */}
         {menu}
         {children} {/**Render the form passed as children */}
       </Flex>
