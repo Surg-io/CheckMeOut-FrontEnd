@@ -4,7 +4,7 @@
   }
   
   .logo-image {
-    height: 40px; /*TODO Adjust the height*/
+    height: 40px;
     width: auto;
   }
   
@@ -15,4 +15,8 @@
     font-weight: bold;
     font-size: 1.7rem;
     margin-left: 10px;
+  }
+
+.icon-container {
+    min-width: 300px; /*TODO: Change this*/
   }

@@ -1,4 +1,8 @@
 // src/pages/Auth/Auth.js
+// This page is the auth page
+// It can switch between login and sign up without redirecting
+// It can verify form submission
+
 import React from 'react';
 import AuthLayout from '../../layouts/AuthLayout';
 import LoginForm from '../../components/LoginForm';

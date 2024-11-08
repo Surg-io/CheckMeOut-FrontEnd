@@ -1,4 +1,7 @@
 // src/layouts/MainLayout.js
+// This layout is a header-content-footer layout for common pages
+// It takes a menuitem that is displayed in the right of the header
+// It takes a children as content
 import React from 'react';
 import { Layout } from 'antd';
 import Header from '../components/Header';
@@ -12,7 +15,7 @@ const MainLayout = ({ menuItem,children }) => (
   <Layout>
     <Header>
       <Icon size={1}/>
-      {menuItem} {/* Pass single menuItem as an array */}
+      {menuItem} {/* Render the menuitem inside the page header*/}
     </Header>
     <Content>
       {children} {/* Render the content passed as children */}

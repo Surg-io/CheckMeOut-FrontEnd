@@ -1,7 +1,10 @@
-//src/components/LoginForm.js
+// src/components/LoginForm.js
+// This component is the login form for the autho page (excluding switch menu)
+// TODO: Add verification. Change Login in button size.
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Flex, Button, Form, Input, Checkbox } from 'antd';
+
 
 const LoginForm = ( onFinish ) => (
   <Form
@@ -50,7 +53,6 @@ const LoginForm = ( onFinish ) => (
       <Button block type="primary" htmlType="submit">
         Log in
       </Button>
-      or <a href="">Sign Up!</a>
     </Form.Item>
   </Form>
 )

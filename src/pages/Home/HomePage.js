@@ -1,21 +1,24 @@
 // src/pages/HomePage.js
+// This page is the homepage of the website, should only appear when not authed?
+// TODO: Bcackground img streches as window stretches, weird
+// TODO: What happens when an authed user access this page?
+// TODO: Config is odd and unstable
+
 import React from 'react';
 import MainLayout from '../../layouts/MainLayout';
 import HomeMenu from '../../components/HomeMenu';
 import { Flex, Button } from 'antd';
 import { blue, gold } from '@ant-design/colors';
 import './HomePage.css'
-{/**TODO: Bcackground img streches as window stretches, weird */}
+
 const HomePage = () => {
   const menuItem = <HomeMenu />;
   const children =
-    <div className="background-container">
+    <div className="container"> {/**Separately contain background and main content */}
       <div className="blurred-background"></div>
       <div className='content'>
-        <Flex vertical gap='small' style={{
-          width: '50%',
-          margin: '100px 250px'
-        }}>
+        <Flex className='flex' vertical gap='small'>
+          {/**Slogan part */}
           <h1 className='Slogan_heading' style={{color:blue[6]}}>Dream,</h1>
           <h1 className='Slogan_heading' style={{color:blue[6]}}>Design,</h1>
           <h1 className='Slogan_heading' style={{color:blue[6]}}>Build.</h1>
@@ -31,17 +34,13 @@ const HomePage = () => {
           </Button>
         </Flex>
       </div>;
+    </div>
 
-      
-    </div>
   return (
-    <div id="homepage">
-      <MainLayout
-        menuItem={menuItem}
-        url={'url("/images/people-repairing-computer-chips.jpg")'}
-        children={[children]}>
-      </MainLayout>
-    </div>
+    <MainLayout
+      menuItem={menuItem}
+      children={[children]}>
+    </MainLayout>
   );
 };
 

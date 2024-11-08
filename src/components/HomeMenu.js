@@ -1,15 +1,18 @@
 // src/components/HomeMenu.js
+// This component is the menu content for homepage, should be contained inside a header
+// TODO: Adjust to very small width
+
 import React from 'react';
 import { Menu, Button, Row, Col } from 'antd';
 
-const labels = ["Space", "Equipment", "Contact", "FAQ"];
+const labels = ["Space", "Equipment", "Contact", "FAQ"]; {/**Allow viewing website before auth*/}
 const items = labels.map((label, index) => ({
   key: index + 1,
   label: label,
 }));
-{/* TODO:Change the width of nav bar menu items, show all elements */}
+
 const HomeMenu = () => (
-  <Row align="middle" style={{ width: '100%', padding: '0 20px 0 20px' }}>
+  <Row align="middle" style={{ width: '100%', padding: '0 20px 0 20px' }}>   {/**Separates the subpage from auth buttons*/}
     <Col flex="auto">
       <Menu
         theme="light"
