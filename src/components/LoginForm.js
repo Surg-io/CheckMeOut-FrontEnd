@@ -34,7 +34,7 @@ const LoginForm = ( onFinish ) => (
       rules={[
         {
           required: true,
-          message: 'Please enter your password!',
+          message: 'Please enter your password',
         },
       ]}
     >

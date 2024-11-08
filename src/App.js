@@ -1,3 +1,5 @@
+// This is the main entry point of the application
+// TODO: Add conditional branches
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -14,7 +16,6 @@ const isAuthenticated = true; // Replace with actual authentication logic
 
 
 const App = () => {
-  // TODO: Add conditional branches
   return (
     <Auth/>
   );

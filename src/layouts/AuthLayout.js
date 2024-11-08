@@ -9,24 +9,12 @@ import './AuthLayout.css';
 
 const { Content } = Layout;
 
-{/**Allow switching between login and sign up */}
-const labels = ["Login", "Sign Up"];
-const items = labels.map((label, index) => ({ 
-  key: index + 1,
-  label: label,
-}));
-
-const LoginLayout = ({children, key }) => (
+const LoginLayout = ({menu, children}) => (
   <Layout className='layout'>
     <Content>
       <Flex className='container'>
-        <Icon size={1.8}/>  {/**Scale the Icon and name */}
-        <Menu
-          className='login-form'
-          mode="horizontal"
-          selectedKeys={[key]}
-          items={items}
-        />
+        <Icon size={1.5}/>  {/**Scale the Icon and name */}
+        {menu}
         {children} {/**Render the form passed as children */}
       </Flex>
     </Content>

@@ -3,19 +3,46 @@
 // It can switch between login and sign up without redirecting
 // It can verify form submission
 
-import React from 'react';
+import React, {useState} from 'react';
+import { Menu } from 'antd';
 import AuthLayout from '../../layouts/AuthLayout';
 import LoginForm from '../../components/LoginForm';
-const Auth = () => {
-  const onFinishLogin = (values) => {
-    console.log('Received values of form: ', values);
-  };
-  const children = <LoginForm onFinish = {onFinishLogin}/>;
+import RegisterForm from '../../components/RegisterForm';
 
+{/**Allow switching between login and sign up */}
+const labels = ["Login", "Sign Up"];
+const items = labels.map((label, index) => ({ 
+  key: index + 1,
+  label: label,
+}));
+
+const Auth = () => {
+  const [isLogin, setIsLogin] = useState(true);
+
+  const onLogin = (values) => {
+    console.log('Received login form: ', values);
+  };
+  const onRegister = (values) => {
+    console.log('Received register form: ', values);
+  };
+
+  const handleMenuClick = (e) => {
+    setIsLogin(e.key === "1"); // Set isLogin to true if "Login" is selected, false otherwise
+  };
+
+  const menu = <Menu
+    className='login-form'
+    mode="horizontal"
+    items={items}
+    onClick={handleMenuClick} // Add onClick to handle form switching
+    selectedKeys={[isLogin ? "1" : "2"]} // Highlight selected menu item
+  />
+
+  const children = isLogin ? <LoginForm onFinish={onLogin} /> : <RegisterForm onFinish={onRegister} />;
 
   return (
     <div id="login">
-      <AuthLayout children={children} key='1'>
+      <AuthLayout menu={menu} children={children}>
       </AuthLayout>
     </div>
   );
