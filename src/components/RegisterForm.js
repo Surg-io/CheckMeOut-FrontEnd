@@ -1,7 +1,6 @@
 // src/components/RegisterForm.js
 // This component is the register form for the autho page (excluding switch menu)
 // TODO: Add verification. 
-// TODO: Change Sign up button size.
 // TODO: Design password rules.
 import React from 'react';
 import { Flex, Button, Form, Input, Row, Col} from 'antd';

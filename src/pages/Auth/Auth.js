@@ -51,7 +51,7 @@ const Auth = () => {
 
   return (
     <div id="auth">
-      <AuthLayout menu={menu} children={children} />
+      <AuthLayout menuComponent={menu} formComponent={children} />
     </div>
   );
 };

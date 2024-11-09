@@ -1,6 +1,5 @@
 // src/components/Icon.js
 // This component is the universal icon+website name, it can be scaled
-// TODO: Add an attribute to determine if it's clickable
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';

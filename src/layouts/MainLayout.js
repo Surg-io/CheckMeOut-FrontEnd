@@ -11,14 +11,14 @@ import './MainLayout.css';
 
 const { Content } = Layout;
 
-const MainLayout = ({ menuItem,children }) => (
+const MainLayout = ({ menuComponent, content}) => (
   <Layout>
     <Header>
       <Icon size={1} clickable={true}/>
-      {menuItem} {/* Render the menuitem inside the page header*/}
+      {menuComponent} {/* Render the menuitem inside the page header*/}
     </Header>
     <Content>
-      {children} {/* Render the content passed as children */}
+      {content} {/* Render the content passed as children */}
     </Content>
     <Footer />
   </Layout>

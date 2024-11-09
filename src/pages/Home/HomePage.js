@@ -21,11 +21,11 @@ const HomePage = () => {
   const handleRegisterClick = () => {
     navigate('/auth', { state: { form: 'signup' } });
   };
-  const menuItem = <HomeMenu onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>;
-  const children =
-    <div className="container"> {/**Separately contain background and main content */}
+  const menuComponent = <HomeMenu onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>;
+  const content =
+    <div className="homepage-container"> {/**Separately contain background and main content */}
       <div className="blurred-background"></div>
-      <div className='content'>
+      <div className='homepage-content'>
         <Flex className='flex' vertical gap='small'>
           {/**Slogan part */}
           <h1 className='Slogan_heading' style={{color:blue[6]}}>Dream,</h1>
@@ -47,10 +47,9 @@ const HomePage = () => {
 
   return (
     <MainLayout
-      menuItem={menuItem}
-      children={[children]}>
-    </MainLayout>
-  );
+      menuComponent={menuComponent}
+      content={content}
+    />);
 };
 
 export default HomePage;

@@ -1,0 +1,13 @@
+.dashboard-sider {
+    line-height: 120px;
+    background-color: transparent;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%
+}
+
+.dashboard-content {
+    background-color: white;
+    margin-top: 5%;
+    box-shadow: 10px 5px 5px grey;
+}
