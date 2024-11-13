@@ -19,6 +19,22 @@ const items = labels.map((label, index) => ({
 }));
 
 const Auth = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  // Update window dimensions on resize
+  useEffect(() => {
+      const handleResize = () => {
+          setWindowWidth(window.innerWidth);
+          setWindowHeight(window.innerHeight);
+      };
+
+      window.addEventListener('resize', handleResize);
+      
+      // Cleanup listener on component unmount
+      return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   const location = useLocation();
 
   // Set initial form based on navigation state or default to Sign Up

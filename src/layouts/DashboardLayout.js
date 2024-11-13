@@ -10,7 +10,6 @@ const DashboardLayout = ({menuComponent, siderComponent, content}) => {
         <Layout>
             <Sider className="dashboard-sider" width="25%">
                 {siderComponent}
-                Sider
             </Sider>
             <Content className="dashboard-content">
                 {content}

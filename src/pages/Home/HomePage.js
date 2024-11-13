@@ -4,7 +4,7 @@
 // TODO: What happens when an authed user access this page?
 // TODO: Config is odd and unstable
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MainLayout from '../../layouts/MainLayout';
 import HomeMenu from '../../components/HomeMenu';
 import { Flex, Button } from 'antd';
@@ -13,6 +13,22 @@ import { useNavigate } from 'react-router-dom';
 import './HomePage.css'
 
 const HomePage = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  // Update window dimensions on resize
+  useEffect(() => {
+      const handleResize = () => {
+          setWindowWidth(window.innerWidth);
+          setWindowHeight(window.innerHeight);
+      };
+
+      window.addEventListener('resize', handleResize);
+      
+      // Cleanup listener on component unmount
+      return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const navigate = useNavigate();
   const handleLoginClick = () => {
     navigate('/auth', { state: { form: 'login' } });
