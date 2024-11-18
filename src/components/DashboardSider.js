@@ -1,5 +1,5 @@
 import React from 'react';
-import { DashboardOutlined, ExclamationCircleFilled, ExclamationCircleOutlined, FundViewOutlined, PhoneOutlined, QuestionCircleOutlined, ReadOutlined, SearchOutlined, SmileOutlined } from '@ant-design/icons';
+import { CalendarOutlined, DashboardOutlined, ExclamationCircleFilled, ExclamationCircleOutlined, FundViewOutlined, HistoryOutlined, PhoneOutlined, QuestionCircleOutlined, ReadOutlined, SearchOutlined, SmileOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useState } from 'react';
 import './DashboardSider.css'
@@ -21,23 +21,23 @@ const getLevelKeys = (items1) => {
   return key;
 };
 
-const DashboardSider = () => {
+const DashboardSider = ({ onSelectKey }) => {
   const [stateOpenKeys, setStateOpenKeys] = useState(['2', '23']);
   const items = [
     {
-      key: 'sub1',
+      key: '1',
       label: 'Dashboard',
       icon: <DashboardOutlined className='icon'/>,
-      children: [
-        {
-          key: '1',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Reservation</span>,
-        },
-        {
-          key: '2',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>History</span>,
-        },
-      ],
+    },
+    {
+      key: '2',
+      label:  'Reservation',
+      icon: <CalendarOutlined className='icon'/>,
+    },
+    {
+      key: '3',
+      label:  'History',
+      icon: <HistoryOutlined className='icon'/>,
     },
     {
       key: 'sub2',
@@ -45,11 +45,11 @@ const DashboardSider = () => {
       icon: <FundViewOutlined className='icon'/>,
       children: [
         {
-          key: '3',
+          key: '4',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Space</span>,
         },
         {
-          key: '4',
+          key: '5',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Equipment</span>,
         },
       ],
@@ -60,11 +60,11 @@ const DashboardSider = () => {
       icon: <ReadOutlined className='icon'/>,
       children: [
         {
-          key: '5',
+          key: '6',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Guides</span>,
         },
         {
-          key: '6',
+          key: '7',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
         },
       ],
@@ -73,17 +73,17 @@ const DashboardSider = () => {
       type: 'divider',
     },
     {
-      key: 'sub4',
+      key: '8',
       label: 'Teams',
       icon: <SmileOutlined className='icon'/>,
     },
     {
-      key: 'sub5',
+      key: '9',
       label: 'Report',
       icon: <ExclamationCircleOutlined className='icon'/>,
     },
     {
-      key: 'sub6',
+      key: '10',
       label: 'Contact',
       icon: <PhoneOutlined className='icon'/>,
     },
@@ -121,6 +121,7 @@ const DashboardSider = () => {
         minHeight: '40px'
       }}
       items={items}
+      onSelect={({ key }) => { if (onSelectKey) { onSelectKey(key); } }}
     />
   );
 };

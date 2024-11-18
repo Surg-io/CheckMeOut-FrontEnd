@@ -1,14 +1,16 @@
 // src/pages/Dashboard/Dashboard.js
 // TODO: hasNotification
 import React, { useState, useEffect } from 'react';
-import PlaceHolder from "../../components/Placeholder"
 import DashboardLayout from "../../layouts/DashboardLayout";
 import DashboardSider from "../../components/DashboardSider";
 import DashboardMenu from "../../components/DashboardMenu";
+import { Card, Row, Col } from 'antd';
+import Placeholder from "../../components/Placeholder"
 
 const Dashboard = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+    const [selectedKey, setSelectedKey] = useState(null);
 
     // Update window dimensions on resize
     useEffect(() => {
@@ -23,13 +25,26 @@ const Dashboard = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const sider = <DashboardSider/>;
+    const sider = <DashboardSider onSelectKey={setSelectedKey}/>;
     const dashboardMenu = <DashboardMenu hasNotification={true} screenWidth={windowWidth} screenHeight={windowHeight}/>;
-    const dashboardContent = <PlaceHolder/>;
+    
+    const renderContent = () => {
+        switch (selectedKey) {
+        case '1':
+            return <Card />;
+        case '2':
+            return <div>Reservation</div>;
+        case '3':
+            return <div>History</div>;
+        default:
+            return <Placeholder/>;
+        }
+    };
+
     return <DashboardLayout
         menuComponent = {dashboardMenu}
         siderComponent = {sider}
-        content = {dashboardContent}
+        content = {renderContent()}
     />;
 };
 
