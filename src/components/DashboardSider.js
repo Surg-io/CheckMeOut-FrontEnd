@@ -26,7 +26,7 @@ const DashboardSider = ({ onSelectKey }) => {
   const items = [
     {
       key: '1',
-      label: 'Dashboard',
+      label: 'Summary',
       icon: <DashboardOutlined className='icon'/>,
     },
     {

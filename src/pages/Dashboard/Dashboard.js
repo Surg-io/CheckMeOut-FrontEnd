@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from "../../layouts/DashboardLayout";
 import DashboardSider from "../../components/DashboardSider";
 import DashboardMenu from "../../components/DashboardMenu";
+import LimitedDatePicker from '../../components/LimitedDatePicker';
 import { Card, Row, Col } from 'antd';
 import Placeholder from "../../components/Placeholder"
 
@@ -33,11 +34,11 @@ const Dashboard = () => {
         case '1':
             return <Card />;
         case '2':
-            return <div>Reservation</div>;
+            return <LimitedDatePicker />;
         case '3':
             return <div>History</div>;
         default:
-            return <Placeholder/>;
+            return <Card />;
         }
     };
 
