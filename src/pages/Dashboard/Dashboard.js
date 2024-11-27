@@ -7,6 +7,7 @@ import DashboardMenu from "../../components/DashboardMenu";
 import LimitedDatePicker from '../../components/LimitedDatePicker';
 import { Card, Row, Col } from 'antd';
 import Placeholder from "../../components/Placeholder"
+import CombinedReservationMaker from '../../components/CombinedReservationMaker';
 
 const Dashboard = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -34,7 +35,7 @@ const Dashboard = () => {
         case '1':
             return <Card />;
         case '2':
-            return <LimitedDatePicker />;
+            return <CombinedReservationMaker />;
         case '3':
             return <div>History</div>;
         default:

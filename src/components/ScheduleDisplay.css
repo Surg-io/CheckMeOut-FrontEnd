@@ -1,0 +1,13 @@
+.scrollable-grid-container {
+    padding: 10px;
+    border: 1px solid #ccc; /* Table outer border */
+    background-color: #f9f9f9;
+}
+
+.grid-cell {
+    text-align: center; /* Center-align text in the cell */
+    padding: 8px; /* Adjust padding to fit the content */
+    font-size: 12px; /* Reduce font size for better fit */
+    border: 1px solid #ddd; /* Add border between cells */
+    white-space: nowrap; /* Prevent wrapping of text */
+}
