@@ -6,6 +6,14 @@ const config = {
         startTime: "08:00",
         endTime: "19:30",
     },
+    useMockData: true,
+    reservationStatus: {
+        available: { label: 'available', color: '#52c41a' },
+        reserved: { label: 'reserved', color: '#ff4d4f' },
+        pending: { label: 'pending', color: '#1770ff' },
+        outOfService: { label: 'oos', color: '#ffae17' },
+        unknown: {label: 'unknown', color: '#8a8a8a'}
+    },
 };
 
 export default config;
