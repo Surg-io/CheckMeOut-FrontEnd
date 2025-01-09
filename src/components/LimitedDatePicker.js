@@ -5,7 +5,7 @@ import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import handleFetchSchedule from '../services/Reservation'
 
-const LimitedDatePicker = ({ onDataFetched }) => {
+const LimitedDatePicker = ({ onDatePicked }) => {
   const now = dayjs();
 
   return (
@@ -14,8 +14,8 @@ const LimitedDatePicker = ({ onDataFetched }) => {
       minDate={now}
       maxDate={now.add(7,'day')}
       onClick={(date) => {
-        if (date && onDataFetched) {
-            onDataFetched(date);
+        if (date && onDatePicked) {
+          onDatePicked(date);
         }
     }}
     />

@@ -29,20 +29,20 @@ const mockFetchScheduleResponse = {
 const mockSubmitReservationResponse = {
     "reservations": [
     {
-        "deviceId": "deviceA",
+        "deviceId": 1,
         "device": "Device A",
         "time": "2024-11-28T09:00:00.000Z",
         "status": "success"
     },
     {
-        "deviceId": "deviceA",
+        "deviceId": 1,
         "device": "Device A",
         "time": "2024-11-28T13:00:00.000Z",
         "status": "failed",
         "reason": "Time slot already reserved"
     },
     {
-        "deviceId": "deviceB",
+        "deviceId": 2,
         "device": "Device B",
         "time": "2024-11-28T15:00:00.000Z",
         "status": "success"

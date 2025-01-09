@@ -15,12 +15,6 @@ import { mockFetchScheduleResponse, mockSubmitReservationResponse } from '../moc
  * @throws {Error} Throws an error if the API request fails or the response is not `ok`.
  */
 const handleFetchSchedule = async (value) => {
-    const selectedDate = {
-        year: value.$y,
-        month: value.$M + 1,
-        day: value.$D,
-        fullDate: value.$d.toISOString() || ""
-    };
     try {
         let response;
         if (config.useMockData){ // Send the selected date to the backend
@@ -32,7 +26,7 @@ const handleFetchSchedule = async (value) => {
                     'Content-Type': 'application/json',
                 },
                 method: 'POST',
-                body: JSON.stringify(selectedDate),
+                body: JSON.stringify(value),
             });
         }
         if (response.ok) { // Handle the server response
@@ -51,7 +45,7 @@ const handleFetchSchedule = async (value) => {
 /**
  * Submits the pending slots for reservation.
  * @async
- * @function handleSubmitReserve
+ * @function handleSubmitReservation
  * @param {Array<Object>} pendingSlots - An array of objects representing the selected slots.
  * Each object contains:
  *  - {string} deviceId - The ID of the device.
@@ -60,7 +54,7 @@ const handleFetchSchedule = async (value) => {
  * @returns {Promise<Object>} The API response if successful.
  * @throws {Error} Throws an error if the reservation submission fails.
  */
-const handleSubmitReserve = async (pendingSlots) => {
+const handleSubmitReservation = async (pendingSlots) => {
     try {
         // Define the payload for the API
         let response;
@@ -98,4 +92,4 @@ const handleSubmitReserve = async (pendingSlots) => {
         throw error; 
     }
 };
-export { handleFetchSchedule, handleSubmitReserve };
+export { handleFetchSchedule, handleSubmitReservation };

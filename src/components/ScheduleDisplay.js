@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Spin, Button } from "antd";
+import { Table, Spin, Button, Divider } from "antd";
 import config from '../config/config';
 import { LoadingOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
@@ -10,7 +10,7 @@ const parseTimeToDecimal = (timeString) => {  // Converts "HH:mm" to decimal hou
     return hours + minutes / 60;
 };
 
-const ScheduleDisplay = ({ response, onSelect }) => {
+const ScheduleDisplay = ({ response }) => {
     const { startTime, endTime } = config.timeRange;
 
     // Parse the start and end times
@@ -135,50 +135,17 @@ const ScheduleDisplay = ({ response, onSelect }) => {
         return <Spin indicator={<LoadingOutlined spin />} size="large" />;
     }
 
-    const getPendingSlots = () => {
-        const pendingSlots = [];
-        dataSource.forEach((row) => {
-            Object.keys(row).forEach((key) => {
-                if (row[key] === 'pending' && key.startsWith('time')) {
-                    const timeString = key.replace('time', '').replace(/(\d{2})(\d{2})/, '$1:$2');
-                    const fullTime = dayjs(`${response.selectedDate}T${timeString}`);
-                    pendingSlots.push({
-                        deviceId: row.key,
-                        device: row.device,
-                        time: fullTime.toISOString(),
-                    });
-                }
-            });
-        });
-        return pendingSlots;
-    };
-
-    const handleReserveClick = async () => {
-        try {
-            const pendingSlots = getPendingSlots();
-            const result = await handleSubmitReserve(pendingSlots);
-        } catch (error) {
-            console.error('Error submitting reservations:', error);
-        }
-    };
-
     return (
-        <div>
-            <Table
-                bordered
-                columns={columns}
-                dataSource={dataSource}
-                pagination={false}
-                scroll={{
-                    x: 'max-content',
-                    y: '400px',
-                }}
-            />
-            <Button 
-                type='primary'
-                onClick={handleReserveClick}
-            >Submit</Button>
-        </div>
+        <Table
+            bordered
+            columns={columns}
+            dataSource={dataSource}
+            pagination={false}
+            scroll={{
+                x: 'max-content',
+                y: '400px',
+            }}
+        />
     );
 };
 
