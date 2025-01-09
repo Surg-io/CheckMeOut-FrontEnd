@@ -4,9 +4,8 @@
 // It takes a children as content
 import React from 'react';
 import { Layout } from 'antd';
-import Header from '../components/Header';
-import Icon from '../components/Icon';
-import Footer from '../components/Footer';
+import { Footer, Header, Icon } from '@root/components';
+
 import './MainLayout.css';
 
 const { Content } = Layout;

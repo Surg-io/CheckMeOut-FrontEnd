@@ -3,7 +3,6 @@
 import React from 'react';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
-import handleFetchSchedule from '../services/Reservation'
 
 const LimitedDatePicker = ({ onDatePicked }) => {
   const now = dayjs();

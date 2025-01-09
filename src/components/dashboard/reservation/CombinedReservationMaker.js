@@ -2,9 +2,9 @@
 // This component assembles multiple components in the reservation page
 // TODO: Submit all content in this page
 import React, { useState, useEffect } from 'react';
-import LimitedDatePicker from './LimitedDatePicker';
-import ScheduleDisplay from './ScheduleDisplay';
-import { handleFetchSchedule, handleSubmitReservation } from '../services/Reservation';
+import LimitedDatePicker from '@root/components/dashboard/reservation/LimitedDatePicker'
+import ScheduleDisplay from '@root/components/dashboard/reservation/ScheduleDisplay';
+import { handleFetchSchedule, handleSubmitReservation } from '@root/services/Reservation';
 import dayjs from 'dayjs';
 import { Radio, Typography, Space, Divider, Button } from 'antd';
 const { Title, Paragraph} = Typography;

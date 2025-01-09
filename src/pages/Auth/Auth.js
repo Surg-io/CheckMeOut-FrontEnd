@@ -5,9 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Menu } from 'antd';
-import AuthLayout from '../../layouts/AuthLayout';
-import LoginForm from '../../components/LoginForm';
-import RegisterForm from '../../components/RegisterForm';
+import { AuthLayout } from '@root/layouts';
+import { LoginForm, RegisterForm } from '@root/components';
 import { useLocation } from 'react-router-dom';
 import './Auth.css';
 

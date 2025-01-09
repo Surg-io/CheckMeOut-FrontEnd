@@ -5,8 +5,8 @@
 // TODO: Config is odd and unstable
 
 import React, { useState, useEffect } from 'react';
-import MainLayout from '../../layouts/MainLayout';
-import HomeMenu from '../../components/HomeMenu';
+import { MainLayout } from '@root/layouts';
+import { HomeMenu } from '@root/components';
 import { Flex, Button } from 'antd';
 import { blue, gold } from '@ant-design/colors';
 import { useNavigate } from 'react-router-dom';

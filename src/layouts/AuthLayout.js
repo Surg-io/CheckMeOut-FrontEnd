@@ -3,8 +3,8 @@
 // TODO: Make the form appropriate size not stretching too long when width is large
 import React from 'react';
 import { Flex, Layout} from 'antd';
-import Icon from '../components/Icon';
-import Footer from '../components/Footer';
+import { Footer, Icon } from '@root/components';
+
 import './AuthLayout.css';
 
 const { Content } = Layout;

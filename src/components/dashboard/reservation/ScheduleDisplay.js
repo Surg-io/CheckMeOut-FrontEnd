@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Spin, Button, Divider } from "antd";
-import config from '../config/config';
+import { Table, Spin} from "antd";
+import config from '@root/config/config';
 import { LoadingOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { handleSubmitReserve} from '../services/Reservation';
 
 const parseTimeToDecimal = (timeString) => {  // Converts "HH:mm" to decimal hours
     const [hours, minutes] = timeString.split(":").map(Number);

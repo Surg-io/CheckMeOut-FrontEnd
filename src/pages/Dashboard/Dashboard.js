@@ -1,13 +1,9 @@
 // src/pages/Dashboard/Dashboard.js
 // TODO: hasNotification
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from "../../layouts/DashboardLayout";
-import DashboardSider from "../../components/DashboardSider";
-import DashboardMenu from "../../components/DashboardMenu";
-import LimitedDatePicker from '../../components/LimitedDatePicker';
-import { Card, Row, Col } from 'antd';
-import Placeholder from "../../components/Placeholder"
-import CombinedReservationMaker from '../../components/CombinedReservationMaker';
+import { DashboardLayout } from "@root/layouts";
+import { DashboardSider, DashboardMenu, CombinedReservationMaker } from '@root/components';
+import { Card } from 'antd';
 
 const Dashboard = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);

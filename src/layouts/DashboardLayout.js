@@ -1,9 +1,8 @@
 import Sider from "antd/es/layout/Sider";
-import MainLayout from "./MainLayout";
+import MainLayout from "@root/layouts/MainLayout";
 import { Layout } from "antd";
-import './DashboardLayout.css';
-
 import { Content } from "antd/es/layout/layout";
+import './DashboardLayout.css';
 
 const DashboardLayout = ({menuComponent, siderComponent, content}) => {
     const wrappedContent = (

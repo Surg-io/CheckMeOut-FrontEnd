@@ -4,7 +4,7 @@
 // TODO: Design password rules.
 import React from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
-import config from '../config/config';
+import config from '@root/config/config';
 
 const RegisterForm = ({ onFinish }) => {
   const handleRegister = async (values) => {
