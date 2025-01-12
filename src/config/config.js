@@ -7,6 +7,7 @@ const config = {
         endTime: "19:30",
     },
     useMockData: true,
+    mockURL: 'https://bf47d3a5-174c-41fa-99f8-bc4a823cecac.mock.pstmn.io',
     reservationStatus: {
         available: { label: 'available', color: '#52c41a' },
         reserved: { label: 'reserved', color: '#ff4d4f' },

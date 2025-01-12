@@ -2,8 +2,9 @@
  * src/services/api.js
  * Modify config file to use mock/actual data
  */
+
+// TODO: Add userID to reserve
 import config from '../config/config';
-import { mockFetchScheduleResponse, mockSubmitReservationResponse } from '../mocks/MockResponses';
 
 
 /**
@@ -17,18 +18,21 @@ import { mockFetchScheduleResponse, mockSubmitReservationResponse } from '../moc
 const handleFetchSchedule = async (value) => {
     try {
         let response;
+        let url;
         if (config.useMockData){ // Send the selected date to the backend
-            console.log('Using mock data for handleFetchSchedule')
-            response = { ok: true, json: async () => mockFetchScheduleResponse };
+            url = `${config.mockURL}`;
         } else {
-            response = await fetch(`${config.apiBaseUrl}/searchdate`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method: 'POST',
-                body: JSON.stringify(value),
-            });
+            url = `${config.apiBaseUrl}`;
         }
+        response = await fetch(`${url}/searchdate`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                fullDate: value.toISOString(),
+            }),
+        });
         if (response.ok) { // Handle the server response
             const data = await response.json();
             return data;
@@ -58,34 +62,34 @@ const handleSubmitReservation = async (pendingSlots) => {
     try {
         // Define the payload for the API
         let response;
-        if(config.useMockData){
-            console.log('Using mock data for handleSubmitReserve')
-            response = { ok: true, json: mockSubmitReservationResponse };
-            return response;
+        let url;
+        if (config.useMockData){ // Send the selected date to the backend
+            url = `${config.mockURL}`;
         } else {
-            const payload = {
-                reservations: pendingSlots.map(({ deviceId, device, time }) => ({
-                    deviceId,
-                    device,
-                    time,
-                })),
-            };
-            // Send the reservation data to the API
-            response = await fetch(`${config.apiBaseUrl}/reserve`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-    
-            if (response.ok) { // Handle the server response
-                const data = await response.json();
-                return data;
-            } else {
-                const errorText = await response.text();
-                throw new Error(errorText);
-            }
+            url = `${config.apiBaseUrl}`;
+        }
+        const payload = {
+            reservations: pendingSlots.map(({ deviceId, device, time }) => ({
+                deviceId,
+                device,
+                time,
+            })),
+        };
+        // Send the reservation data to the API
+        response = await fetch(`${url}/reserve`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (response.ok) { // Handle the server response
+            const data = await response.json();
+            return data;
+        } else {
+            const errorText = await response.text();
+            throw new Error(errorText);
         }
     } catch (error) { // Log the error and propagate it to the caller
         console.error('An error occurred:', error);
