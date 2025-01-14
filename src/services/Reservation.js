@@ -3,8 +3,9 @@
  * Modify config file to use mock/actual data
  */
 
-// TODO: Add userID to reserve
+// TODO: Add accountID to reserve
 import config from '../config/config';
+import dayjs from 'dayjs';
 
 
 /**
@@ -30,7 +31,7 @@ const handleFetchSchedule = async (value) => {
             },
             method: 'POST',
             body: JSON.stringify({
-                fullDate: value.toISOString(),
+                fullDate: dayjs(value).toISOString(),
             }),
         });
         if (response.ok) { // Handle the server response
@@ -38,11 +39,9 @@ const handleFetchSchedule = async (value) => {
             return data;
         } else {
             const errorText = await response.text();
-            throw new Error(errorText);
         }
     } catch (error) { // Log the error and propagate it to the caller
         console.error('An error occurred:', error);
-        throw error;
     }
 }
 
@@ -69,6 +68,7 @@ const handleSubmitReservation = async (pendingSlots) => {
             url = `${config.apiBaseUrl}`;
         }
         const payload = {
+            accountID: 1,
             reservations: pendingSlots.map(({ deviceId, device, time }) => ({
                 deviceId,
                 device,
@@ -89,11 +89,9 @@ const handleSubmitReservation = async (pendingSlots) => {
             return data;
         } else {
             const errorText = await response.text();
-            throw new Error(errorText);
         }
     } catch (error) { // Log the error and propagate it to the caller
         console.error('An error occurred:', error);
-        throw error; 
     }
 };
 export { handleFetchSchedule, handleSubmitReservation };

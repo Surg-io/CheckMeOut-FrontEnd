@@ -7,7 +7,7 @@ const config = {
         endTime: "19:30",
     },
     useMockData: true,
-    mockURL: 'https://bf47d3a5-174c-41fa-99f8-bc4a823cecac.mock.pstmn.io',
+    mockURL: 'https://6ee3a34f-3379-4e24-8bfb-8feb925e01da.mock.pstmn.io',
     reservationStatus: {
         available: { label: 'available', color: '#52c41a' },
         reserved: { label: 'reserved', color: '#ff4d4f' },
@@ -15,6 +15,7 @@ const config = {
         outOfService: { label: 'oos', color: '#ffae17' },
         unknown: {label: 'unknown', color: '#8a8a8a'}
     },
+    maxSlotsPicked: 2,
 };
 
 export default config;

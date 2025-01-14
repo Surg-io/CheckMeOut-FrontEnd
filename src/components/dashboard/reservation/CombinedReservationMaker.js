@@ -58,7 +58,6 @@ const CombinedReservationMaker = () => {
         try{
             const response = await handleSubmitReservation(pendingSlots);
             if(response.ErrorIndicies){
-                console.log("reservation caught");
                 if(response.ErrorIndicies.length === 0){
                     openNotification('Success','All reservations were submitted successfully.');
                 }
@@ -132,7 +131,11 @@ const CombinedReservationMaker = () => {
                 </div>
                 <div>
                     <Divider orientation='left'>Select Time</Divider>
-                    <ScheduleDisplay response={scheduleData} />
+                    <ScheduleDisplay 
+                        response={scheduleData}
+                        pendingSlots={pendingSlots}
+                        setPendingSlots={setPendingSlots}
+                    />
                 </div>
                 <Divider/>
                 <div
