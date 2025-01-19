@@ -1,41 +1,57 @@
-// src/components/RegisterForm.js
-// This component is the register form for the autho page (excluding switch menu)
-// TODO: Add verification. 
-// TODO: Design password rules.
-import React from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
-import config from '@root/config/config';
+import React, { useState } from 'react';
+import { Form, Input, Button, Row, Col, Select } from 'antd';
+import { DateOfBirthInput } from '@root/components';
+import majors from '@root/config/majorList';
+
+const { Option } = Select;
+
 
 const RegisterForm = ({ onFinish }) => {
-  const handleRegister = async (values) => {
-    // Form submission logic
-    try {
-      console.log('Form values:', values);
+  const [dobState, setDobState] = useState({ isValid: true, errorMessage: '' });
 
-      // Validate the "Major" field
-      if (values.major === 'None') {
-        alert('Make sure to choose a Major!');
-        return;
-      }
-
-      // Send the form data to the backend
-      const response = await fetch(`${config.apiBaseUrl}/registeruser`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify(values),
-      });
-
-      // Handle the server response
-      if (response.ok) {
-        console.log('Registration successful:', await response.json());
-      } else {
-        console.error('Registration failed:', await response.json());
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
+  const validateDateOfBirth = (dob) => {
+    const { month, day, year } = dob || {};
+    if (!month || !day || !year) {
+      return { isValid: false, errorMessage: 'Please complete your date of birth.' };
     }
+
+    const m = parseInt(month, 10);
+    const d = parseInt(day, 10);
+    const y = parseInt(year, 10);
+
+    if (m < 1 || m > 12 || d < 1 || d > 31) {
+      return { isValid: false, errorMessage: 'Invalid date of birth.' };
+    }
+
+    if (m === 2) {
+      const isLeapYear = (y) => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+      if (d > 29 || (d === 29 && !isLeapYear(y))) {
+        return { isValid: false, errorMessage: 'Invalid date for February.' };
+      }
+    }
+
+    if (['4', '6', '9', '11'].includes(String(m)) && d > 30) {
+      return { isValid: false, errorMessage: 'Invalid date for this month.' };
+    }
+
+    return { isValid: true, errorMessage: '' };
+  };
+
+  const handleFinish = async (values) => {
+    const dobValidation = validateDateOfBirth(values.birthday);
+    setDobState(dobValidation);
+
+    if (!dobValidation.isValid) {
+      return; // Prevent form submission if DOB is invalid
+    }
+
+    // Proceed with form submission
+    onFinish(values);
+  };
+
+  const handleDobChange = (dob) => {
+    const dobValidation = validateDateOfBirth(dob);
+    setDobState(dobValidation); // Update the error state dynamically
   };
 
   return (
@@ -48,7 +64,7 @@ const RegisterForm = ({ onFinish }) => {
         maxWidth: '50vw',
         width: '50vw',
       }}
-      onFinish={handleRegister} // Attach the handler to the onFinish event
+      onFinish={handleFinish}
     >
       <Row gutter={16}>
         <Col span={12}>
@@ -59,7 +75,8 @@ const RegisterForm = ({ onFinish }) => {
                 required: true,
                 message: 'Please enter your first name',
               },
-            ]}>
+            ]}
+          >
             <Input placeholder="First Name" />
           </Form.Item>
         </Col>
@@ -78,11 +95,43 @@ const RegisterForm = ({ onFinish }) => {
         </Col>
       </Row>
       <Form.Item
-        name="email"
+        name="birthday"
+        validateStatus={!dobState.isValid ? 'error' : ''}
+        help={!dobState.isValid ? dobState.errorMessage : ''}
+      >
+        <DateOfBirthInput onChange={handleDobChange} />
+      </Form.Item>
+      <Form.Item
+        name='major'
+        rules={[{
+          required: true,
+          message: 'Please select your major'
+        }]}
+      >
+        <Select
+          placeholder="Choose a major"
+          allowClear
+          showSearch
+          optionFilterProp="children"
+          
+        >
+          {majors.map((major, index) => (
+            <Option key={index} value={major}>
+              {major}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="Email"
         rules={[
           {
             required: true,
             message: 'Please enter your email',
+          },
+          {
+            type: 'email',
+            message: 'Please enter a valid email address',
           },
         ]}
       >
@@ -94,6 +143,14 @@ const RegisterForm = ({ onFinish }) => {
           {
             required: true,
             message: 'Please enter your password',
+          },
+          {
+            min: 6,
+            message: 'Password must be at least 6 characters',
+          },
+          {
+            pattern: /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/,
+            message: 'Password must include both letters and numbers',
           },
         ]}
       >
@@ -119,7 +176,7 @@ const RegisterForm = ({ onFinish }) => {
         <Input type="password" placeholder="Confirm password" />
       </Form.Item>
       <Row>
-        <Col span={14}>
+        <Col span={18}>
           <Form.Item
             name="code"
             rules={[
@@ -132,13 +189,17 @@ const RegisterForm = ({ onFinish }) => {
             <Input placeholder="Verification code" />
           </Form.Item>
         </Col>
-        <Col span={5}></Col>
+        <Col span={1}></Col>
         <Col span={5}>
           <Button type="default">Get Code</Button>
         </Col>
       </Row>
       <Form.Item>
-        <Button block type="primary" htmlType="submit">
+        <Button
+          block
+          type="primary"
+          htmlType="submit"
+        >
           Sign Up
         </Button>
       </Form.Item>

@@ -8,6 +8,7 @@ import { Menu } from 'antd';
 import { AuthLayout } from '@root/layouts';
 import { LoginForm, RegisterForm } from '@root/components';
 import { useLocation } from 'react-router-dom';
+import { handleRegistration } from '@root/services/Authentication'
 import './Auth.css';
 
 // Switch the order so "Sign Up" is first
@@ -40,14 +41,6 @@ const Auth = () => {
   const initialForm = location.state?.form === 'login' ? 'login' : 'signup';
   const [isLogin, setIsLogin] = useState(initialForm === 'login');
 
-  const onLogin = (values) => {
-    console.log('Received login form: ', values);
-  };
-
-  const onRegister = (values) => {
-    console.log('Received register form: ', values);
-  };
-
   const handleMenuClick = (e) => {
     setIsLogin(e.key === "2"); // Set isLogin to true if "Login" is selected, false otherwise
   };
@@ -62,7 +55,7 @@ const Auth = () => {
     />
   );
 
-  const children = isLogin ? <LoginForm onFinish={onLogin} /> : <RegisterForm onFinish={onRegister} />;
+  const children = isLogin ? <LoginForm onFinish={handleRegistration} /> : <RegisterForm onFinish={handleRegistration} />;
 
   return (
     <div id="auth">

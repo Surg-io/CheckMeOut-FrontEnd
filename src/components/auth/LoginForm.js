@@ -27,7 +27,10 @@ const LoginForm = ( onFinish ) => (
         },
       ]}
     >
-      <Input prefix={<UserOutlined />} placeholder="Email" />
+      <Input
+        prefix={<UserOutlined />}
+        placeholder="Email"
+        />
     </Form.Item>
     <Form.Item
       name="password"
@@ -38,7 +41,11 @@ const LoginForm = ( onFinish ) => (
         },
       ]}
     >
-      <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+      <Input
+        prefix={<LockOutlined />}
+        type="password"
+        placeholder="Password"
+      />
     </Form.Item>
     <Form.Item>
       <Flex justify="space-between" align="center">
@@ -50,7 +57,7 @@ const LoginForm = ( onFinish ) => (
     </Form.Item>
 
     <Form.Item>
-      <Button block type="primary" htmlType="submit">
+      <Button block type="primary" htmlType="submit" onClick={onFinish}>
         Log in
       </Button>
     </Form.Item>

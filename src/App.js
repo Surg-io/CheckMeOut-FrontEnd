@@ -9,7 +9,7 @@ import Auth from "./pages/Auth/Auth";
 import Dashboard from "./pages/Dashboard/Dashboard";
 
 // Mock authentication check (replace with real auth logic)
-const isAuthenticated = true; // Replace with actual authentication logic
+const isAuthenticated = false; // Replace with actual authentication logic
 
 const App = () => {
   return (

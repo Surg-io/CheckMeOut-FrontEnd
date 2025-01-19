@@ -9,7 +9,7 @@ export { default as Footer } from '@root/components/common/Footer';
 export { default as Header } from '@root/components/common/Header';
 export { default as Icon } from '@root/components/common/Icon';
 export { default as Placeholder } from '@root/components/common/Placeholder';
-
+export { default as DateOfBirthInput } from '@root/components/common/DOB'
 /* 
     |___auth
 */

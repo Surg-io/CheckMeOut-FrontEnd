@@ -1,10 +1,10 @@
 /** 
- * src/services/api.js
+ * src/services/Reservation.js
  * Modify config file to use mock/actual data
  */
 
 // TODO: Add accountID to reserve
-import config from '../config/config';
+import config from '@root/config/config';
 import dayjs from 'dayjs';
 
 
