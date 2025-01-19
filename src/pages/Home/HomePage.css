@@ -1,0 +1,46 @@
+.homepage {
+  text-align: center;
+  padding: 50px;
+}
+
+.homepage-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.blurred-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/images/people-repairing-computer-chips.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(30px);
+  z-index: 0;
+}
+
+.homepage-content {
+  margin-left: 10%;
+  margin-top: 10%;
+  position: fixed;
+  z-index: 1;
+  color: #fff;
+}
+
+.Slogan_heading {
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 605;
+  line-height: 95%;
+  letter-spacing: -.04em;
+  margin: 0;
+  padding: 0;
+  text-wrap: balance;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.flex {
+  width: 50vw;
+}

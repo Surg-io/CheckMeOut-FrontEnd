@@ -1,0 +1,8 @@
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Adjusts spacing between icon and text */
+    width: 24px; /* Set a fixed width for icon containers */
+    height: 24px; /* Set a fixed height for icon containers */
+}

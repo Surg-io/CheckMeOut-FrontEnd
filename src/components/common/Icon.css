@@ -1,0 +1,22 @@
+.logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-image {
+    height: 40px;
+    width: auto;
+  }
+  
+.brand-name {
+    display: flex;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.7rem;
+    margin-left: 10px;
+  }
+
+.icon-container {
+    min-width: 300px; /*TODO: Change this*/
+  }
