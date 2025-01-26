@@ -1,38 +1,48 @@
 // This is the main entry point of the application
 // TODO: Add conditional branches for authentication
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import { UserProvider, useUser } from "@root/context/UserContext";
 // Pages
-import HomePage from "./pages/Home/HomePage";
-import Auth from "./pages/Auth/Auth";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import HomePage from "@root/pages/Home/HomePage";
+import Auth from "@root/pages/Auth/Auth";
+import Dashboard from "@root/pages/Dashboard/Dashboard";
 
-// Mock authentication check (replace with real auth logic)
-const isAuthenticated = false; // Replace with actual authentication logic
+// ProtectedRoute component
+const ProtectedRoute = ({ children }) => {
+  const { userId } = useUser(); // Access user authentication state
+  return userId ? children : <Navigate to="/auth" replace />;
+};
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Redirect logged-in users to the dashboard if they try to access the home page */}
-        <Route 
-          path="/" 
-          element={isAuthenticated ? <Navigate to="/dashboard" /> : <HomePage />} 
-        />
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Redirect logged-in users to the dashboard if they try to access the home page */}
+          <Route 
+            path="/" 
+            element={
+              <HomePage />
+            } 
+          />
 
-        {/* Auth page route */}
-        <Route path="/auth" element={<Auth />} />
+          {/* Auth page route */}
+          <Route path="/auth" element={<Auth />} />
 
-        {/* Dashboard route, only accessible if authenticated */}
-        <Route 
-          path="/dashboard" 
-          element={isAuthenticated ? <Dashboard /> : <Navigate to="/auth" />} 
-        />
-      </Routes>
-    </BrowserRouter>
+          {/* Dashboard route, only accessible if authenticated */}
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 };
 
 export default App;
-

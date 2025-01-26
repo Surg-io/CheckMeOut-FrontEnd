@@ -191,7 +191,14 @@ const RegisterForm = ({ onFinish }) => {
         </Col>
         <Col span={1}></Col>
         <Col span={5}>
-          <Button type="default">Get Code</Button>
+          <Button
+            type="default"
+            style={{
+              width: '100%'
+            }}
+          >
+            Get Code
+          </Button>
         </Col>
       </Row>
       <Form.Item>

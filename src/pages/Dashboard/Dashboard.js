@@ -9,7 +9,6 @@ const Dashboard = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [selectedKey, setSelectedKey] = useState(null);
-
     // Update window dimensions on resize
     useEffect(() => {
         const handleResize = () => {
@@ -22,6 +21,7 @@ const Dashboard = () => {
         // Cleanup listener on component unmount
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
 
     const sider = <DashboardSider onSelectKey={setSelectedKey}/>;
     const dashboardMenu = <DashboardMenu hasNotification={true} screenWidth={windowWidth} screenHeight={windowHeight}/>;

@@ -6,8 +6,6 @@ import React from 'react';
 import { Layout } from 'antd';
 import { Footer, Header, Icon } from '@root/components';
 
-import './MainLayout.css';
-
 const { Content } = Layout;
 
 const MainLayout = ({ menuComponent, content}) => (

@@ -15,10 +15,9 @@ import config from '@root/config/config';
  */
 const handleRegistration = async (value) => {
     try {
-        console.log(value);
         let response;
         let url;
-        if (config.useMockData){ // Send the selected date to the backend
+        if (config.useMockData){
             url = `${config.mockURL}`;
         } else {
             url = `${config.apiBaseUrl}`;
@@ -31,7 +30,6 @@ const handleRegistration = async (value) => {
             Major: value.major,
             DOB: value.birthday,
         };
-        console.log(payload);
         response = await fetch(`${url}/registration`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -50,4 +48,53 @@ const handleRegistration = async (value) => {
     }
 }
 
-export {handleRegistration};
+/**
+ * Request account login
+ * @async
+ * @function handleLogin
+ * @param {Object} value - Form info
+ * @returns {Promise<Object>} A promise that resolves to the account ID.
+ * @throws {Error} Throws an error if the API request fails or the response is not `ok`.
+ */
+const handleLogin = async (values) => {
+    let url;
+    if (config.useMockData) {
+        url = `${config.mockURL}`;
+    } else {
+        url = `${config.apiBaseUrl}`;
+    }
+
+    try {
+        const response = await fetch(`${url}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values),
+        });
+
+        // Check if response is ok
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({
+                message: 'Failed to parse error response',
+            }));
+            throw new Error(errorData.message || 'Login failed');
+        }
+
+        // Parse response body
+        const data = await response.json().catch(() => {
+            throw new Error('Failed to parse response');
+        });
+
+        // Validate success field in the data
+        if (data.success) {
+            return data; // Return the success data
+        } else {
+            throw new Error(data.message || 'Internal error');
+        }
+    } catch (error) {
+        console.error('Login error:', error.message);
+        return null; // Return null on any error
+    }
+};
+
+
+export { handleRegistration, handleLogin};
