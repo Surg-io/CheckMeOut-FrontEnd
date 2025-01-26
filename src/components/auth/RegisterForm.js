@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Row, Col, Select } from 'antd';
 import { DateOfBirthInput } from '@root/components';
 import majors from '@root/config/majorList';
-
+import {
+  validatePasswordMatch,
+  sanitizeEmail,
+  sanitizeMajor,
+  sanitizeVerificationCode,
+  sanitizeName,
+  sanitizePassword
+} from '@root/utils/sanitizers';
 const { Option } = Select;
 
 
@@ -76,6 +83,7 @@ const RegisterForm = ({ onFinish }) => {
                 message: 'Please enter your first name',
               },
             ]}
+            normalize={(value) => sanitizeName(value)}
           >
             <Input placeholder="First Name" />
           </Form.Item>
@@ -89,6 +97,7 @@ const RegisterForm = ({ onFinish }) => {
                 message: 'Please enter your last name',
               },
             ]}
+            normalize={(value) => sanitizeName(value)}
           >
             <Input placeholder="Last Name" />
           </Form.Item>
@@ -107,6 +116,7 @@ const RegisterForm = ({ onFinish }) => {
           required: true,
           message: 'Please select your major'
         }]}
+        normalize={(value) => sanitizeMajor(value,majors)}
       >
         <Select
           placeholder="Choose a major"
@@ -134,6 +144,7 @@ const RegisterForm = ({ onFinish }) => {
             message: 'Please enter a valid email address',
           },
         ]}
+        normalize={(value) => sanitizeEmail(value)}
       >
         <Input placeholder="Email" />
       </Form.Item>
@@ -153,11 +164,13 @@ const RegisterForm = ({ onFinish }) => {
             message: 'Password must include both letters and numbers',
           },
         ]}
+        normalize={(value) => sanitizePassword(value)}
       >
         <Input type="password" placeholder="Password" />
       </Form.Item>
       <Form.Item
-        name="confirmation"
+        name="confirm"
+        dependencies={['password']}
         rules={[
           {
             required: true,
@@ -165,13 +178,17 @@ const RegisterForm = ({ onFinish }) => {
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (validatePasswordMatch(
+                getFieldValue('confirm'), 
+                value
+              )) {
                 return Promise.resolve();
               }
               return Promise.reject(new Error('Passwords do not match!'));
             },
           }),
         ]}
+        normalize={(value) => sanitizePassword(value)}
       >
         <Input type="password" placeholder="Confirm password" />
       </Form.Item>
@@ -185,6 +202,7 @@ const RegisterForm = ({ onFinish }) => {
                 message: 'Please check your email and enter verification code',
               },
             ]}
+            normalize={(value) => sanitizeVerificationCode(value)}
           >
             <Input placeholder="Verification code" />
           </Form.Item>

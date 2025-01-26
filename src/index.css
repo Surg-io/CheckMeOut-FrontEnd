@@ -1,6 +1,11 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    font-weight: 400;
     margin: 0;
     padding: 0;
+}
+
+
+h1, h2, h3, .bold-text {
+    font-weight: 700;
 }

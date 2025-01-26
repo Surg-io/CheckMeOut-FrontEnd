@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Badge, Avatar, Modal, QRCode, Row, Button } from 'antd';
+import { Badge, Modal, QRCode, Row, Button } from 'antd';
 import { NotificationOutlined, QrcodeOutlined, SettingOutlined } from '@ant-design/icons';
 
 const DashboardMenu = ({ hasNotification, screenWidth, screenHeight }) => {
@@ -36,9 +36,6 @@ const DashboardMenu = ({ hasNotification, screenWidth, screenHeight }) => {
                 </span>
                 <span onClick={showModal} style={{ cursor: 'pointer' }}>
                     <QrcodeOutlined />
-                </span>
-                <span>
-                    <Avatar />
                 </span>
                 <Modal
                     title="QR Code"

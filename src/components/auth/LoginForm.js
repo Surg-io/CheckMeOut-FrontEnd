@@ -5,11 +5,12 @@ import React, { useState } from 'react';
 import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Flex, Button, Form, Input, Checkbox } from 'antd';
 import { useUser } from '@root/context/UserContext';
-
+import { sanitizeEmail, sanitizePassword } from '@root/utils/sanitizers';
 const LoginForm = ( {onFinish,} ) => {
   const { setUserId, setUserName } = useUser();
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+
 
   const onFinishLoginSetContext = async (values) => {
     setLoading(true);
@@ -51,6 +52,7 @@ const LoginForm = ( {onFinish,} ) => {
             message: 'Please enter your email',
           },
         ]}
+        normalize={(value) => sanitizeEmail(value)}
       >
         <Input
           prefix={<UserOutlined />}
@@ -65,6 +67,7 @@ const LoginForm = ( {onFinish,} ) => {
             message: 'Please enter your password',
           },
         ]}
+        normalize={(value) => sanitizePassword(value)}
       >
         <Input.Password
           prefix={<LockOutlined />}
