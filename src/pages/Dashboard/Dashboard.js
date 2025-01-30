@@ -1,14 +1,17 @@
 // src/pages/Dashboard/Dashboard.js
 // TODO: hasNotification
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { DashboardLayout } from "@root/layouts";
-import { DashboardSider, DashboardMenu, CombinedReservationMaker } from '@root/components';
+import { DashboardSider, DashboardMenu, CombinedReservationMaker, History } from '@root/components';
 import { Card } from 'antd';
 
 const Dashboard = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-    const [selectedKey, setSelectedKey] = useState(null);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [selectedKey, setSelectedKey] = useState(searchParams.get('tab') || 'summary');
+    
     // Update window dimensions on resize
     useEffect(() => {
         const handleResize = () => {
@@ -22,18 +25,36 @@ const Dashboard = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        setSearchParams({tab: selectedKey});
+    },[selectedKey,searchParams]);
 
-    const sider = <DashboardSider onSelectKey={setSelectedKey}/>;
+
+    const sider = <DashboardSider onSelectKey={setSelectedKey} selectedKey={selectedKey}/>;
     const dashboardMenu = <DashboardMenu hasNotification={true} screenWidth={windowWidth} screenHeight={windowHeight}/>;
     
     const renderContent = () => {
         switch (selectedKey) {
-        case '1':
+        case 'summary':
             return <Card />;
-        case '2':
+        case 'reservation':
             return <CombinedReservationMaker />;
-        case '3':
-            return <div>History</div>;
+        case 'history':
+            return <History />;
+        case 'space':
+            return <Card />;
+        case 'equipment':
+            return <Card />;
+        case 'guides':
+            return <Card />;
+        case 'courses':
+            return <Card />;
+        case 'teams':
+            return <Card />;
+        case 'report':
+            return <Card />;
+        case 'contact':
+            return <Card />;
         default:
             return <Card />;
         }

@@ -21,50 +21,50 @@ const getLevelKeys = (items1) => {
   return key;
 };
 
-const DashboardSider = ({ onSelectKey }) => {
+const DashboardSider = ({ onSelectKey, selectedKey }) => {
   const [stateOpenKeys, setStateOpenKeys] = useState(['2', '23']);
   const items = [
     {
-      key: '1',
+      key: 'summary',
       label: 'Summary',
       icon: <DashboardOutlined className='icon'/>,
     },
     {
-      key: '2',
+      key: 'reservation',
       label:  'Reservation',
       icon: <CalendarOutlined className='icon'/>,
     },
     {
-      key: '3',
+      key: 'history',
       label:  'History',
       icon: <HistoryOutlined className='icon'/>,
     },
     {
-      key: 'sub2',
+      key: 'status',
       label: 'Status',
       icon: <FundViewOutlined className='icon'/>,
       children: [
         {
-          key: '4',
+          key: 'space',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Space</span>,
         },
         {
-          key: '5',
+          key: 'equipment',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Equipment</span>,
         },
       ],
     },
     {
-      key: 'sub3',
+      key: 'resources',
       label: 'Resources',
       icon: <ReadOutlined className='icon'/>,
       children: [
         {
-          key: '6',
+          key: 'guides',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Guides</span>,
         },
         {
-          key: '7',
+          key: 'courses',
           label:  <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
         },
       ],
@@ -73,17 +73,17 @@ const DashboardSider = ({ onSelectKey }) => {
       type: 'divider',
     },
     {
-      key: '8',
+      key: 'teams',
       label: 'Teams',
       icon: <SmileOutlined className='icon'/>,
     },
     {
-      key: '9',
+      key: 'report',
       label: 'Report',
       icon: <ExclamationCircleOutlined className='icon'/>,
     },
     {
-      key: '10',
+      key: 'contact',
       label: 'Contact',
       icon: <PhoneOutlined className='icon'/>,
     },
@@ -116,6 +116,7 @@ const DashboardSider = ({ onSelectKey }) => {
       mode="inline"
       openKeys={stateOpenKeys}
       onOpenChange={onOpenChange}
+      selectedKeys={[selectedKey]}
       style={{
         width: '100%',
         minHeight: '40px'

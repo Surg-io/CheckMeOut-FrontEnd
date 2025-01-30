@@ -2,9 +2,8 @@
  * src/services/Authentication.js
  * Modify config file to use mock/actual data
  */
-
-import config from '@root/config/config';
-
+import { getUrl } from "@root/utils/GetUrl";
+import { fetchWithAuth } from "@root/utils/Token";
 /**
  * Request account registration
  * @async
@@ -15,13 +14,7 @@ import config from '@root/config/config';
  */
 const handleRegistration = async (value) => {
     try {
-        let response;
-        let url;
-        if (config.useMockData){
-            url = `${config.mockURL}`;
-        } else {
-            url = `${config.apiBaseUrl}`;
-        }
+        const url = getUrl();
         const payload = {
             LN: value.lastName,
             FN: value.firstName,
@@ -30,21 +23,26 @@ const handleRegistration = async (value) => {
             Major: value.major,
             DOB: value.birthday,
         };
-        response = await fetch(`${url}/registration`, {
+
+        const response = await fetch(`${url}/registration`, {
             headers: {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
             body: JSON.stringify(payload),
         });
-        if (response.ok) { // Handle the server response
-            const data = await response.json();
-            return data;
-        } else {
+
+        if (!response.ok) {
             const errorText = await response.text();
+            throw new Error(errorText || 'Registration failed.')
+        } else {
+            
         }
-    } catch (error) { // Log the error and propagate it to the caller
-        console.error('An error occurred:', error);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Registration error:', error);
+        throw error; //
     }
 }
 
@@ -57,21 +55,15 @@ const handleRegistration = async (value) => {
  * @throws {Error} Throws an error if the API request fails or the response is not `ok`.
  */
 const handleLogin = async (values) => {
-    let url;
-    if (config.useMockData) {
-        url = `${config.mockURL}`;
-    } else {
-        url = `${config.apiBaseUrl}`;
-    }
-
+    const url = getUrl();
     try {
         const response = await fetch(`${url}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(values),
+            credentials: 'include',
         });
 
-        // Check if response is ok
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({
                 message: 'Failed to parse error response',
@@ -79,22 +71,17 @@ const handleLogin = async (values) => {
             throw new Error(errorData.message || 'Login failed');
         }
 
-        // Parse response body
-        const data = await response.json().catch(() => {
-            throw new Error('Failed to parse response');
-        });
+        const data = await response.json();
 
-        // Validate success field in the data
-        if (data.success) {
-            return data; // Return the success data
-        } else {
+        if (!data.success) {
             throw new Error(data.message || 'Internal error');
         }
+
+        return data;
     } catch (error) {
         console.error('Login error:', error.message);
-        return null; // Return null on any error
+        throw error;
     }
 };
-
 
 export { handleRegistration, handleLogin};

@@ -130,7 +130,7 @@ const CombinedReservationMaker = () => {
                     </Row>
                 </div>
                 <div>
-                    <Divider orientation='left'>Select Time</Divider>
+                    <Divider>Select Time</Divider>
                     <ScheduleDisplay 
                         response={scheduleData}
                         pendingSlots={pendingSlots}

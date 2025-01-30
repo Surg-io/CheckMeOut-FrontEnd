@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Flex, Button, Form, Input, Checkbox } from 'antd';
 import { useUser } from '@root/context/UserContext';
-import { sanitizeEmail, sanitizePassword } from '@root/utils/sanitizers';
+import { sanitizeEmail, sanitizePassword } from '@root/utils/Sanitizers';
 const LoginForm = ( {onFinish,} ) => {
   const { setUserId, setUserName } = useUser();
   const [errorMessage, setErrorMessage] = useState(null);

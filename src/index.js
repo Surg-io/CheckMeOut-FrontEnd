@@ -1,10 +1,13 @@
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from '@root/App';
+import reportWebVitals from '@root/reportWebVitals';
+import '@root/index.css';
+import { Buffer } from 'buffer';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
-import './index.css';
+global.Buffer = Buffer;
 root.render(
   <React.StrictMode>
     <App />

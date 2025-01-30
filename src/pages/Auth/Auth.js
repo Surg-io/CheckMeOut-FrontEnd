@@ -7,9 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { Menu, notification } from 'antd';
 import { AuthLayout } from '@root/layouts';
 import { LoginForm, RegisterForm } from '@root/components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams  } from 'react-router-dom';
 import { handleRegistration, handleLogin } from '@root/services/Authentication'
-import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
 
@@ -29,9 +28,17 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
   const location = useLocation();
-  const initialForm = location.state?.form === 'login' ? 'login' : 'signup';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialForm = searchParams.get('tab') || (location.state?.form === 'login' ? 'login' : 'signup');
   const [isLogin, setIsLogin] = useState(initialForm === 'login');
 
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab === 'login' || tab === 'signup') {
+        setIsLogin(tab === 'login');
+    }
+  }, [searchParams]);
+  
   const handleMenuClick = (e) => {
     setIsLogin(e.key === "2");
   };

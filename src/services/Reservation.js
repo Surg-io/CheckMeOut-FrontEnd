@@ -4,7 +4,8 @@
  */
 
 // TODO: Add accountID to reserve
-import config from '@root/config/config';
+import { getUrl } from "@root/utils/GetUrl";
+import { fetchWithAuth } from "@root/utils/Token";
 import dayjs from 'dayjs';
 
 
@@ -18,14 +19,8 @@ import dayjs from 'dayjs';
  */
 const handleFetchSchedule = async (value) => {
     try {
-        let response;
-        let url;
-        if (config.useMockData){ // Send the selected date to the backend
-            url = `${config.mockURL}`;
-        } else {
-            url = `${config.apiBaseUrl}`;
-        }
-        response = await fetch(`${url}/searchdate`, {
+        const url = getUrl();
+        const response = await fetchWithAuth(`${url}/searchdate`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -59,14 +54,7 @@ const handleFetchSchedule = async (value) => {
  */
 const handleSubmitReservation = async (pendingSlots) => {
     try {
-        // Define the payload for the API
-        let response;
-        let url;
-        if (config.useMockData){ // Send the selected date to the backend
-            url = `${config.mockURL}`;
-        } else {
-            url = `${config.apiBaseUrl}`;
-        }
+        const url = getUrl();
         const payload = {
             accountID: 1,
             reservations: pendingSlots.map(({ deviceId, device, time }) => ({
@@ -76,7 +64,7 @@ const handleSubmitReservation = async (pendingSlots) => {
             })),
         };
         // Send the reservation data to the API
-        response = await fetch(`${url}/reserve`, {
+        const response = await fetchWithAuth(`${url}/reserve`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

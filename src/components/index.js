@@ -33,3 +33,8 @@ export { default as DashboardSider } from '@root/components/dashboard/DashboardS
 export { default as CombinedReservationMaker } from '@root/components/dashboard/reservation/CombinedReservationMaker'
 export { default as LimitedDatePicker } from '@root/components/dashboard/reservation/LimitedDatePicker'
 export { default as ScheduleDisplay } from '@root/components/dashboard/reservation/ScheduleDisplay'
+
+/*
+    |___History.js
+*/
+export { default as History } from '@root/components/dashboard/History'

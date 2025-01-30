@@ -9,7 +9,7 @@ import {
   sanitizeVerificationCode,
   sanitizeName,
   sanitizePassword
-} from '@root/utils/sanitizers';
+} from '@root/utils/Sanitizers';
 const { Option } = Select;
 
 
