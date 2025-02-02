@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
-import { Badge, Modal, QRCode, Row, Button } from 'antd';
+import { Badge, Modal, QRCode, Row, Button, Drawer } from 'antd';
 import { NotificationOutlined, QrcodeOutlined, SettingOutlined } from '@ant-design/icons';
-
-const DashboardMenu = ({ hasNotification, screenWidth, screenHeight }) => {
+import { useUser} from '@root/context/UserContext'
+import { useNavigate } from 'react-router-dom';
+const DashboardMenu = ({
+    hasNotification,
+    screenWidth,
+    screenHeight
+    }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [qrtext] = useState('This QR code is for testing.');
+    const [isSettingOpen, setIsSettingOpen] = useState(false);
+    const {logout} = useUser();
+    const navigate = useNavigate();
+
+    const showSettings = () => {
+        setIsSettingOpen(true);
+    };
+    
+    const closeSettings = () => {
+        setIsSettingOpen(false);
+    };
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -15,6 +31,13 @@ const DashboardMenu = ({ hasNotification, screenWidth, screenHeight }) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    const handlleLogout = () => {
+        logout();
+        navigate('/auth');
+        closeSettings();
+    }
+
     const modalSize = Math.min(screenWidth,screenHeight);
     return (
         <Row
@@ -27,7 +50,9 @@ const DashboardMenu = ({ hasNotification, screenWidth, screenHeight }) => {
             {/* Wrapper div for fixed gap */}
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                 <span>
-                    <SettingOutlined />
+                    <SettingOutlined
+                        onClick={showSettings}
+                    />
                 </span>
                 <span>
                     <Badge dot={hasNotification}>
@@ -54,6 +79,23 @@ const DashboardMenu = ({ hasNotification, screenWidth, screenHeight }) => {
                         errorLevel='Q'
                     />
                 </Modal>
+                <Drawer
+                    title='Settings'
+                    placement='right'
+                    onClose={closeSettings}
+                    open={isSettingOpen}
+                >
+                    <Button
+                        type='primary'
+                        danger
+                        onClick={handlleLogout}
+                        style={{
+                            width:'100%'
+                        }}
+                    >
+                        Log out
+                    </Button>
+                </Drawer>
             </div>
         </Row>
     );
