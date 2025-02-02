@@ -9,7 +9,7 @@ import { Footer, Header, Icon } from '@root/components';
 const { Content } = Layout;
 
 const MainLayout = ({ menuComponent, content}) => (
-  <Layout>
+  <Layout style={{height: '100%'}}>
     <Header>
       <Icon size={1} clickable={true}/>
       {menuComponent} {/* Render the menuitem inside the page header*/}

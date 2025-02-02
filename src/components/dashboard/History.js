@@ -1,6 +1,6 @@
 import { Typography, List, DatePicker } from "antd";
 import { useState } from 'react';
-
+const { RangePicker } = DatePicker;
 const { Title, Paragraph} = Typography;
 const History = ({})=>{
     const [data, setData] = useState([]);
@@ -8,7 +8,7 @@ const History = ({})=>{
         <Typography>
             <Title level={1}>History</Title>
             <div>
-                
+                <RangePicker />
             </div>
         </Typography>
     );

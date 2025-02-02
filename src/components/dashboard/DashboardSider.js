@@ -119,7 +119,8 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
       selectedKeys={[selectedKey]}
       style={{
         width: '100%',
-        minHeight: '40px'
+        minHeight: '40px',
+        height: '100%'
       }}
       items={items}
       onSelect={({ key }) => { if (onSelectKey) { onSelectKey(key); } }}
