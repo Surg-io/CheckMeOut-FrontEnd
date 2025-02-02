@@ -21,11 +21,11 @@ const AppRoutes = () => {
     <Routes>
       <Route 
         path="/" 
-        element={userId ? <Navigate to="/dashboard" replace /> : <HomePage />} 
+        element={<HomePage />}
       />
       <Route 
         path="/auth"
-        element={<Auth />}
+        element={userId ? <Navigate to="/dashboard" replace /> : <Auth />} 
       />
       <Route 
         path="/dashboard" 
