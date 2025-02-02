@@ -57,11 +57,10 @@ const handleRegistration = async (value) => {
 const handleLogin = async (values) => {
     const url = getUrl();
     try {
-        const response = await fetch(`${url}/login`, {
+        const response = await fetchWithAuth(`${url}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(values),
-            credentials: 'include',
         });
 
         if (!response.ok) {

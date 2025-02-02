@@ -7,7 +7,7 @@ import { Flex, Button, Form, Input, Checkbox } from 'antd';
 import { useUser } from '@root/context/UserContext';
 import { sanitizeEmail, sanitizePassword } from '@root/utils/Sanitizers';
 const LoginForm = ( {onFinish,} ) => {
-  const { setUserId, setUserName } = useUser();
+  const {login} = useUser();
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -18,8 +18,7 @@ const LoginForm = ( {onFinish,} ) => {
     try {
       const userData = await onFinish(values); // Call the login API
       if (userData) {
-        setUserId(userData.userId);
-        setUserName(userData.userName);
+        login(userData.userId, userData.userName)
       } else {
         setErrorMessage('Invalid email or password'); // Set error message
       }
@@ -85,7 +84,7 @@ const LoginForm = ( {onFinish,} ) => {
       </Form.Item>
 
       <Form.Item>
-        <Button block type="primary" htmlType="submit">
+        <Button block type="primary" htmlType="submit" loading={loading}>
           Log in
         </Button>
       </Form.Item>

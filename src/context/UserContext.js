@@ -1,14 +1,43 @@
 // src/context/UserContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [userId, setUserId] = useState(null);
-    const [userName, setUserName] = useState('');
+
+    const [userId, setUserId] = useState(() => {
+        return localStorage.getItem('userId') || null;
+    });
+    const [userName, setUserName] = useState(() => {
+        return localStorage.getItem('userName') || '';
+    });
+    useEffect(() => {
+        if(userId){
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('userName', userName);
+        } else {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userName');
+        }
+    },[userId,userName]);
+
+    const login = (id, name) => {
+        setUserId(id);
+        setUserName(name);
+    }
+
+    const logout = () => {
+        setUserId(null);
+        setUserName('');
+    }
 
     return (
-        <UserContext.Provider value={{ userId, setUserId, userName, setUserName }}>
+        <UserContext.Provider value={{
+            userId,
+            userName,
+            login,
+            logout
+        }}>
             {children}
         </UserContext.Provider>
     );
