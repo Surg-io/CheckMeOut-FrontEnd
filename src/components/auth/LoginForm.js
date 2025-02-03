@@ -3,10 +3,33 @@
 import React, { useState } from 'react';
 import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Flex, Button, Form, Input, Checkbox } from 'antd';
+import { useUser } from '@root/context/UserContext';
 import { sanitizeEmail, sanitizePassword } from '@root/utils/Sanitizers';
-
-const LoginForm = ( {onFinish} ) => {
+const LoginForm = ( {onFinish,} ) => {
+  const {login} = useUser();
+  const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+
+
+  const onFinishLoginSetContext = async (values) => {
+    setLoading(true);
+    setErrorMessage(null); // Clear any existing error message
+    try {
+      const userData = await onFinish(values); // Call the login API
+      if (userData) {
+        login(userData.userId, userData.userName)
+      } else {
+        setErrorMessage('Invalid email or password'); // Set error message
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
+      console.error('Login error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <Form
       name="login"
@@ -17,7 +40,7 @@ const LoginForm = ( {onFinish} ) => {
         maxWidth: '50vw',
         width: '50vw'
       }}
-      onFinish={onFinish}
+      onFinish={onFinishLoginSetContext}
     >
       <Form.Item
         name="Email"

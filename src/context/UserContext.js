@@ -1,45 +1,42 @@
 // src/context/UserContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
 
 const UserContext = createContext();
-let isRefreshing = false;
 
 export const UserProvider = ({ children }) => {
-    const [token, setToken] = useState(() => localStorage.getItem('token'));
-    const [expiresAt, setExpiresAt] = useState(() => 
-        parseInt(localStorage.getItem('expiresAt'), 10) || null
-    );
 
-    const 
+    const [userId, setUserId] = useState(() => {
+        return localStorage.getItem('userId') || null;
+    });
+    const [userName, setUserName] = useState(() => {
+        return localStorage.getItem('userName') || '';
+    });
     useEffect(() => {
-        const storedToken = localStorage.getItem('token');
-        if (storedToken) {
-            try {
-                jwtDecode(storedToken);
-                setToken(storedToken);
-            } catch (error) {
-                console.error('Invalid token:', error);
-                logout();
-            }
+        if(userId){
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('userName', userName);
+        } else {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userName');
         }
-    }, []);
+    },[userId,userName]);
 
-    const login = (newToken) => {
-        localStorage.setItem('token', newToken);
-        setToken(newToken);
-    };
+    const login = (id, name) => {
+        setUserId(id);
+        setUserName(name);
+    }
 
     const logout = () => {
-        localStorage.removeItem('token');
-        setToken(null);
-    };
+        setUserId(null);
+        setUserName('');
+    }
 
     return (
         <UserContext.Provider value={{
-            token,
+            userId,
+            userName,
             login,
-            logout,
+            logout
         }}>
             {children}
         </UserContext.Provider>

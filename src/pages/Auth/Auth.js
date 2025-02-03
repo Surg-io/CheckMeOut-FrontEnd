@@ -1,15 +1,22 @@
 // src/pages/Auth/Auth.js
+// This page is the auth page
+// It can switch between login and sign up without redirecting
+// It can verify form submission
+
 import React, { useState, useEffect } from 'react';
 import { Menu, notification } from 'antd';
 import { AuthLayout } from '@root/layouts';
 import { LoginForm, RegisterForm } from '@root/components';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { handleRegistration, handleLogin } from '@root/services/Authentication';
-import { useUser } from '@root/context/UserContext';
+import { useLocation, useNavigate, useSearchParams  } from 'react-router-dom';
+import { handleRegistration, handleLogin } from '@root/services/Authentication'
 import './Auth.css';
 
-const Context = React.createContext({ name: 'Default' });
 
+const Context = React.createContext({
+    name: 'Default',
+});
+
+// Switch the order so "Sign Up" is first
 const labels = ["Sign Up", "Login"];
 const items = labels.map((label, index) => ({ 
   key: index + 1,
@@ -21,54 +28,42 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
   const location = useLocation();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const initialForm = searchParams.get('tab') || (location.state?.form === 'login' ? 'login' : 'signup');
   const [isLogin, setIsLogin] = useState(initialForm === 'login');
-  const { login } = useUser();
 
   useEffect(() => {
     const tab = searchParams.get('tab');
     if (tab === 'login' || tab === 'signup') {
-      setIsLogin(tab === 'login');
+        setIsLogin(tab === 'login');
     }
   }, [searchParams]);
-
+  
   const handleMenuClick = (e) => {
     setIsLogin(e.key === "2");
   };
 
-  const showNotification = (type, message, description) => {
-    api[type]({
-      message,
-      description,
+  const openNotification = (status, description) => {
+    api.info({
+      message: `Authentication ${status}`,
+      description: `${description}`,
       placement: 'bottomLeft',
     });
   };
 
   const handleLoginWithNotification = async (values) => {
     setLoading(true);
-    try {
-      const userData = await handleLogin(values);
-      showNotification(
-        'success',
-        'Login Successful',
-        'You have logged in successfully. Redirecting...'
-      );
-    
-      setTimeout(() => {
-        login(userData.token);
-        navigate('/dashboard');
-      }, 1500);
-      
-    } catch (error) {
-      showNotification(
-        'error',
-        'Login Failed',
-        error.message || 'Please check your credentials and try again.'
-      );
-    } finally {
-      setLoading(false);
+    const userData = await handleLogin(values);
+    if (!userData) {
+        openNotification('Failed', 'Please try again.');
+    } else {
+        openNotification('Success', 'You have logged in successfully. Redirecting...');
+        setTimeout(() => {
+            navigate('/dashboard');
+        }, 1500);
     }
+    setLoading(false);
+    return userData;
   };
 
   const menu = (
@@ -82,18 +77,18 @@ const Auth = () => {
   );
 
   const children = isLogin ? (
-    <LoginForm onFinish={handleLoginWithNotification} loading={loading} />
+    <LoginForm onFinish={handleLoginWithNotification} />
   ) : (
     <RegisterForm onFinish={handleRegistration} />
   );
 
   return (
-    <>
+    <Context.Provider value={null}>
       {contextHolder}
       <div id="auth">
         <AuthLayout menuComponent={menu} formComponent={children} />
       </div>
-    </>
+    </Context.Provider>
   );
 };
 
