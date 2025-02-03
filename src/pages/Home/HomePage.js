@@ -13,7 +13,7 @@ import './HomePage.css'
 const HomePage = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const { userId } = useUser();
+  const { token } = useUser();
   const navigate = useNavigate();
 
   // Update window dimensions on resize
@@ -38,12 +38,25 @@ const HomePage = () => {
   };
 
   const handleReserveNow = () => {
-    if (userId) {
-      navigate('/dashboard');
-    } else {
+    const token = localStorage.getItem('token');
+    if (!token) {
       navigate('/auth');
+      return;
     }
-  }
+    const parsedToken = parseJwt(token);
+    if (!parsedToken) {
+      localStorage.removeItem('token');
+      navigate('/auth');
+      return;
+    }
+    const currentTime = Date.now() / 1000;
+    if (parsedToken.exp < currentTime) {
+      localStorage.removeItem('token');
+      navigate('/auth');
+    } else {
+      navigate('/dashboard');
+    }
+  };
 
   const menuComponent = <HomeMenu onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>;
   const content = (

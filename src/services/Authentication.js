@@ -1,60 +1,60 @@
-/** 
- * src/services/Authentication.js
- * Modify config file to use mock/actual data
- */
-import { getUrl } from "@root/utils/GetUrl";
-import { fetchWithAuth } from "@root/utils/Token";
 /**
- * Request account registration
+ * src/services/Authentication.js
+ * Service for handling authentication-related API requests (registration and login).
+ * Uses utility functions for consistent request handling, timeout, and error management.
+ */
+import { getUrl, fetchWithAuth, checkResponseStatus, parseJsonResponse } from "@root/utils/ApiUtils";
+
+/**
+ * Handles user registration by sending a POST request to the registration endpoint.
  * @async
  * @function handleRegistration
- * @param {Object} value - Form info
- * @returns {Promise<Object>} A promise that resolves to the account ID.
- * @throws {Error} Throws an error if the API request fails or the response is not `ok`.
+ * @param {Object} value - Form data containing user registration details.
+ * @returns {Promise<Object>} A promise that resolves to the registration response data.
+ * @throws {Error} Throws an error if the API request fails or the response is not successful.
  */
 const handleRegistration = async (value) => {
-    try {
-        const url = getUrl();
-        const payload = {
-            LN: value.lastName,
-            FN: value.firstName,
-            Email: value.Email,
-            Password: value.password,
-            Major: value.major,
-            DOB: value.birthday,
-        };
+    const url = getUrl();
+    const payload = {
+        LN: value.lastName,
+        FN: value.firstName,
+        Email: value.email,
+        Password: value.password,
+        Major: value.major,
+        DOB: value.birthday,
+    };
 
-        const response = await fetch(`${url}/registration`, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
+    try {
+        const response = await fetchWithAuth(`${url}/registration`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(errorText || 'Registration failed.')
-        } else {
-            
-        }
-        const data = await response.json();
+        // Check if the response status is OK
+        checkResponseStatus(response);
+
+        // Parse the JSON response
+        const data = await parseJsonResponse(response);
         return data;
     } catch (error) {
-        console.error('Registration error:', error);
-        throw error; //
+        console.error('Registration error:', error.message);
+        throw new Error(error.message || 'Registration failed. Please try again.');
     }
-}
+};
 
 /**
- * Request account login
+ * Handles user login by sending a POST request to the login endpoint.
  * @async
  * @function handleLogin
- * @param {Object} value - Form info
- * @returns {Promise<Object>} A promise that resolves to the account ID.
- * @throws {Error} Throws an error if the API request fails or the response is not `ok`.
+ * @param {Object} values - Form data containing login credentials (username and password).
+ * @returns {Promise<Object>} A promise that resolves to the login response data.
+ * @throws {Error} Throws an error if the API request fails, the response is not successful, or input is invalid.
  */
 const handleLogin = async (values) => {
+    if (!values || !values.Email || !values.password) {
+        throw new Error('Invalid input: username and password are required.');
+    }
     const url = getUrl();
     try {
         const response = await fetchWithAuth(`${url}/login`, {
@@ -63,24 +63,20 @@ const handleLogin = async (values) => {
             body: JSON.stringify(values),
         });
 
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({
-                message: 'Failed to parse error response',
-            }));
-            throw new Error(errorData.message || 'Login failed');
-        }
-
-        const data = await response.json();
-
+        // Check if the response status is OK
+        checkResponseStatus(response);
+        // Parse the JSON response
+        const data = await parseJsonResponse(response);
+        // Check if the login was successful based on the response data
         if (!data.success) {
-            throw new Error(data.message || 'Internal error');
+            throw new Error(data.message || 'Login failed due to an internal error.');
         }
-
+        
         return data;
     } catch (error) {
         console.error('Login error:', error.message);
-        throw error;
+        throw new Error(error.message || 'Login failed. Please check your credentials and try again.');
     }
 };
 
-export { handleRegistration, handleLogin};
+export { handleRegistration, handleLogin };
