@@ -22,7 +22,7 @@ const CombinedReservationMaker = () => {
         api.info({
             message: `Reservation ${status}`,
             description: `${description}`,
-            placement: 'bottomLeft'
+            placement: 'bottomLeft',
         })
     }
 

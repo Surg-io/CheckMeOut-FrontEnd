@@ -10,13 +10,14 @@ import Dashboard from "@root/pages/Dashboard/Dashboard";
 
 // ProtectedRoute
 const ProtectedRoute = ({ children }) => {
-  const { userId } = useUser();
-  return userId ? children : <Navigate to="/auth" replace />;
+  const { token } = useUser();
+  if (token === undefined) return null;
+  return token ? children : <Navigate to="/auth" replace />;
 };
 
 
 const AppRoutes = () => {
-  const { userId } = useUser();
+  const { token } = useUser();
 
   return (
     <Routes>
@@ -26,7 +27,7 @@ const AppRoutes = () => {
       />
       <Route 
         path="/auth"
-        element={userId ? <Navigate to="/dashboard" replace /> : <Auth />} 
+        element={token ? <Navigate to="/dashboard" replace /> : <Auth />} 
       />
       <Route 
         path="/dashboard" 
