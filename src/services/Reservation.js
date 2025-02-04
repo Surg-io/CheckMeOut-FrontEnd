@@ -13,16 +13,15 @@ import dayjs from 'dayjs';
 * @throws {Error}
 */
 const handleFetchSchedule = async (date) => {
-try {
-    const response = await apiClient.post('/searchdate', {
-    fullDate: dayjs(date).toISOString()
-    });
-    
-    return response.data;
-} catch (error) {
-    console.error('Failed to fetch schedule:', error.message);
-    throw new Error(error.message || 'Failed to fetch schedule, please try again later.');
-}
+    try {
+        const response = await apiClient.post('/searchdate', {
+            fullDate: dayjs(date).toISOString()
+        });
+        return response;
+    } catch (error) {
+        console.error('Failed to fetch schedule:', error.message);
+        throw new Error(error.message || 'Failed to fetch schedule, please try again later.');
+    }
 };
 
 /**
@@ -35,14 +34,14 @@ try {
 const handleSubmitReservation = async (pendingSlots) => {
 try {
     const response = await apiClient.post('/reserve', {
-    reservations: pendingSlots.map(({ deviceId, device, time }) => ({
-        deviceId,
-        device,
-        time
-    }))
+        reservations: pendingSlots.map(({ deviceId, device, time }) => ({
+            deviceId,
+            device,
+            time
+        }))
     });
 
-    return response.data;
+    return response;
 } catch (error) {
     console.error('Failed to submit reservation:', error.message);
     throw new Error(error.message || 'Failed to submit reservation, please try again later.');

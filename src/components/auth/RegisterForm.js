@@ -51,7 +51,6 @@ const RegisterForm = ({ onFinish }) => {
     if (!dobValidation.isValid) {
       return; // Prevent form submission if DOB is invalid
     }
-
     // Proceed with form submission
     onFinish(values);
   };

@@ -93,7 +93,7 @@ export const UserProvider = ({ children }) => {
             response => response,
             async error => {
                 const originalRequest = error.config;
-                
+                //TODO: Change refresh conditions
                 if (error.response?.status === 401 && !originalRequest._retry) {
                     originalRequest._retry = true;
                     

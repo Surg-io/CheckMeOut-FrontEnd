@@ -7,23 +7,8 @@ import { DashboardSider, DashboardMenu, CombinedReservationMaker, History } from
 import { Card, Drawer } from 'antd';
 
 const Dashboard = () => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [searchParams, setSearchParams] = useSearchParams();
     const [selectedKey, setSelectedKey] = useState(searchParams.get('tab') || 'summary');
-
-    // Update window dimensions on resize
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-            setWindowHeight(window.innerHeight);
-        };
-
-        window.addEventListener('resize', handleResize);
-        
-        // Cleanup listener on component unmount
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     useEffect(() => {
         setSearchParams({tab: selectedKey});
@@ -37,8 +22,6 @@ const Dashboard = () => {
                 />;
     const dashboardMenu = <DashboardMenu
                     hasNotification={true}
-                    screenWidth={windowWidth}
-                    screenHeight={windowHeight}
                 />;
     
     const renderContent = () => {

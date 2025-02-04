@@ -30,11 +30,11 @@ const HomePage = () => {
   }, []);
 
   const handleLoginClick = () => {
-    navigate('/auth', { state: { form: 'login' } });
+    navigate('/auth?tab=login', { state: { form: 'login' } });
   };
 
   const handleRegisterClick = () => {
-    navigate('/auth', { state: { form: 'signup' } });
+    navigate('/auth?tab=signup', { state: { form: 'signup' } });
   };
 
   const handleReserveNow = () => {

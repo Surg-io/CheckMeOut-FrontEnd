@@ -1,6 +1,5 @@
 // src/components/CombinedReservationMaker
 // This component assembles multiple components in the reservation page
-// TODO: Submit all content in this page
 import React, { useState, useEffect } from 'react';
 import LimitedDatePicker from '@root/components/dashboard/reservation/LimitedDatePicker'
 import ScheduleDisplay from '@root/components/dashboard/reservation/ScheduleDisplay';
@@ -18,13 +17,13 @@ const CombinedReservationMaker = () => {
     const [ purposeValue, setPurposeValue ] = useState(null);
     const [ pendingSlots, setPendingSlots ] = useState([]);
 
-    const openNotification = (status, description) => {
-        api.info({
-            message: `Reservation ${status}`,
-            description: `${description}`,
+    const showNotification = (type, message, description) => {
+        api[type]({
+            message,
+            description,
             placement: 'bottomLeft',
-        })
-    }
+        });
+    };
 
     const fetchScheduleOnRender = async () => {
         const now = dayjs();
@@ -59,10 +58,10 @@ const CombinedReservationMaker = () => {
             const response = await handleSubmitReservation(pendingSlots);
             if(response.ErrorIndicies){
                 if(response.ErrorIndicies.length === 0){
-                    openNotification('Success','All reservations were submitted successfully.');
+                    showNotification('success','All reservations were submitted successfully.');
                 }
                 else{
-                    openNotification('Failed', 'Some reservations failed.');
+                    showNotification('error', 'Some reservations failed.');
                 }
             }
             setPendingSlots([]);

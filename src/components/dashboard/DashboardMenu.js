@@ -3,11 +3,7 @@ import { Badge, Modal, QRCode, Row, Button, Drawer } from 'antd';
 import { NotificationOutlined, QrcodeOutlined, SettingOutlined } from '@ant-design/icons';
 import { useUser} from '@root/context/UserContext'
 import { useNavigate } from 'react-router-dom';
-const DashboardMenu = ({
-    hasNotification,
-    screenWidth,
-    screenHeight
-    }) => {
+const DashboardMenu = ({hasNotification}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [qrtext] = useState('This QR code is for testing.');
     const [isSettingOpen, setIsSettingOpen] = useState(false);
@@ -38,7 +34,6 @@ const DashboardMenu = ({
         closeSettings();
     }
 
-    const modalSize = Math.min(screenWidth,screenHeight);
     return (
         <Row
             justify="end"
@@ -67,17 +62,13 @@ const DashboardMenu = ({
                     open={isModalOpen}
                     onOk={handleOk}
                     onCancel={handleCancel}
-                    footer={[
-                        <Button key="OK" onClick={handleOk}>OK</Button>
-                    ]}
-                    width={modalSize}
-                    height={modalSize}
+                    footer={null}
+                    centered
+                    width="auto"
                 >
-                    <QRCode
-                        value={qrtext}
-                        size={modalSize-60}
-                        errorLevel='Q'
-                    />
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <QRCode value={qrtext} errorLevel="Q" />
+                    </div>
                 </Modal>
                 <Drawer
                     title='Settings'

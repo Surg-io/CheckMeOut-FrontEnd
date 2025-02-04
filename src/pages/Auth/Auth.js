@@ -4,7 +4,7 @@ import { Menu, notification } from 'antd';
 import { AuthLayout } from '@root/layouts';
 import { LoginForm, RegisterForm } from '@root/components';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { handleRegistration, handleLogin } from '@root/services/Authentication';
+import { handleRegister, handleLogin } from '@root/services/Authentication';
 import { useUser } from '@root/context/UserContext';
 import './Auth.css';
 
@@ -20,21 +20,18 @@ const Auth = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const initialForm = searchParams.get('tab') || (location.state?.form === 'login' ? 'login' : 'signup');
-  const [isLogin, setIsLogin] = useState(initialForm === 'login');
+  const [searchParams, setSearchParams] = useSearchParams();
   const { login } = useUser();
+  const initialForm = searchParams.get('tab') || 'signup'; 
+  const [isLogin, setIsLogin] = useState(initialForm === 'login');
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab === 'login' || tab === 'signup') {
-      setIsLogin(tab === 'login');
-    }
+    setIsLogin(tab === 'login');
   }, [searchParams]);
 
   const handleMenuClick = (e) => {
-    setIsLogin(e.key === "2");
+    setSearchParams({ tab: e.key === "2" ? 'login' : 'signup' });
   };
 
   const showNotification = (type, message, description) => {
@@ -71,6 +68,31 @@ const Auth = () => {
     }
   };
 
+  const handleRegisterWithNotification = async (values) => {
+    setLoading(true);
+    try {
+      const userData = await handleRegister(values);
+      showNotification(
+        'success',
+        'Registration Successful',
+        'You have signed up successfully. Redirecting...'
+      );
+    
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1500);
+      
+    } catch (error) {
+      showNotification(
+        'error',
+        'Registration Failed',
+        error.message || 'Registration failed. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const menu = (
     <Menu
       className="login-form"
@@ -84,7 +106,7 @@ const Auth = () => {
   const children = isLogin ? (
     <LoginForm onFinish={handleLoginWithNotification} loading={loading} />
   ) : (
-    <RegisterForm onFinish={handleRegistration} />
+    <RegisterForm onFinish={handleRegisterWithNotification} />
   );
 
   return (

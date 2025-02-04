@@ -1,7 +1,7 @@
 // src/services/Authentication.js
 import { apiClient } from '@root/utils/ApiUtils';
 
-export const handleRegistration = async (value) => {
+export const handleRegister = async (value) => {
     const payload = {
         LN: value.lastName,
         FN: value.firstName,
@@ -12,7 +12,7 @@ export const handleRegistration = async (value) => {
     };
 
     try {
-        const data = await apiClient.post('/registration', payload);
+        const data = await apiClient.post('/register', payload);
         return data;
     } catch (error) {
         throw new Error(error.message || 'Registration failed');
