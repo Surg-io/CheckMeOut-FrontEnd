@@ -56,7 +56,7 @@ const Auth = () => {
       );
     
       setTimeout(() => {
-        login(userData.token);
+        login(userData.token, userData.expiresIn);
         navigate('/dashboard');
       }, 1500);
       

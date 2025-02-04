@@ -1,21 +1,7 @@
+// @root/utils/ApiUtils.js
+import axios from 'axios';
 import config from '@root/config/config';
 import { jwtDecode } from 'jwt-decode';
-
-export const parseJwt = (token) => {
-    try {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-        atob(base64)
-        .split('')
-        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    );
-    return JSON.parse(jsonPayload);
-    } catch (e) {
-    return null;
-    }
-};
 
 export const getUrl = () => {
     if (config.useMockData){
@@ -25,67 +11,52 @@ export const getUrl = () => {
     }
 };
 
-export const parseJsonResponse = async (response) => {
-    try {
-        return await response.json();
-    } catch (error) {
-        throw new Error('Failed to parse response as JSON');
+export const apiClient = axios.create({
+    baseURL: config.useMockData ? config.mockURL : config.apiBaseUrl,
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json',
+        'Credentials': 'include'
     }
-};
+});
 
+apiClient.interceptors.request.use(config => {
+    const token = localStorage.getItem('token');
 
-export const checkResponseStatus = (response) => {
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+    if (token && isTokenExpired(token)) {
+        localStorage.removeItem('token');
+        throw new axios.Cancel('Token expired');
     }
-    return response;
-};
+
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+apiClient.interceptors.response.use(
+    response => response.data,
+    error => {
+        if (axios.isCancel(error)) {
+        console.error('Request canceled:', error.message);
+        return Promise.reject({ message: 'Session expired, please login again' });
+        }
+        
+        const errorMessage = error.response?.data?.message || 
+                            error.message || 
+                            'Request failed';
+        return Promise.reject({ message: errorMessage });
+    }
+);
 
 export const isTokenExpired = (token) => {
     try {
         const decoded = jwtDecode(token);
         const now = Date.now() / 1000;
-
-        if (decoded.exp && decoded.exp < now) return true;
-
-        if (decoded.nbf && decoded.nbf > now) return true;
-
-        return false;
+        return (decoded.exp < now) || (decoded.nbf > now);
     } catch (error) {
-        console.error('Token error:', error);
         return true;
     }
 };
 
-export const fetchWithAuth = async (url, options = {}, timeout = 10000) => {
-    const token = localStorage.getItem('token');
-
-    if (token && isTokenExpired(token)) {
-        localStorage.removeItem('token');
-        throw new Error('Token expired');
-    }
-
-    const headers = {
-        ...options.headers,
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        credentials: 'include',
-    };
-
-    try {
-        const response = await Promise.race([
-            fetch(url, { ...options, headers }),
-            new Promise((_, reject) =>
-                setTimeout(() => reject(new Error('Request timed out')), timeout)
-            ),
-        ]);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        return response;
-    } catch (error) {
-        console.error('Request failed:', error);
-        throw error;
-    }
-};
+export const getApiClient = () => apiClient;
