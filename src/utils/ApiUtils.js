@@ -14,7 +14,7 @@ export const getUrl = () => {
 export const apiClient = axios.create({
     baseURL: config.useMockData ? config.mockURL : config.apiBaseUrl,
     timeout: 10000,
-    withCredentials: true,
+    //withCredentials: true,
     responseType: 'json',
     headers: {
         'Content-Type': 'application/json'
@@ -31,7 +31,6 @@ apiClient.interceptors.request.use(config => {
         return Promise.reject({ message: 'Token expired, please login again' });
     }
     
-
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }

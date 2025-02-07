@@ -10,6 +10,7 @@ import { Radio, Typography, Space, Divider, Button, notification, Row, Col, Spin
 import { LoadingOutlined } from "@ant-design/icons";
 import ReactMarkdown from 'react-markdown'
 import { useNotification } from '@root/context/NotificationContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const { Title, Paragraph} = Typography;
 
@@ -19,6 +20,7 @@ const CombinedReservationMaker = () => {
     const [ purposeValue, setPurposeValue ] = useState(null);
     const [ pendingSlots, setPendingSlots ] = useState([]);
     const [content, setContent] = useState("");
+    const navigate = useNavigate();
 
     const fetchScheduleOnRender = async () => {
         const now = dayjs();
@@ -47,6 +49,7 @@ const CombinedReservationMaker = () => {
         try {
             const response = await handleFetchSchedule(date);
             setScheduleData(response);
+            setPendingSlots([])
         } catch (error) {
             console.error('Error fetching schedule for selected date:', error);
         }
@@ -63,8 +66,7 @@ const CombinedReservationMaker = () => {
                     showNotification('error', 'Some reservations failed.');
                 }
             }
-            setPendingSlots([]);
-            await fetchScheduleOnRender();
+            navigate(0);
         }
         catch (error) {
             console.error('Error submitting reservation:', error);

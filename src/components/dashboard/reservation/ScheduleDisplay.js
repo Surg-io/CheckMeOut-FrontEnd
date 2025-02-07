@@ -44,7 +44,7 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
 
             setDataSource(initialDataSource);
         }
-    }, [response, startDecimal, endDecimal]);
+    }, [response]);
 
     const parseDecimalToTime = (decimal) => {
         const hours = Math.floor(decimal);
