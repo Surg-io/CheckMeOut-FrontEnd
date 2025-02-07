@@ -1,6 +1,6 @@
 /* Icon and form styling */
 .login-form {
-    width: 100%;               /* Make form fill the container width */
-    margin-bottom: 20px;       /* Spacing between icon and form */
-    background: transparent;
+  width: 100%; /* Make form fill the container width */
+  margin-bottom: 20px; /* Spacing between icon and form */
+  background: transparent;
 }

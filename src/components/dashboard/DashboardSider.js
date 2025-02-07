@@ -1,8 +1,20 @@
-import React from 'react';
-import { CalendarOutlined, DashboardOutlined, ExclamationCircleFilled, ExclamationCircleOutlined, FundViewOutlined, HistoryOutlined, PhoneOutlined, QuestionCircleOutlined, ReadOutlined, SearchOutlined, SmileOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
-import { useState } from 'react';
-import './DashboardSider.css'
+import React from "react";
+import {
+  CalendarOutlined,
+  DashboardOutlined,
+  ExclamationCircleFilled,
+  ExclamationCircleOutlined,
+  FundViewOutlined,
+  HistoryOutlined,
+  PhoneOutlined,
+  QuestionCircleOutlined,
+  ReadOutlined,
+  SearchOutlined,
+  SmileOutlined,
+} from "@ant-design/icons";
+import { Menu } from "antd";
+import { useState } from "react";
+import "./DashboardSider.css";
 
 const subMenuMarginLeft = 16;
 const getLevelKeys = (items1) => {
@@ -22,77 +34,81 @@ const getLevelKeys = (items1) => {
 };
 
 const DashboardSider = ({ onSelectKey, selectedKey }) => {
-  const [stateOpenKeys, setStateOpenKeys] = useState(['2', '23']);
+  const [stateOpenKeys, setStateOpenKeys] = useState(["2", "23"]);
   const items = [
     {
-      key: 'summary',
-      label: 'Summary',
-      icon: <DashboardOutlined className='icon'/>,
+      key: "summary",
+      label: "Summary",
+      icon: <DashboardOutlined className="icon" />,
     },
     {
-      key: 'reservation',
-      label:  'Reservation',
-      icon: <CalendarOutlined className='icon'/>,
+      key: "reservation",
+      label: "Reservation",
+      icon: <CalendarOutlined className="icon" />,
     },
     {
-      key: 'history',
-      label:  'History',
-      icon: <HistoryOutlined className='icon'/>,
+      key: "history",
+      label: "History",
+      icon: <HistoryOutlined className="icon" />,
     },
     {
-      key: 'status',
-      label: 'Status',
-      icon: <FundViewOutlined className='icon'/>,
+      key: "status",
+      label: "Status",
+      icon: <FundViewOutlined className="icon" />,
       children: [
         {
-          key: 'space',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Space</span>,
+          key: "space",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Space</span>,
         },
         {
-          key: 'equipment',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Equipment</span>,
+          key: "equipment",
+          label: (
+            <span style={{ marginLeft: subMenuMarginLeft }}>Equipment</span>
+          ),
         },
       ],
     },
     {
-      key: 'resources',
-      label: 'Resources',
-      icon: <ReadOutlined className='icon'/>,
+      key: "resources",
+      label: "Resources",
+      icon: <ReadOutlined className="icon" />,
       children: [
         {
-          key: 'guides',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Guides</span>,
+          key: "guides",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Guides</span>,
         },
         {
-          key: 'courses',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
+          key: "courses",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
         },
       ],
     },
     {
-      type: 'divider',
+      type: "divider",
     },
     {
-      key: 'teams',
-      label: 'Teams',
-      icon: <SmileOutlined className='icon'/>,
+      key: "teams",
+      label: "Teams",
+      icon: <SmileOutlined className="icon" />,
     },
     {
-      key: 'report',
-      label: 'Report',
-      icon: <ExclamationCircleOutlined className='icon'/>,
+      key: "report",
+      label: "Report",
+      icon: <ExclamationCircleOutlined className="icon" />,
     },
     {
-      key: 'contact',
-      label: 'Contact',
-      icon: <PhoneOutlined className='icon'/>,
+      key: "contact",
+      label: "Contact",
+      icon: <PhoneOutlined className="icon" />,
     },
   ];
 
   const levelKeys = getLevelKeys(items);
 
   const onOpenChange = (openKeys) => {
-    const currentOpenKey = openKeys.find((key) => stateOpenKeys.indexOf(key) === -1);
+    const currentOpenKey = openKeys.find(
+      (key) => stateOpenKeys.indexOf(key) === -1,
+    );
     // open
     if (currentOpenKey !== undefined) {
       const repeatIndex = openKeys
@@ -118,12 +134,16 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
       onOpenChange={onOpenChange}
       selectedKeys={[selectedKey]}
       style={{
-        width: '100%',
-        minHeight: '40px',
-        height: '100%'
+        width: "100%",
+        minHeight: "40px",
+        height: "100%",
       }}
       items={items}
-      onSelect={({ key }) => { if (onSelectKey) { onSelectKey(key); } }}
+      onSelect={({ key }) => {
+        if (onSelectKey) {
+          onSelectKey(key);
+        }
+      }}
     />
   );
 };

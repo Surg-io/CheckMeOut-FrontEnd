@@ -1,17 +1,16 @@
 // src/pages/Auth/Auth.js
-import React, { useState, useEffect } from 'react';
-import { Menu } from 'antd';
-import { AuthLayout } from '@root/layouts';
-import { LoginForm, RegisterForm } from '@root/components';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { handleRegister, handleLogin } from '@root/services/Authentication';
-import { useUser } from '@root/context/UserContext';
-import { useNotification } from '@root/context/NotificationContext';
-import './Auth.css';
-
+import React, { useState, useEffect } from "react";
+import { Menu } from "antd";
+import { AuthLayout } from "@root/layouts";
+import { LoginForm, RegisterForm } from "@root/components";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { handleRegister, handleLogin } from "@root/services/Authentication";
+import { useUser } from "@root/context/UserContext";
+import { useNotification } from "@root/context/NotificationContext";
+import "./Auth.css";
 
 const labels = ["Sign Up", "Login"];
-const items = labels.map((label, index) => ({ 
+const items = labels.map((label, index) => ({
   key: index + 1,
   label: label,
 }));
@@ -23,16 +22,16 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { login } = useUser();
-  const initialForm = searchParams.get('tab') || 'signup'; 
-  const [isLogin, setIsLogin] = useState(initialForm === 'login');
+  const initialForm = searchParams.get("tab") || "signup";
+  const [isLogin, setIsLogin] = useState(initialForm === "login");
 
   useEffect(() => {
-    const tab = searchParams.get('tab');
-    setIsLogin(tab === 'login');
+    const tab = searchParams.get("tab");
+    setIsLogin(tab === "login");
   }, [searchParams]);
 
   const handleMenuClick = (e) => {
-    setSearchParams({ tab: e.key === "2" ? 'login' : 'signup' });
+    setSearchParams({ tab: e.key === "2" ? "login" : "signup" });
   };
 
   const handleLoginWithNotification = async (values) => {
@@ -40,22 +39,20 @@ const Auth = () => {
     try {
       const userData = await handleLogin(values);
       showNotification(
-        'success',
-        'You have logged in successfully.',
-        'Redirecting...',
+        "success",
+        "You have logged in successfully.",
+        "Redirecting...",
         500,
-        (() => {
+        () => {
           login(userData.token, userData.expiresIn);
-          navigate('/dashboard')
-          }
-        ),
-        
+          navigate("/dashboard");
+        },
       );
     } catch (error) {
       showNotification(
-        'error',
-        'Login Failed',
-        error.message + 'Please check your credentials and try again.',
+        "error",
+        "Login Failed",
+        error.message + "Please check your credentials and try again.",
         0,
         null,
       );
@@ -69,20 +66,19 @@ const Auth = () => {
     try {
       const userData = await handleRegister(values);
       showNotification(
-        'success',
-        'You have signed up successfully.',
-        'Redirecting...',
+        "success",
+        "You have signed up successfully.",
+        "Redirecting...",
         500,
-        (() => navigate('/dashboard'))
+        () => navigate("/dashboard"),
       );
-      
     } catch (error) {
       showNotification(
-        'error',
-        'Registration Failed',
-        error.message + 'Please try again.',
+        "error",
+        "Registration Failed",
+        error.message + "Please try again.",
         0,
-        null
+        null,
       );
     } finally {
       setLoading(false);
@@ -106,9 +102,9 @@ const Auth = () => {
   );
 
   return (
-      <div id="auth">
-        <AuthLayout menuComponent={menu} formComponent={children} />
-      </div>
+    <div id="auth">
+      <AuthLayout menuComponent={menu} formComponent={children} />
+    </div>
   );
 };
 

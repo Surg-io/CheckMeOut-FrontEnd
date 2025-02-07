@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UserProvider, useUser } from "@root/context/UserContext";
-import { ConfigProvider } from 'antd';
+import { ConfigProvider } from "antd";
 // Pages
 import HomePage from "@root/pages/Home/HomePage";
 import Auth from "@root/pages/Auth/Auth";
@@ -16,27 +16,23 @@ const ProtectedRoute = ({ children }) => {
   return token ? children : <Navigate to="/auth" replace />;
 };
 
-
 const AppRoutes = () => {
   const { token } = useUser();
 
   return (
     <Routes>
-      <Route 
-        path="/" 
-        element={<HomePage />}
-      />
-      <Route 
+      <Route path="/" element={<HomePage />} />
+      <Route
         path="/auth"
-        element={token ? <Navigate to="/dashboard" replace /> : <Auth />} 
+        element={token ? <Navigate to="/dashboard" replace /> : <Auth />}
       />
-      <Route 
-        path="/dashboard" 
+      <Route
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
           </ProtectedRoute>
-        } 
+        }
       />
     </Routes>
   );
@@ -44,10 +40,9 @@ const AppRoutes = () => {
 
 const customTheme = {
   token: {
-    fontFamily: 'Montserrat, sans-serif',
+    fontFamily: "Montserrat, sans-serif",
   },
 };
-
 
 const App = () => {
   return (

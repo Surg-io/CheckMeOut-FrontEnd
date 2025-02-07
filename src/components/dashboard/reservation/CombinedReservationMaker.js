@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import LimitedDatePicker from '@root/components/dashboard/reservation/LimitedDatePicker';
-import ScheduleDisplay from '@root/components/dashboard/reservation/ScheduleDisplay';
-import { handleFetchSchedule, handleSubmitReservation } from '@root/services/Reservation';
-import dayjs from 'dayjs';
-import config from '@root/config/config';
-import { Radio, Space, Divider, Button, Row, Col, Skeleton } from 'antd';
-import ReactMarkdown from 'react-markdown';
-import { useNotification } from '@root/context/NotificationContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import LimitedDatePicker from "@root/components/dashboard/reservation/LimitedDatePicker";
+import ScheduleDisplay from "@root/components/dashboard/reservation/ScheduleDisplay";
+import {
+  handleFetchSchedule,
+  handleSubmitReservation,
+} from "@root/services/Reservation";
+import dayjs from "dayjs";
+import config from "@root/config/config";
+import { Radio, Space, Divider, Button, Row, Col, Skeleton } from "antd";
+import ReactMarkdown from "react-markdown";
+import { useNotification } from "@root/context/NotificationContext";
+import { useNavigate } from "react-router-dom";
 
 const CombinedReservationMaker = () => {
   const showNotification = useNotification();
@@ -30,7 +33,7 @@ const CombinedReservationMaker = () => {
         setScheduleLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching schedule:', error);
+        console.error("Error fetching schedule:", error);
         setScheduleLoading(false);
       });
 
@@ -58,7 +61,7 @@ const CombinedReservationMaker = () => {
       setScheduleData(response);
       setPendingSlots([]);
     } catch (error) {
-      console.error('Error fetching schedule for selected date:', error);
+      console.error("Error fetching schedule for selected date:", error);
     }
   };
 
@@ -68,41 +71,52 @@ const CombinedReservationMaker = () => {
         const response = await handleSubmitReservation(pendingSlots);
         if (response.ErrorIndicies?.length === 0) {
           showNotification(
-            'success',
-            'All reservations were submitted successfully.',
-            'Reloading...',
+            "success",
+            "All reservations were submitted successfully.",
+            "Reloading...",
             500,
-            () => navigate(0)
+            () => navigate(0),
           );
         } else {
           showNotification(
-            'error',
-            'Some reservations failed.',
-            'Please try again.'
+            "error",
+            "Some reservations failed.",
+            "Please try again.",
           );
         }
       }, 50);
     } catch (error) {
-      console.error('Error submitting reservation:', error);
-      showNotification('error', 'An unexpected error occurred while submitting reservations.');
+      console.error("Error submitting reservation:", error);
+      showNotification(
+        "error",
+        "An unexpected error occurred while submitting reservations.",
+      );
     }
   };
 
   return (
     <>
       <h1>Reservation</h1>
-      <div style={{ position: 'relative', minHeight: '200px' }}>
+      <div style={{ position: "relative", minHeight: "200px" }}>
         {contentLoading ? (
           <Skeleton active paragraph={{ rows: 9 }} />
         ) : (
-          <div style={{ visibility: contentLoading ? 'hidden' : 'visible' }}>
+          <div style={{ visibility: contentLoading ? "hidden" : "visible" }}>
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         )}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Row gutter={16} style={{ flex: 1, display: 'flex' }}>
-          <Col span={12} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', height: '100%' }}>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <Row gutter={16} style={{ flex: 1, display: "flex" }}>
+          <Col
+            span={12}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              height: "100%",
+            }}
+          >
             <Divider>Reservation Purpose</Divider>
             <Radio.Group onChange={onSelectPurpose} value={purposeValue}>
               <Space direction="vertical">
@@ -114,7 +128,15 @@ const CombinedReservationMaker = () => {
               </Space>
             </Radio.Group>
           </Col>
-          <Col span={12} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', height: '100%' }}>
+          <Col
+            span={12}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              height: "100%",
+            }}
+          >
             <Divider>Select Date</Divider>
             <LimitedDatePicker onDatePicked={handleDatePicked} />
           </Col>
@@ -122,30 +144,96 @@ const CombinedReservationMaker = () => {
       </div>
       <div>
         <Divider>Select Time</Divider>
-        <div style={{ display: 'flex', flexDirection: 'row', padding: '10px 15px' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: '0px 10px 0px 0px' }}>
-            <div style={{ background: config.reservationStatus.available.color, height: '8px', width: '8px', margin: '0px 5px' }} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            padding: "10px 15px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 10px 0px 0px",
+            }}
+          >
+            <div
+              style={{
+                background: config.reservationStatus.available.color,
+                height: "8px",
+                width: "8px",
+                margin: "0px 5px",
+              }}
+            />
             <>Available</>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: '0px 10px 0px 0px' }}>
-            <div style={{ background: config.reservationStatus.reserved.color, height: '8px', width: '8px', margin: '0px 5px' }} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 10px 0px 0px",
+            }}
+          >
+            <div
+              style={{
+                background: config.reservationStatus.reserved.color,
+                height: "8px",
+                width: "8px",
+                margin: "0px 5px",
+              }}
+            />
             <>Reserved</>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: '0px 10px 0px 0px' }}>
-            <div style={{ background: config.reservationStatus.outOfService.color, height: '8px', width: '8px', margin: '0px 5px' }} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 10px 0px 0px",
+            }}
+          >
+            <div
+              style={{
+                background: config.reservationStatus.outOfService.color,
+                height: "8px",
+                width: "8px",
+                margin: "0px 5px",
+              }}
+            />
             <>Out Of Service</>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: '0px 10px 0px 0px' }}>
-            <div style={{ background: config.reservationStatus.pending.color, height: '8px', width: '8px', margin: '0px 5px' }} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 10px 0px 0px",
+            }}
+          >
+            <div
+              style={{
+                background: config.reservationStatus.pending.color,
+                height: "8px",
+                width: "8px",
+                margin: "0px 5px",
+              }}
+            />
             <>Selected</>
           </div>
         </div>
-        <div style={{ position: 'relative', minHeight: '200px' }}>
+        <div style={{ position: "relative", minHeight: "200px" }}>
           {showSkeleton ? (
             <Skeleton active paragraph={{ rows: 8 }} />
           ) : (
-            <div style={{ visibility: showSkeleton ? 'hidden' : 'visible' }}>
-              <ScheduleDisplay 
+            <div style={{ visibility: showSkeleton ? "hidden" : "visible" }}>
+              <ScheduleDisplay
                 response={scheduleData}
                 pendingSlots={pendingSlots}
                 setPendingSlots={setPendingSlots}
@@ -155,8 +243,10 @@ const CombinedReservationMaker = () => {
         </div>
       </div>
       <Divider />
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button type='primary' onClick={handleSubmit}>Submit</Button>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button type="primary" onClick={handleSubmit}>
+          Submit
+        </Button>
       </div>
     </>
   );

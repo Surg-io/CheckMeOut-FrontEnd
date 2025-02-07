@@ -4,26 +4,32 @@ import { notification } from "antd";
 const NotificationContext = createContext(null);
 
 export const NotificationProvider = ({ children }) => {
-    const [api, contextHolder] = notification.useNotification();
+  const [api, contextHolder] = notification.useNotification();
 
-    const showNotification = (type, message, description = '', timeout = 0, action = null) => {
-        api[type]({
-            message,
-            description,
-            placement: "bottomLeft",
-        });
-        setTimeout(() => {
-            if (typeof action === "function") {
-                action();
-            }
-        }, timeout);
-    };
+  const showNotification = (
+    type,
+    message,
+    description = "",
+    timeout = 0,
+    action = null,
+  ) => {
+    api[type]({
+      message,
+      description,
+      placement: "bottomLeft",
+    });
+    setTimeout(() => {
+      if (typeof action === "function") {
+        action();
+      }
+    }, timeout);
+  };
 
-    return (
-        <NotificationContext.Provider value={showNotification}>
-            {contextHolder} {children}
-        </NotificationContext.Provider>
-    );
+  return (
+    <NotificationContext.Provider value={showNotification}>
+      {contextHolder} {children}
+    </NotificationContext.Provider>
+  );
 };
 
 export const useNotification = () => useContext(NotificationContext);

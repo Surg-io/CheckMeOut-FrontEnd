@@ -1,11 +1,16 @@
 // src/components/LoginForm.js
 // This component is the login form for the autho page (excluding switch menu)
-import React, { useState } from 'react';
-import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Flex, Button, Form, Input, Checkbox } from 'antd';
-import { sanitizeEmail, sanitizePassword } from '@root/utils/Sanitizers';
+import React, { useState } from "react";
+import {
+  LockOutlined,
+  UserOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+} from "@ant-design/icons";
+import { Flex, Button, Form, Input, Checkbox } from "antd";
+import { sanitizeEmail, sanitizePassword } from "@root/utils/Sanitizers";
 
-const LoginForm = ( {onFinish} ) => {
+const LoginForm = ({ onFinish }) => {
   const [loading, setLoading] = useState(false);
   return (
     <Form
@@ -14,8 +19,8 @@ const LoginForm = ( {onFinish} ) => {
         remember: true,
       }}
       style={{
-        maxWidth: '50vw',
-        width: '50vw'
+        maxWidth: "50vw",
+        width: "50vw",
       }}
       onFinish={onFinish}
     >
@@ -24,22 +29,19 @@ const LoginForm = ( {onFinish} ) => {
         rules={[
           {
             required: true,
-            message: 'Please enter your email',
+            message: "Please enter your email",
           },
         ]}
         normalize={(value) => sanitizeEmail(value)}
       >
-        <Input
-          prefix={<UserOutlined />}
-          placeholder="Email"
-          />
+        <Input prefix={<UserOutlined />} placeholder="Email" />
       </Form.Item>
       <Form.Item
         name="password"
         rules={[
           {
             required: true,
-            message: 'Please enter your password',
+            message: "Please enter your password",
           },
         ]}
         normalize={(value) => sanitizePassword(value)}
@@ -47,7 +49,9 @@ const LoginForm = ( {onFinish} ) => {
         <Input.Password
           prefix={<LockOutlined />}
           placeholder="input password"
-          iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+          iconRender={(visible) =>
+            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+          }
         />
       </Form.Item>
       <Form.Item>
