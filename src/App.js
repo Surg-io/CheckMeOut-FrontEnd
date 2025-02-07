@@ -7,6 +7,7 @@ import { ConfigProvider } from 'antd';
 import HomePage from "@root/pages/Home/HomePage";
 import Auth from "@root/pages/Auth/Auth";
 import Dashboard from "@root/pages/Dashboard/Dashboard";
+import { NotificationProvider } from "./context/NotificationContext";
 
 // ProtectedRoute
 const ProtectedRoute = ({ children }) => {
@@ -52,9 +53,11 @@ const App = () => {
   return (
     <ConfigProvider theme={customTheme}>
       <UserProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+        <NotificationProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </NotificationProvider>
       </UserProvider>
     </ConfigProvider>
   );

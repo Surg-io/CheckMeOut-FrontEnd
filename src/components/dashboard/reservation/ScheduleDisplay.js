@@ -46,14 +46,31 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
         }
     }, [response, startDecimal, endDecimal]);
 
+    const parseDecimalToTime = (decimal) => {
+        const hours = Math.floor(decimal);
+        const minutes = (decimal % 1) * 60;
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    };
+
     const columns = Array.from({ length: (endDecimal - startDecimal) * 2 }, (_, i) => {
         const timeDecimal = startDecimal + i * 0.5;
         const hour = Math.floor(timeDecimal);
-        const timeLabel = `${hour.toString().padStart(2, "0")}:${timeDecimal % 1 === 0 ? "00" : "30"}`;
         const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
+        
+        const startTimeStr = parseDecimalToTime(timeDecimal);
+        const endTimeStr = parseDecimalToTime(timeDecimal + 0.5);
 
         return {
-            title: timeLabel,
+            title: (
+                <div style={{ 
+                    fontSize: 12,
+                    lineHeight: "16px",
+                    textAlign: "center",
+                    whiteSpace: "normal"
+                }}>
+                    {startTimeStr}<br/>-<br/>{endTimeStr}
+                </div>
+            ),
             dataIndex: dataIndex,
             key: dataIndex,
             align: "center",
@@ -101,7 +118,7 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
                                 {
                                     deviceId: record.key,
                                     device: record.device,
-                                    time: dayjs(`${response.selectedDate}T${timeLabel}`).toDate(),
+                                    time: dayjs(`${response.selectedDate}T${startTimeStr}`).toDate(),
                                 },
                             ]);
                         } else if (status === "pending") {
@@ -122,7 +139,7 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
                                         !(
                                             slot.deviceId === record.key &&
                                             slot.time.getTime() ===
-                                                dayjs(`${response.selectedDate}T${timeLabel}`).toDate().getTime()
+                                                dayjs(`${response.selectedDate}T${startTimeStr}`).toDate().getTime()
                                         )
                                 )
                             );
@@ -135,13 +152,14 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
     });
 
     columns.unshift({
-        title: "Device",
+        title: <span style={{ fontSize: 12, textAlign: "center", display: "block", width: "100%" }}>Device</span>,
         dataIndex: "device",
         key: "device",
         fixed: "left",
         width: "120px",
         align: "center",
     });
+    
 
     if (!response || !response.devices) {
         return <Spin indicator={<LoadingOutlined spin />} size="large" />;
@@ -156,6 +174,17 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
             scroll={{
                 x: "max-content",
                 y: "400px",
+            }}
+            components={{
+                header: {
+                    cell: (props) => (
+                        <th {...props} style={{ 
+                            lineHeight: "16px",
+                            padding: "8px 0",
+                            backgroundColor: "#fafafa" 
+                        }}/>
+                    )
+                }
             }}
         />
     );

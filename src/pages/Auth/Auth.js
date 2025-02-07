@@ -1,14 +1,14 @@
 // src/pages/Auth/Auth.js
 import React, { useState, useEffect } from 'react';
-import { Menu, notification } from 'antd';
+import { Menu } from 'antd';
 import { AuthLayout } from '@root/layouts';
 import { LoginForm, RegisterForm } from '@root/components';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { handleRegister, handleLogin } from '@root/services/Authentication';
 import { useUser } from '@root/context/UserContext';
+import { useNotification } from '@root/context/NotificationContext';
 import './Auth.css';
 
-const Context = React.createContext({ name: 'Default' });
 
 const labels = ["Sign Up", "Login"];
 const items = labels.map((label, index) => ({ 
@@ -18,8 +18,9 @@ const items = labels.map((label, index) => ({
 
 const Auth = () => {
   const navigate = useNavigate();
+  const showNotification = useNotification();
+
   const [loading, setLoading] = useState(false);
-  const [api, contextHolder] = notification.useNotification();
   const [searchParams, setSearchParams] = useSearchParams();
   const { login } = useUser();
   const initialForm = searchParams.get('tab') || 'signup'; 
@@ -32,14 +33,6 @@ const Auth = () => {
 
   const handleMenuClick = (e) => {
     setSearchParams({ tab: e.key === "2" ? 'login' : 'signup' });
-  };
-
-  const showNotification = (type, message, description) => {
-    api[type]({
-      message,
-      description,
-      placement: 'bottomLeft',
-    });
   };
 
   const handleLoginWithNotification = async (values) => {
@@ -110,12 +103,9 @@ const Auth = () => {
   );
 
   return (
-    <>
-      {contextHolder}
       <div id="auth">
         <AuthLayout menuComponent={menu} formComponent={children} />
       </div>
-    </>
   );
 };
 

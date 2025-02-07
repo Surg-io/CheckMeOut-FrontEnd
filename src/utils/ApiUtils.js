@@ -14,19 +14,23 @@ export const getUrl = () => {
 export const apiClient = axios.create({
     baseURL: config.useMockData ? config.mockURL : config.apiBaseUrl,
     timeout: 10000,
+    withCredentials: true,
+    responseType: 'json',
     headers: {
-        'Content-Type': 'application/json',
-        'Credentials': 'include'
+        'Content-Type': 'application/json'
     }
 });
+
 
 apiClient.interceptors.request.use(config => {
     const token = localStorage.getItem('token');
 
     if (token && isTokenExpired(token)) {
         localStorage.removeItem('token');
-        throw new axios.Cancel('Token expired');
+        window.location.href = "/auth?tab=login";
+        return Promise.reject({ message: 'Token expired, please login again' });
     }
+    
 
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;

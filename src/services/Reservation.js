@@ -14,9 +14,14 @@ import dayjs from 'dayjs';
 */
 const handleFetchSchedule = async (date) => {
     try {
-        const response = await apiClient.post('/searchdate', {
-            fullDate: dayjs(date).toISOString()
-        });
+        const response = await apiClient.post('/searchdate',
+            {
+                fullDate: dayjs(date).toISOString()
+            },
+            {
+                withCredentials: false
+            }
+        );
         return response;
     } catch (error) {
         console.error('Failed to fetch schedule:', error.message);

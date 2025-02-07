@@ -1,10 +1,9 @@
 // src/pages/Dashboard/Dashboard.js
-// TODO: hasNotification
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { DashboardLayout } from "@root/layouts";
 import { DashboardSider, DashboardMenu, CombinedReservationMaker, History } from '@root/components';
-import { Card, Drawer } from 'antd';
+import { Card } from 'antd';
 
 const Dashboard = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -13,8 +12,6 @@ const Dashboard = () => {
     useEffect(() => {
         setSearchParams({tab: selectedKey});
     },[selectedKey,searchParams]);
-
-
 
     const sider = <DashboardSider
                     onSelectKey={setSelectedKey}

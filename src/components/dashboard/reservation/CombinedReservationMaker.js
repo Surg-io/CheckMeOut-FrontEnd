@@ -5,25 +5,20 @@ import LimitedDatePicker from '@root/components/dashboard/reservation/LimitedDat
 import ScheduleDisplay from '@root/components/dashboard/reservation/ScheduleDisplay';
 import { handleFetchSchedule, handleSubmitReservation } from '@root/services/Reservation';
 import dayjs from 'dayjs';
-import { Radio, Typography, Space, Divider, Button, notification, Row, Col } from 'antd';
+import config from '@root/config/config';
+import { Radio, Typography, Space, Divider, Button, notification, Row, Col, Spin } from 'antd';
+import { LoadingOutlined } from "@ant-design/icons";
+import ReactMarkdown from 'react-markdown'
+import { useNotification } from '@root/context/NotificationContext';
+
 const { Title, Paragraph} = Typography;
-const Context = React.createContext({
-    name: 'Default',
-});
 
 const CombinedReservationMaker = () => {
-    const [api, contextHolder] = notification.useNotification();
+    const showNotification = useNotification();
     const [ scheduleData, setScheduleData ] = useState(null);
     const [ purposeValue, setPurposeValue ] = useState(null);
     const [ pendingSlots, setPendingSlots ] = useState([]);
-
-    const showNotification = (type, message, description) => {
-        api[type]({
-            message,
-            description,
-            placement: 'bottomLeft',
-        });
-    };
+    const [content, setContent] = useState("");
 
     const fetchScheduleOnRender = async () => {
         const now = dayjs();
@@ -38,6 +33,10 @@ const CombinedReservationMaker = () => {
 
     useEffect(() => {
         fetchScheduleOnRender();
+        fetch("/docs/reservation.md")
+            .then((res) => res.text())
+            .then((text) => setContent(text))
+            .catch(() => setContent("Failed to load guidelines."));
     }, []);
 
     const onSelectPurpose = (item) => {
@@ -69,88 +68,167 @@ const CombinedReservationMaker = () => {
         }
         catch (error) {
             console.error('Error submitting reservation:', error);
-            openNotification('Error', 'An unexpected error occurred while submitting reservations.');
+            showNotification('error', 'An unexpected error occurred while submitting reservations.');
         }
     }
 
     return (
-        <Context.Provider value={null}>
-            {contextHolder}
-            <Typography>
-                <Title level={1} >Reservation</Title>
-                <Paragraph>
-                    Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here 
-                </Paragraph>
-                <div
+        <Typography>
+            <Title level={1} >Reservation</Title>
+            <Paragraph>
+                {content ? (
+                    <ReactMarkdown>{content}</ReactMarkdown>
+                ) : (
+                    <Spin indicator={<LoadingOutlined spin />} />
+                )}
+            </Paragraph>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
+                <Row
+                    gutter={16}
                     style={{
-                        display: 'flex',
-                        flexDirection: 'column',
+                        flex: 1, /* Allows the Row to grow and fill the parent height */
+                        display: 'flex', /* Enables flex layout for child columns */
                     }}
                 >
-                    <Row
-                        gutter={16}
+                    <Col
+                        span={12}
                         style={{
-                            flex: 1, /* Allows the Row to grow and fill the parent height */
-                            display: 'flex', /* Enables flex layout for child columns */
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start', /* Align content to the top */
+                            height: '100%', /* Ensures the column takes full height */
                         }}
                     >
-                        <Col
-                            span={12}
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'flex-start', /* Align content to the top */
-                                height: '100%', /* Ensures the column takes full height */
-                            }}
-                        >
-                            <Divider>Reservation Purpose</Divider>
-                            <Radio.Group onChange={onSelectPurpose} value={purposeValue}>
-                                <Space direction="vertical">
-                                    <Radio value={1}>Group Project</Radio>
-                                    <Radio value={2}>Personal Project</Radio>
-                                    <Radio value={3}>Class Assignments</Radio>
-                                    <Radio value={4}>Office Hours</Radio>
-                                    <Radio value={5}>Other</Radio>
-                                </Space>
-                            </Radio.Group>
-                        </Col>
-                        <Col
-                            span={12}
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'flex-start', /* Align content to the top */
-                                height: '100%', /* Ensures the column takes full height */
-                            }}
-                        >
-                            <Divider>Select Date</Divider>
-                            <LimitedDatePicker onDatePicked={handleDatePicked} />
-                        </Col>
-                    </Row>
-                </div>
-                <div>
-                    <Divider>Select Time</Divider>
-                    <ScheduleDisplay 
-                        response={scheduleData}
-                        pendingSlots={pendingSlots}
-                        setPendingSlots={setPendingSlots}
-                    />
-                </div>
-                <Divider/>
+                        <Divider>Reservation Purpose</Divider>
+                        <Radio.Group onChange={onSelectPurpose} value={purposeValue}>
+                            <Space direction="vertical">
+                                <Radio value={1}>Group Project</Radio>
+                                <Radio value={2}>Personal Project</Radio>
+                                <Radio value={3}>Class Assignments</Radio>
+                                <Radio value={4}>Office Hours</Radio>
+                                <Radio value={5}>Other</Radio>
+                            </Space>
+                        </Radio.Group>
+                    </Col>
+                    <Col
+                        span={12}
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start', /* Align content to the top */
+                            height: '100%', /* Ensures the column takes full height */
+                        }}
+                    >
+                        <Divider>Select Date</Divider>
+                        <LimitedDatePicker onDatePicked={handleDatePicked}/>
+                    </Col>
+                </Row>
+            </div>
+            <div>
+                <Divider>Select Time</Divider>
                 <div
                     style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                    }}>
-                    <Button
-                        type='primary'
-                        onClick={handleSubmit}
-                    >
-                        Submit</Button>
+                        display:'flex',
+                        flexDirection:'row',
+                        padding:'10px 15px'
+                }}>
+                    <div
+                        style={{
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            padding:'0px 10px 0px 0px'
+                        }}>
+                        <div
+                            style={{
+                                background: config.reservationStatus.available.color,
+                                height: '8px',
+                                width: '8px',
+                                margin:'0px 5px'
+                            }}
+                        />
+                        <>Available</>
+                    </div>
+                    <div
+                        style={{
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            padding:'0px 10px 0px 0px'
+                        }}>
+                        <div
+                            style={{
+                                background: config.reservationStatus.reserved.color,
+                                height: '8px',
+                                width: '8px',
+                                margin:'0px 5px'
+                            }}
+                        />
+                        <>Reserved</>
+                    </div>
+                    <div
+                        style={{
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            padding:'0px 10px 0px 0px'
+                        }}>
+                        <div
+                            style={{
+                                background: config.reservationStatus.outOfService.color,
+                                height: '8px',
+                                width: '8px',
+                                margin:'0px 5px'
+                            }}
+                        />
+                        <>Out Of Service</>
+                    </div>
+                    <div
+                        style={{
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            padding:'0px 10px 0px 0px'
+                        }}>
+                        <div
+                            style={{
+                                background: config.reservationStatus.pending.color,
+                                height: '8px',
+                                width: '8px',
+                                margin:'0px 5px'
+                            }}
+                        />
+                        <>Selected</>
+                    </div>
                 </div>
-                
-            </Typography>
-        </Context.Provider>
+                <ScheduleDisplay 
+                    response={scheduleData}
+                    pendingSlots={pendingSlots}
+                    setPendingSlots={setPendingSlots}
+                />
+            </div>
+            <Divider/>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end'
+                }}>
+                <Button
+                    type='primary'
+                    onClick={handleSubmit}
+                >
+                    Submit</Button>
+            </div>
+        </Typography>
     );
 };
 export default CombinedReservationMaker;

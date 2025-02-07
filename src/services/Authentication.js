@@ -12,7 +12,7 @@ export const handleRegister = async (value) => {
     };
 
     try {
-        const data = await apiClient.post('/register', payload);
+        const data = await apiClient.post('/register', payload, {withCredentials: false});
         return data;
     } catch (error) {
         throw new Error(error.message || 'Registration failed');
@@ -25,7 +25,7 @@ export const handleLogin = async (values) => {
     }
 
     try {
-        const data = await apiClient.post('/login', values);
+        const data = await apiClient.post('/login', values, {withCredentials: false});
         if (!data.success) {
             throw new Error(data.message || 'Login failed');
         }
