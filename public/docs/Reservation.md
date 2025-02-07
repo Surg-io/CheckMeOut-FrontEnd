@@ -2,13 +2,16 @@ Welcome to MCMakerspace! To ensure fair access and efficient use of our faciliti
 
 > 1. Reserve Responsibly  
 >    Please select only the time you need to avoid unnecessary reservations and maximize availability for others.
+> 
 > 2. Extended Usage  
 >    If you require a long session (e.g., for **3D printing large models**), we encourage you to book evening slots whenever possible to reduce daytime congestion.
-> 3. Timely Arrivals and Cancellation Policy
->    Please arrive on time for your reservation.
->    If you no longer need your reservation, kindly **cancel in advance** to free up the space for others.
+> 
+> 3. Cancellation Policy  
+>    Please arrive on time for your reservation. If you no longer need your reservation, kindly **cancel in advance** to free up the space for others.
+> 
 > 4. Equipment-Specific Policies  
 >    Some machines require **prior training or approval** before use. Please check **"Resources"** before reserving.
+> 
 > 5. Respect Shared Spaces  
 >    Clean up after your session and ensure all tools and materials are properly stored for the next user.
 
