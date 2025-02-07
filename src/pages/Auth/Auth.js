@@ -41,20 +41,23 @@ const Auth = () => {
       const userData = await handleLogin(values);
       showNotification(
         'success',
-        'Login Successful',
-        'You have logged in successfully. Redirecting...'
+        'You have logged in successfully.',
+        'Redirecting...',
+        500,
+        (() => {
+          login(userData.token, userData.expiresIn);
+          navigate('/dashboard')
+          }
+        ),
+        
       );
-    
-      setTimeout(() => {
-        login(userData.token, userData.expiresIn);
-        navigate('/dashboard');
-      }, 1500);
-      
     } catch (error) {
       showNotification(
         'error',
         'Login Failed',
-        error.message || 'Please check your credentials and try again.'
+        error.message + 'Please check your credentials and try again.',
+        0,
+        null,
       );
     } finally {
       setLoading(false);
@@ -67,19 +70,19 @@ const Auth = () => {
       const userData = await handleRegister(values);
       showNotification(
         'success',
-        'Registration Successful',
-        'You have signed up successfully. Redirecting...'
+        'You have signed up successfully.',
+        'Redirecting...',
+        500,
+        (() => navigate('/dashboard'))
       );
-    
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 1500);
       
     } catch (error) {
       showNotification(
         'error',
         'Registration Failed',
-        error.message || 'Registration failed. Please try again.'
+        error.message + 'Please try again.',
+        0,
+        null
       );
     } finally {
       setLoading(false);

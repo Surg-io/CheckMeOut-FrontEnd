@@ -28,9 +28,9 @@ const DashboardMenu = ({hasNotification}) => {
         setIsModalOpen(false);
     };
 
-    const handlleLogout = () => {
+    const handleLogout = () => {
         logout();
-        navigate('/auth');
+        navigate('/auth?tab=login');
         closeSettings();
     }
 
@@ -79,7 +79,7 @@ const DashboardMenu = ({hasNotification}) => {
                     <Button
                         type='primary'
                         danger
-                        onClick={handlleLogout}
+                        onClick={handleLogout}
                         style={{
                             width:'100%'
                         }}

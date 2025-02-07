@@ -38,7 +38,7 @@ const Icon = ({ size = 1, clickable = false }) => {
         }}
       >
         <div className="logo">
-          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className="logo-image" />
+          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className="logo-image" fetchpriority="high"/>
         </div>
         <div className="brand-name" style={{ marginLeft: '10px' }}>
           {/**Assign different colors*/}

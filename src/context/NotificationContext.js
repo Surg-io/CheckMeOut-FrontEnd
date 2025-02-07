@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, use, useContext } from "react";
 import { notification } from "antd";
 
 const NotificationContext = createContext(null);
@@ -6,12 +6,17 @@ const NotificationContext = createContext(null);
 export const NotificationProvider = ({ children }) => {
     const [api, contextHolder] = notification.useNotification();
 
-    const showNotification = (type, message, description) => {
+    const showNotification = (type, message, description = '', timeout = 0, action = null) => {
         api[type]({
             message,
             description,
             placement: "bottomLeft",
         });
+        setTimeout(() => {
+            if (typeof action === "function") {
+                action();
+            }
+        }, timeout);
     };
 
     return (

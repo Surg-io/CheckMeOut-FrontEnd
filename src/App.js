@@ -53,11 +53,11 @@ const App = () => {
   return (
     <ConfigProvider theme={customTheme}>
       <UserProvider>
-        <NotificationProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <NotificationProvider>
             <AppRoutes />
-          </BrowserRouter>
-        </NotificationProvider>
+          </NotificationProvider>
+        </BrowserRouter>
       </UserProvider>
     </ConfigProvider>
   );
