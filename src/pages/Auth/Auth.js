@@ -44,15 +44,15 @@ const Auth = () => {
         "Redirecting...",
         500,
         () => {
-          login(userData.token, userData.expiresIn);
-          navigate("/dashboard");
+          login(userData.token, userData.expiresIn, userData.refreshToken);
+          navigate("/dashboard?tab=summary");
         },
       );
     } catch (error) {
       showNotification(
         "error",
         "Login Failed",
-        error.message + "Please check your credentials and try again.",
+        "Please check your credentials and try again.",
         0,
         null,
       );
@@ -70,7 +70,7 @@ const Auth = () => {
         "You have signed up successfully.",
         "Redirecting...",
         500,
-        () => navigate("/dashboard"),
+        () => navigate("/auth?tab=login"),
       );
     } catch (error) {
       showNotification(

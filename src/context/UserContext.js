@@ -5,62 +5,74 @@ import React, {
   useEffect,
   useState,
   useCallback,
+  useRef
 } from "react";
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { validateToken } from "@root/utils/TokenUtils";
+import { handleRefreshToken } from "@root/services/Token";
 
 const UserContext = createContext();
 
 let isRefreshing = false;
+function persistTokenData(newToken, newExpiresAt, newRefreshToken) {
+  localStorage.setItem("token", newToken);
+  localStorage.setItem("expiresAt", String(newExpiresAt));
+  if (newRefreshToken) {
+    localStorage.setItem("refreshToken", newRefreshToken);
+  }
+}
+
+function clearTokenData() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expiresAt");
+  localStorage.removeItem("refreshToken");
+}
 
 export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [refreshToken, setRefreshToken] = useState(() => localStorage.getItem("refreshToken"));
   const [expiresAt, setExpiresAt] = useState(
     () => parseInt(localStorage.getItem("expiresAt"), 10) || null,
   );
+  const refreshTimerRef = useRef(null);
 
-  const validateToken = useCallback(() => {
-    if (!token || !expiresAt) return false;
-    try {
-      jwtDecode(token);
-      return Date.now() < expiresAt;
-    } catch (error) {
-      console.error("Invalid token:", error);
-      return false;
-    }
-  }, [token, expiresAt]);
-
-  const login = useCallback((newToken, expiresIn) => {
+  const login = useCallback((newToken, expiresIn, refreshToken) => {
     const calculatedExpiresAt = Date.now() + expiresIn * 1000;
-
-    localStorage.setItem("token", newToken);
-    localStorage.setItem("expiresAt", calculatedExpiresAt.toString());
-
+    persistTokenData(newToken, calculatedExpiresAt.toString(), refreshToken);
+  
     setToken(newToken);
     setExpiresAt(calculatedExpiresAt);
-
+    setRefreshToken(refreshToken);
     scheduleTokenRefresh(calculatedExpiresAt);
   }, []);
 
   const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expiresAt");
+    clearTokenData();
     setToken(null);
     setExpiresAt(null);
+    setRefreshToken(null);
     delete axios.defaults.headers.common.Authorization;
+    if (refreshTimerRef.current) {
+      clearTimeout(refreshTimerRef.current);
+      refreshTimerRef.current = null;
+    }
   }, []);
 
-  const refreshToken = useCallback(async () => {
+  const refresh = useCallback(async () => {
     if (isRefreshing) return;
     isRefreshing = true;
-
+  
     try {
-      const response = await axios.post("/refresh", {
-        refreshToken: localStorage.getItem("refreshToken"),
-      });
-
-      login(response.data.token, response.data.expiresIn);
-      return response.data.token;
+      const storedRefreshToken = localStorage.getItem("refreshToken");
+      if (!storedRefreshToken) {
+        logout();
+      }
+      const response = await handleRefreshToken();
+      if(!response.token) {
+        throw new Error("Refresh token failed.")
+      }
+      login(response.token, response.expiresIn, storedRefreshToken);
+      return response.token;
     } catch (error) {
       logout();
       throw error;
@@ -68,46 +80,52 @@ export const UserProvider = ({ children }) => {
       isRefreshing = false;
     }
   }, [login, logout]);
+  
 
-  const scheduleTokenRefresh = useCallback(
-    (expirationTime) => {
+  const scheduleTokenRefresh = useCallback( (expirationTime) => {
+      if (refreshTimerRef.current) {
+        clearTimeout(refreshTimerRef.current);
+      }
       const refreshThreshold = 5 * 60 * 1000;
       const delay = expirationTime - Date.now() - refreshThreshold;
-
       if (delay > 0) {
-        setTimeout(() => {
+        refreshTimerRef.current = setTimeout(() => {
           if (validateToken()) {
-            refreshToken();
+            refresh();
           } else {
             logout();
           }
         }, delay);
       }
     },
-    [validateToken, refreshToken, logout],
+    [refreshToken, logout],
   );
 
   useEffect(() => {
-    if (!validateToken()) {
-      logout();
+    if (!token) {
+      return;
     }
-
-    if (token) {
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    if (validateToken(token)) {
+      scheduleTokenRefresh(expiresAt);
     } else {
-      delete axios.defaults.headers.common.Authorization;
+      refresh().catch((err) => {
+        console.error("Refresh token failed", err);
+      });
     }
-
+  
     const interceptor = axios.interceptors.response.use(
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-        //TODO: Change refresh conditions
         if (error.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
-
           try {
-            const newToken = await refreshToken();
+            const storedRefreshToken = localStorage.getItem("refreshToken");
+            if (!storedRefreshToken) {
+              logout();
+              return Promise.reject(error);
+            }
+            const newToken = await refresh();
             originalRequest.headers.Authorization = `Bearer ${newToken}`;
             return axios(originalRequest);
           } catch (refreshError) {
@@ -118,9 +136,14 @@ export const UserProvider = ({ children }) => {
         return Promise.reject(error);
       },
     );
-
-    return () => axios.interceptors.response.eject(interceptor);
-  }, [token, validateToken, logout, refreshToken]);
+  
+    return () => {
+      axios.interceptors.response.eject(interceptor);
+      if (refreshTimerRef.current) {
+        clearTimeout(refreshTimerRef.current);
+      }
+    };
+  }, [token, expiresAt, refresh, logout]);
 
   return (
     <UserContext.Provider

@@ -27,13 +27,17 @@ export const handleLogin = async (values) => {
   }
 
   try {
-    const data = await apiClient.post("/login", values, {
+    const loginResponse = await apiClient.post("/login", values, {
       withCredentials: false,
     });
-    if (!data.success) {
-      throw new Error(data.message || "Login failed");
+    if (!loginResponse.success) {
+      throw new Error(loginResponse.message || "Login failed");
     }
-    return data;
+    return {
+      token: loginResponse.token,
+      expiresIn: loginResponse.expiresIn,
+      refreshToken: loginResponse.refreshToken
+    };
   } catch (error) {
     throw new Error(error.message || "Login failed");
   }
