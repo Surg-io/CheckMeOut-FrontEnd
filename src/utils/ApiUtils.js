@@ -1,47 +1,30 @@
-// @root/utils/ApiUtils.js
-import axios from "axios";
-import config from "@root/config/config";
-import { jwtDecode } from "jwt-decode";
-import { validateToken } from "@root/utils/TokenUtils";
+// src/utils/ApiUtils.js
 
-export const getUrl = () => {
-  if (config.useMockData) {
-    return `${config.mockURL}`;
-  } else {
-    return `${config.apiBaseUrl}`;
-  }
-};
+export const handleApiRequest = async (apiCall) => {
+  try {
+    const response = await apiCall();
+    
+    if (!response || !response.data) {
+      throw new Error("Invalid response from server");
+    }
 
-export const apiClient = axios.create({
-  baseURL: config.useMockData ? config.mockURL : config.apiBaseUrl,
-  timeout: 10000,
-  //withCredentials: true,
-  responseType: "json",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+    return response.data;
+  } catch (error) {
+    console.error("API Request Error:", error);
 
+    if (error.response) {
+      const status = error.response.status;
+      const message = error.response.data?.message || "Request failed";
 
-apiClient.interceptors.response.use(
-  (response) => response.data,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        const newToken = await refreshToken();
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return apiClient(originalRequest);
-      } catch (refreshError) {
-        logout();
-        window.location.href = "/auth?tab=login";
-        return Promise.reject({ message: "Session expired, please login again" });
+      if (status === 401) {
+        throw new Error("Unauthorized: Please login again");
+      } else if (status >= 500) {
+        throw new Error("Server error: Please try again later");
+      } else {
+        throw new Error(message);
       }
     }
 
-    return Promise.reject(error);
-  },
-);
+    throw new Error(error.message || "Network error: Please check your connection");
+  }
+};

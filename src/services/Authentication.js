@@ -1,5 +1,6 @@
 // src/services/Authentication.js
-import { apiClient } from "@root/utils/ApiUtils";
+import { apiClient } from "@root/utils/ApiClient";
+import { handleApiRequest } from "@root/utils/ApiUtils";
 
 export const handleRegister = async (value) => {
   const payload = {
@@ -11,34 +12,24 @@ export const handleRegister = async (value) => {
     DOB: value.birthday,
   };
 
-  try {
-    const data = await apiClient.post("/register", payload, {
-      withCredentials: false,
-    });
-    return data;
-  } catch (error) {
-    throw new Error(error.message || "Registration failed");
-  }
+  return handleApiRequest(() =>
+    apiClient.post("/register", payload, { withCredentials: false })
+  );
 };
 
 export const handleLogin = async (values) => {
-  if (!values?.Email || !values?.password) {
-    throw new Error("Email and password are required");
+  return handleApiRequest(() =>
+    apiClient.post("/login", values, { withCredentials: false })
+  );
+};
+
+
+export const handleRefreshToken = async (refreshToken) => {
+  if (!refreshToken) {
+    throw new Error("No refresh token available");
   }
 
-  try {
-    const loginResponse = await apiClient.post("/login", values, {
-      withCredentials: false,
-    });
-    if (!loginResponse.success) {
-      throw new Error(loginResponse.message || "Login failed");
-    }
-    return {
-      token: loginResponse.token,
-      expiresIn: loginResponse.expiresIn,
-      refreshToken: loginResponse.refreshToken
-    };
-  } catch (error) {
-    throw new Error(error.message || "Login failed");
-  }
+  return handleApiRequest(() =>
+    apiClient.post("/refreshToken", { refreshToken })
+  );
 };

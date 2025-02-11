@@ -5,7 +5,7 @@ import { AuthLayout } from "@root/layouts";
 import { LoginForm, RegisterForm } from "@root/components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { handleRegister, handleLogin } from "@root/services/Authentication";
-import { useUser } from "@root/context/UserContext";
+import { login } from "@root/utils/TokenUtils";
 import { useNotification } from "@root/context/NotificationContext";
 import "./Auth.css";
 
@@ -21,7 +21,6 @@ const Auth = () => {
 
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { login } = useUser();
   const initialForm = searchParams.get("tab") || "signup";
   const [isLogin, setIsLogin] = useState(initialForm === "login");
 
@@ -37,25 +36,29 @@ const Auth = () => {
   const handleLoginWithNotification = async (values) => {
     setLoading(true);
     try {
-      const userData = await handleLogin(values);
-      showNotification(
-        "success",
-        "You have logged in successfully.",
-        "Redirecting...",
-        500,
-        () => {
-          login(userData.token, userData.expiresIn, userData.refreshToken);
-          navigate("/dashboard?tab=summary");
-        },
-      );
+      const response = await handleLogin(values);
+      if (response.success) {
+        showNotification(
+          "success",
+          "You have logged in successfully.",
+          "Redirecting...",
+          500,
+          () => {
+            login(response.token, response.expiresIn, response.refreshToken);
+          },
+        );
+      } else {
+        showNotification(
+          "error",
+          "Login Failed",
+          "Please check your credentials and try again.",
+          0,
+          null,
+        );
+      }
     } catch (error) {
-      showNotification(
-        "error",
-        "Login Failed",
-        "Please check your credentials and try again.",
-        0,
-        null,
-      );
+      console.log("Login error: " + error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -64,22 +67,27 @@ const Auth = () => {
   const handleRegisterWithNotification = async (values) => {
     setLoading(true);
     try {
-      const userData = await handleRegister(values);
-      showNotification(
-        "success",
-        "You have signed up successfully.",
-        "Redirecting...",
-        500,
-        () => navigate("/auth?tab=login"),
-      );
+      const response = await handleRegister(values);
+      if (response.success){
+        showNotification(
+          "success",
+          "You have signed up successfully.",
+          "Redirecting...",
+          500,
+          () => navigate("/auth?tab=login"),
+        );
+      } else {
+        showNotification(
+          "error",
+          "Registration Failed",
+          error.message + "Please try again.",
+          0,
+          null,
+        );
+      }
     } catch (error) {
-      showNotification(
-        "error",
-        "Registration Failed",
-        error.message + "Please try again.",
-        0,
-        null,
-      );
+      console.log("Registration error: " + error);
+      throw error;
     } finally {
       setLoading(false);
     }
