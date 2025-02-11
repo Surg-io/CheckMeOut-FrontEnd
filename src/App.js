@@ -1,13 +1,15 @@
 // This is the main entry point of the application
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { UserProvider, useUser } from "@root/context/UserContext";
+import { UserProvider, useUser } from "context/UserContext";
 import { ConfigProvider } from "antd";
 // Pages
-import HomePage from "@root/pages/Home/HomePage";
-import Auth from "@root/pages/Auth/Auth";
-import Dashboard from "@root/pages/Dashboard/Dashboard";
-import { NotificationProvider } from "./context/NotificationContext";
+import HomePage from "pages/Home/HomePage";
+import Auth from "pages/Auth/Auth";
+import Dashboard from "pages/Dashboard/Dashboard";
+import { NotificationProvider } from "context/NotificationContext";
+
+import "App.css";
 
 // ProtectedRoute
 const ProtectedRoute = ({ children }) => {
@@ -41,6 +43,7 @@ const AppRoutes = () => {
 const customTheme = {
   token: {
     fontFamily: "Montserrat, sans-serif",
+    borderRadius: 8
   },
 };
 

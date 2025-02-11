@@ -1,6 +1,6 @@
 // src/services/Authentication.js
-import { apiClient } from "@root/utils/ApiClient";
-import { handleApiRequest } from "@root/utils/ApiUtils";
+import { apiClient } from "utils/ApiClient";
+import { handleApiRequest } from "utils/ApiUtils";
 
 export const handleRegister = async (value) => {
   const payload = {
@@ -22,7 +22,6 @@ export const handleLogin = async (values) => {
     apiClient.post("/login", values, { withCredentials: false })
   );
 };
-
 
 export const handleRefreshToken = async (refreshToken) => {
   if (!refreshToken) {

@@ -1,5 +1,5 @@
 import Sider from "antd/es/layout/Sider";
-import MainLayout from "@root/layouts/MainLayout";
+import MainLayout from "layouts/MainLayout";
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import React, { useState } from "react";

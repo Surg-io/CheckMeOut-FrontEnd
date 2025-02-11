@@ -1,10 +1,11 @@
 // src/index.js
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "@root/App";
-import reportWebVitals from "@root/reportWebVitals";
-import "@root/index.css";
+import App from "App";
+import reportWebVitals from "reportWebVitals";
 import { Buffer } from "buffer";
+
+require('mock/mockServer');
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 global.Buffer = Buffer;

@@ -1,0 +1,173 @@
+[
+  {
+    "recordId": 1,
+    "checkin": "2025-01-01T16:00:00.000Z",
+    "checkout": "2025-01-01T18:00:00.000Z",
+    "reservationDevice": "Laptop",
+    "status": "Checked Out",
+    "reservationStartTime": "2025-12-01T15:30:00.000Z",
+    "reservationEndTime": "2025-12-01T16:00:00.000Z"
+  },
+  {
+    "recordId": 2,
+    "checkin": "2025-01-12T16:00:00.000Z",
+    "checkout": "2025-01-12T18:00:00.000Z",
+    "reservationDevice": "Desktop",
+    "status": "Checked Out",
+    "reservationStartTime": "2025-01-12T15:00:00.000Z",
+    "reservationEndTime": "2025-01-12T15:30:00.000Z"
+  },
+  {
+    "recordId": 3,
+    "checkin": "2025-02-01T14:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": "Tablet",
+    "status": "Not Checked Out",
+    "reservationStartTime": "2025-02-01T13:30:00.000Z",
+    "reservationEndTime": "2025-02-01T14:00:00.000Z"
+  },
+  {
+    "recordId": 4,
+    "checkin": "2025-02-10T10:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": null,
+    "status": "Auto Checkout",
+    "reservationStartTime": null,
+    "reservationEndTime": null
+  },
+  {
+    "recordId": 2,
+    "checkin": "2025-01-12T16:00:00.000Z",
+    "checkout": "2025-01-12T18:00:00.000Z",
+    "reservationDevice": "Desktop",
+    "status": "Checked Out",
+    "reservationStartTime": "2025-01-12T15:00:00.000Z",
+    "reservationEndTime": "2025-01-12T15:30:00.000Z"
+  },
+  {
+    "recordId": 3,
+    "checkin": "2025-02-01T14:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": "Tablet",
+    "status": "Not Checked Out",
+    "reservationStartTime": "2025-02-01T13:30:00.000Z",
+    "reservationEndTime": "2025-02-01T14:00:00.000Z"
+  },
+  {
+    "recordId": 4,
+    "checkin": "2025-02-10T10:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": null,
+    "status": "Auto Checkout",
+    "reservationStartTime": null,
+    "reservationEndTime": null
+  },
+  {
+    "recordId": 2,
+    "checkin": "2025-01-12T16:00:00.000Z",
+    "checkout": "2025-01-12T18:00:00.000Z",
+    "reservationDevice": "Desktop",
+    "status": "Checked Out",
+    "reservationStartTime": "2025-01-12T15:00:00.000Z",
+    "reservationEndTime": "2025-01-12T15:30:00.000Z"
+  },
+  {
+    "recordId": 3,
+    "checkin": "2025-02-01T14:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": "Tablet",
+    "status": "Not Checked Out",
+    "reservationStartTime": "2025-02-01T13:30:00.000Z",
+    "reservationEndTime": "2025-02-01T14:00:00.000Z"
+  },
+  {
+    "recordId": 4,
+    "checkin": "2025-02-10T10:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": null,
+    "status": "Auto Checkout",
+    "reservationStartTime": null,
+    "reservationEndTime": null
+  },
+  {
+    "recordId": 2,
+    "checkin": "2025-01-12T16:00:00.000Z",
+    "checkout": "2025-01-12T18:00:00.000Z",
+    "reservationDevice": "Desktop",
+    "status": "Checked Out",
+    "reservationStartTime": "2025-01-12T15:00:00.000Z",
+    "reservationEndTime": "2025-01-12T15:30:00.000Z"
+  },
+  {
+    "recordId": 3,
+    "checkin": "2025-02-01T14:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": "Tablet",
+    "status": "Not Checked Out",
+    "reservationStartTime": "2025-02-01T13:30:00.000Z",
+    "reservationEndTime": "2025-02-01T14:00:00.000Z"
+  },
+  {
+    "recordId": 4,
+    "checkin": "2025-02-10T10:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": null,
+    "status": "Auto Checkout",
+    "reservationStartTime": null,
+    "reservationEndTime": null
+  },
+  {
+    "recordId": 2,
+    "checkin": "2025-01-12T16:00:00.000Z",
+    "checkout": "2025-01-12T18:00:00.000Z",
+    "reservationDevice": "Desktop",
+    "status": "Checked Out",
+    "reservationStartTime": "2025-01-12T15:00:00.000Z",
+    "reservationEndTime": "2025-01-12T15:30:00.000Z"
+  },
+  {
+    "recordId": 3,
+    "checkin": "2025-02-01T14:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": "Tablet",
+    "status": "Not Checked Out",
+    "reservationStartTime": "2025-02-01T13:30:00.000Z",
+    "reservationEndTime": "2025-02-01T14:00:00.000Z"
+  },
+  {
+    "recordId": 4,
+    "checkin": "2025-02-10T10:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": null,
+    "status": "Auto Checkout",
+    "reservationStartTime": null,
+    "reservationEndTime": null
+  },
+  {
+    "recordId": 2,
+    "checkin": "2025-01-12T16:00:00.000Z",
+    "checkout": "2025-01-12T18:00:00.000Z",
+    "reservationDevice": "Desktop",
+    "status": "Checked Out",
+    "reservationStartTime": "2025-01-12T15:00:00.000Z",
+    "reservationEndTime": "2025-01-12T15:30:00.000Z"
+  },
+  {
+    "recordId": 3,
+    "checkin": "2025-02-01T14:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": "Tablet",
+    "status": "Not Checked Out",
+    "reservationStartTime": "2025-02-01T13:30:00.000Z",
+    "reservationEndTime": "2025-02-01T14:00:00.000Z"
+  },
+  {
+    "recordId": 4,
+    "checkin": "2025-02-10T10:00:00.000Z",
+    "checkout": null,
+    "reservationDevice": null,
+    "status": "Auto Checkout",
+    "reservationStartTime": null,
+    "reservationEndTime": null
+  }
+]

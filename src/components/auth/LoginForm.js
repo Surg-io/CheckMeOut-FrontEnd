@@ -8,7 +8,7 @@ import {
   EyeTwoTone,
 } from "@ant-design/icons";
 import { Flex, Button, Form, Input, Checkbox } from "antd";
-import { sanitizeEmail, sanitizePassword } from "@root/utils/Sanitizers";
+import { sanitizeEmail, sanitizePassword } from "utils/Sanitizers";
 
 const LoginForm = ({ onFinish }) => {
   const [loading, setLoading] = useState(false);

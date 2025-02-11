@@ -1,12 +1,12 @@
 // src/pages/Auth/Auth.js
 import React, { useState, useEffect } from "react";
 import { Menu } from "antd";
-import { AuthLayout } from "@root/layouts";
-import { LoginForm, RegisterForm } from "@root/components";
+import { AuthLayout } from "layouts";
+import { LoginForm, RegisterForm } from "components";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { handleRegister, handleLogin } from "@root/services/Authentication";
-import { login } from "@root/utils/TokenUtils";
-import { useNotification } from "@root/context/NotificationContext";
+import { handleRegister, handleLogin } from "services/Authentication";
+import { login } from "utils/TokenUtils";
+import { useNotification } from "context/NotificationContext";
 import "./Auth.css";
 
 const labels = ["Sign Up", "Login"];
@@ -48,6 +48,7 @@ const Auth = () => {
           },
         );
       } else {
+        console.log(response)
         showNotification(
           "error",
           "Login Failed",

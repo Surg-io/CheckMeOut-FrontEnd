@@ -1,0 +1,12 @@
+.ant-table-thead > tr > th {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  min-width: fit-content;
+}
+
+.ant-table-thead > tr > th .ant-table-cell {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}

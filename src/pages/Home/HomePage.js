@@ -1,33 +1,16 @@
 // src/pages/HomePage.js
 // This page is the homepage of the website, should only appear when not authed?
 
-import React, { useState, useEffect } from "react";
-import { MainLayout } from "@root/layouts";
-import { HomeMenu } from "@root/components";
+import React from "react";
+import { MainLayout } from "layouts";
+import { HomeMenu } from "components";
 import { Flex, Button } from "antd";
 import { blue, gold } from "@ant-design/colors";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "@root/context/UserContext";
 import "./HomePage.css";
 
 const HomePage = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const { token } = useUser();
   const navigate = useNavigate();
-
-  // Update window dimensions on resize
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      setWindowHeight(window.innerHeight);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup listener on component unmount
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleLoginClick = () => {
     navigate("/auth?tab=login", { state: { form: "login" } });

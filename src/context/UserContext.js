@@ -1,6 +1,6 @@
 // src/context/UserContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getToken, refreshToken, validateToken, logout } from "@root/utils/TokenUtils";
+import { getToken, refreshToken, validateToken, logout } from "utils/TokenUtils";
 
 const UserContext = createContext();
 

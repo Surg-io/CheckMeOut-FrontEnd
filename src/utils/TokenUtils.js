@@ -1,6 +1,5 @@
 // src/utils/TokenUtils
-import apiClient from "@root/utils/ApiClient";
-import { handleRefreshToken } from "@root/services/Authentication";
+import { handleRefreshToken } from "services/Authentication";
 
 export const getToken = () => localStorage.getItem("token");
 

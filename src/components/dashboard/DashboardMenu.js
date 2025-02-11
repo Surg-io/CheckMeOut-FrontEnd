@@ -5,7 +5,7 @@ import {
   QrcodeOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { useUser } from "@root/context/UserContext";
+import { useUser } from "context/UserContext";
 import { useNavigate } from "react-router-dom";
 const DashboardMenu = ({ hasNotification }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

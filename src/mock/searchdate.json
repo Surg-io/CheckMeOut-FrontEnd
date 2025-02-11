@@ -1,0 +1,27 @@
+{
+  "selectedDate": "2024-11-28",
+  "devices": [
+      {
+          "deviceId": "deviceA",
+          "deviceName": "Device A",
+          "timeWindows": [
+              { "startTime": "09:00", "endTime": "10:00", "status": "reserved" },
+              { "startTime": "13:00", "endTime": "14:30", "status": "outOfService" },
+              { "startTime": "15:00", "endTime": "15:30", "status": "reserved" }
+          ]
+      },
+      {
+          "deviceId": "deviceB",
+          "deviceName": "Device B",
+          "timeWindows": [
+              { "startTime": "08:00", "endTime": "09:30", "status": "reserved" },
+              { "startTime": "15:00", "endTime": "16:00", "status": "reserved" }
+          ]
+      },
+      {
+          "deviceId": "deviceC",
+          "deviceName": "Device C",
+          "timeWindows": []
+      }
+  ]
+}

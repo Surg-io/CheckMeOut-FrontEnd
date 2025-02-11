@@ -1,6 +1,6 @@
 import axios from "axios";
-import config from "@root/config/config";
-import { getToken, refreshToken, logout } from "@root/utils/TokenUtils"; // 🔥 确保 getToken 方法正确
+import config from "config/config";
+import { getToken, refreshToken, logout } from "utils/TokenUtils"; // 🔥 确保 getToken 方法正确
 
 export const apiClient = axios.create({
   baseURL: config.useMockData ? config.mockURL : config.apiBaseUrl,

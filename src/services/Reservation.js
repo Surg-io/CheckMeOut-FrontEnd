@@ -2,8 +2,8 @@
  * src/services/Reservation.js
  * Service for handling reservation-related API requests (fetching schedules and submitting reservations).
  */
-import { apiClient } from "@root/utils/ApiClient";
-import { handleApiRequest } from "@root/utils/ApiUtils";
+import { apiClient } from "utils/ApiClient";
+import { handleApiRequest } from "utils/ApiUtils";
 import dayjs from "dayjs";
 
 const handleFetchSchedule = async (date) => {

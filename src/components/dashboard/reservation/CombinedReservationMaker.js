@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import LimitedDatePicker from "@root/components/dashboard/reservation/LimitedDatePicker";
-import ScheduleDisplay from "@root/components/dashboard/reservation/ScheduleDisplay";
+import LimitedDatePicker from "components/dashboard/reservation/LimitedDatePicker";
+import ScheduleDisplay from "components/dashboard/reservation/ScheduleDisplay";
 import {
   handleFetchSchedule,
   handleSubmitReservation,
-} from "@root/services/Reservation";
+} from "services/Reservation";
 import dayjs from "dayjs";
-import config from "@root/config/config";
+import config from "config/config";
 import { Radio, Space, Divider, Button, Row, Col, Skeleton } from "antd";
 import ReactMarkdown from "react-markdown";
-import { useNotification } from "@root/context/NotificationContext";
+import { useNotification } from "context/NotificationContext";
 import { useNavigate } from "react-router-dom";
 
 const CombinedReservationMaker = () => {
@@ -96,7 +96,6 @@ const CombinedReservationMaker = () => {
 
   return (
     <>
-      <h1>Reservation</h1>
       <div style={{ position: "relative", minHeight: "200px" }}>
         {contentLoading ? (
           <Skeleton active paragraph={{ rows: 9 }} />

@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJOYW1lIjoiSm9obiBEb2UifQ.Pqw_SrWgw369Kas3NZ1yg9U3sjKO-O58JQcfPuDyWfE",
+  "expiresIn": 3600,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzEyMzQiLCJleHAiOjE2Nzg1MDAwMDB9.-T5bFw-KHbjbgm7oKQTaRluYv8rbXFHPs-yawxgpixg"
+}

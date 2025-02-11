@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Row, Col, Select } from "antd";
-import { DateOfBirthInput } from "@root/components";
-import majors from "@root/config/majorList";
+import { DateOfBirthInput } from "components";
+import majors from "config/majorList";
 import {
   validatePasswordMatch,
   sanitizeEmail,
@@ -9,7 +9,7 @@ import {
   sanitizeVerificationCode,
   sanitizeName,
   sanitizePassword,
-} from "@root/utils/Sanitizers";
+} from "utils/Sanitizers";
 const { Option } = Select;
 
 const RegisterForm = ({ onFinish }) => {

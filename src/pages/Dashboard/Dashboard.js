@@ -1,13 +1,13 @@
 // src/pages/Dashboard/Dashboard.js
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { DashboardLayout } from "@root/layouts";
+import { DashboardLayout } from "layouts";
 import {
   DashboardSider,
   DashboardMenu,
   CombinedReservationMaker,
   History,
-} from "@root/components";
+} from "components";
 import { Card } from "antd";
 
 const Dashboard = () => {
@@ -28,11 +28,26 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (selectedKey) {
       case "summary":
-        return <Card />;
+        return (
+          <div>
+            <h1>Summary</h1>
+            <Card />
+          </div>
+        );
       case "reservation":
-        return <CombinedReservationMaker />;
+        return (
+          <div>
+            <h1>Reservation</h1>
+            <CombinedReservationMaker />;
+          </div>
+        );
       case "history":
-        return <History />;
+        return (
+          <div>
+            <h1>History</h1>
+            <History />
+          </div>
+        );
       case "space":
         return <Card />;
       case "equipment":

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import config from "@root/config/config";
+import config from "config/config";
 import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
