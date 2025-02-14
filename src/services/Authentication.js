@@ -22,13 +22,3 @@ export const handleLogin = async (values) => {
     apiClient.post("/login", values, { withCredentials: false })
   );
 };
-
-export const handleRefreshToken = async (refreshToken) => {
-  if (!refreshToken) {
-    throw new Error("No refresh token available");
-  }
-
-  return handleApiRequest(() =>
-    apiClient.post("/refreshToken", { refreshToken })
-  );
-};

@@ -1,6 +1,6 @@
 // src/context/UserContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getToken, refreshToken, validateToken, logout } from "utils/TokenUtils";
+import { getToken, validateToken, logout } from "utils/TokenUtils";
 
 const UserContext = createContext();
 
@@ -12,16 +12,10 @@ export const UserProvider = ({ children }) => {
     if (!token) {
       return;
     }
-
     if (validateToken()) {
       setIsAuthenticated(true);
     } else {
-      refreshToken()
-        .then((newToken) => {
-          setToken(newToken);
-          setIsAuthenticated(true);
-        })
-        .catch(() => logout());
+      logout();
     }
   }, [token]);
 

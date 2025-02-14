@@ -44,11 +44,10 @@ const Auth = () => {
           "Redirecting...",
           500,
           () => {
-            login(response.token, response.expiresIn, response.refreshToken);
+            login(response.token, response.expiresIn);
           },
         );
       } else {
-        console.log(response)
         showNotification(
           "error",
           "Login Failed",

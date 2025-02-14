@@ -1,6 +1,6 @@
 import axios from "axios";
 import config from "config/config";
-import { getToken, refreshToken, logout } from "utils/TokenUtils"; // 🔥 确保 getToken 方法正确
+import { getToken, logout } from "utils/TokenUtils";
 
 export const apiClient = axios.create({
   baseURL: config.useMockData ? config.mockURL : config.apiBaseUrl,
@@ -28,18 +28,11 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const newToken = await refreshToken();
-        if (newToken) {
-          originalRequest.headers.Authorization = `Bearer ${newToken}`;
-          return apiClient(originalRequest);
-        }
-      } catch (refreshError) {
-        logout();
-        return Promise.reject(refreshError);
-      }
+    if (error.response?.status === 401) {
+      logout();
+
+      window.location.href = '/auth?tab=login';
+      return Promise.reject(error);
     }
     return Promise.reject(error);
   }
