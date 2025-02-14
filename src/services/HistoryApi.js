@@ -4,7 +4,7 @@ import { handleApiRequest } from "utils/ApiUtils";
 
 export const handleGetHistory = async (values) => {
   return handleApiRequest(() => 
-    apiClient.post("/history", values, { withCredentials: true })
+    apiClient.post("/scanHistory", values, { withCredentials: true })
   )
 };
 

@@ -6,6 +6,6 @@ import history from './history.json';
 import searchdate from './searchdate.json';
 import cancel from './cancel.json';
 Mock.mock(`${config.mockURL}/login`, 'post', login);
-Mock.mock(`${config.mockURL}/history`, 'post', history);
+Mock.mock(`${config.mockURL}/scanHistory`, 'post', history);
 Mock.mock(`${config.mockURL}/searchdate`, 'post', searchdate);
 Mock.mock(`${config.mockURL}/cancel`, 'post', cancel);

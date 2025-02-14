@@ -1,6 +1,6 @@
 import { Form, DatePicker, Button, Table, Tag, Switch } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { Children, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { handleCancelReservation, handleGetHistory } from "services/HistoryApi";
 import { useNotification } from "context/NotificationContext";
 import { useNavigate } from "react-router-dom";
@@ -79,7 +79,6 @@ const History = () => {
         reservationDevice: item.reservationDevice || "Not Specified",
         status: item.status,
       }));
-
       setRecord(formattedData);
     } catch (error) {
       console.error("Failed to fetch history:", error);
