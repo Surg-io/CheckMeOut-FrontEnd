@@ -1,30 +1,50 @@
 // src/components/ProtectedRoute.js
-import React from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "context/UserContext";
 import { useAcl } from "context/AclContext";
+import { Spin } from "antd";
 
-const ProtectedRoute = ({ component: Component, requiredPermission, redirectPath }) => {
+const ProtectedRoute = ({ 
+  component: Component, 
+  requiredPermission, 
+  redirectPath
+}) => {
   const { token } = useUser();
   const { hasPermission } = useAcl();
   const location = useLocation();
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
+  const [isChecking, setIsChecking] = React.useState(true);
 
-  const resolvedPermission = 
-    typeof requiredPermission === "function"
-      ? requiredPermission(searchParams)
-      : requiredPermission;
+  useEffect(() => {
+    const checkAccess = () => {
+      if (token === undefined) return;
 
-  if (!token) return <Navigate to="/auth" replace />;
+      if (!token) {
+        navigate("/auth", { replace: true });
+        setIsChecking(false);
+        return;
+      }
 
-  const hasAccess = resolvedPermission ? hasPermission(resolvedPermission) : true;
+      let resolvedPermission = requiredPermission;
+      if (typeof requiredPermission === "function") {
+        const params = new URLSearchParams(location.search);
+        resolvedPermission = requiredPermission(params);
+      }
 
-  if (!hasAccess) {
-    navigate(redirectPath || location.pathname, { replace: true });
-    return null;
-  }
+      if (resolvedPermission && !hasPermission(resolvedPermission)) {
+        navigate(redirectPath || "/unauthorized", { replace: true });
+        setIsChecking(false);
+        return;
+      }
 
+      setIsChecking(false);
+    };
+
+    checkAccess();
+  }, [location, token, requiredPermission, redirectPath]);
+
+  if (isChecking) return <Spin />;
   return <Component />;
 };
 
