@@ -1,4 +1,6 @@
 import React from "react";
+import { useAcl } from "context/AclContext";
+import { ROLE_ADMIN } from "config/permissions";
 import {
   CalendarOutlined,
   DashboardOutlined,
@@ -34,13 +36,18 @@ const getLevelKeys = (items1) => {
 };
 
 const DashboardSider = ({ onSelectKey, selectedKey }) => {
+  const {hasPermission} = useAcl();
   const [stateOpenKeys, setStateOpenKeys] = useState(["2", "23"]);
   const items = [
-    {
-      key: "summary",
-      label: "Summary",
-      icon: <DashboardOutlined className="icon" />,
-    },
+    ...(hasPermission(ROLE_ADMIN)
+      ? [
+          {
+            key: "summary",
+            label: "Summary",
+            icon: <DashboardOutlined className="icon" />,
+          },
+        ]
+      : []),
     {
       key: "reservation",
       label: "Reservation",

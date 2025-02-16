@@ -59,7 +59,7 @@ export const clearTokenData = () => {
 
 export const login = async (token) => {
   persistTokenData(token);
-  window.location.href = "/dashboard?tab=summary";
+  window.location.href = "/dashboard?tab=reservation";
 };
 
 export const logout = () => {
