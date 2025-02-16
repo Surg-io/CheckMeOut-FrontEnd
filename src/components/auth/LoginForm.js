@@ -27,7 +27,7 @@ const LoginForm = () => {
           "Redirecting...",
           500,
           () => {
-            login(response.token, response.expiresIn);
+            login(response.token);
           },
         );
       } else {

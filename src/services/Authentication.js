@@ -12,7 +12,6 @@ export const handleRegister = async (value) => {
     DOB: value.birthday,
     Code: value.confirm
   };
-  console.log(payload)
   return handleApiRequest(() =>
     apiClient.post("/register", payload, { withCredentials: false })
   );

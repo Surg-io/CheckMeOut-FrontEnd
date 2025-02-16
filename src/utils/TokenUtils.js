@@ -1,26 +1,64 @@
-export const getToken = () => localStorage.getItem("token");
+// src/utils/TokenUtils.js
+import Cookies from "js-cookie";
 
-export const validateToken = () => {
-  const expiresAtStr = localStorage.getItem('expiresAt');
-  if (!expiresAtStr) return false;
-  const expiresAt = parseInt(expiresAtStr, 10);
-  return Date.now() < expiresAt;
+export const getToken = () => Cookies.get("token");
+
+const parseJwtPayload = (token) => {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const payload = JSON.parse(atob(base64));
+    return payload;
+  } catch (error) {
+    console.error("Failed to parse JWT payload:", error);
+    return null;
+  }
 };
 
-export const persistTokenData = (token, expiresIn) => {
-  const expiresAt = Date.now() + expiresIn * 1000;
-  localStorage.setItem("token", token);
-  localStorage.setItem("expiresAt", String(expiresAt));
+export const validateToken = () => {
+  const token = getToken();
+  if (!token) return false;
+
+  const payload = parseJwtPayload(token);
+  if (!payload || !payload.exp) return false;
+
+  return Date.now() < payload.exp * 1000; 
+};
+
+export const getPermissions = () => {
+  const token = getToken();
+  if (!token) return null;
+
+  const payload = parseJwtPayload(token);
+  if (!payload || !payload.permissions) return null;
+
+  return payload.permissions;
+};
+
+export const persistTokenData = (token) => {
+  const payload = parseJwtPayload(token);
+  if (!payload || !payload.exp) {
+    throw new Error("Invalid token: missing expiration time");
+  }
+
+  const expiresAt = new Date(payload.exp * 1000);
+    Cookies.set("token", token, { expires: expiresAt, path: '/' });
+
+    if (payload.permissions) {
+      Cookies.set("permissions", JSON.stringify(payload.permissions), {
+        expires: expiresAt,
+        path: '/'
+      });
+    }
 };
 
 export const clearTokenData = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("expiresAt");
+  Cookies.remove("token");
+  Cookies.remove("permissions");
 };
 
-export const login = async (token, expiresIn) => {
-  const calculatedExpiresAt = Date.now() + expiresIn * 1000;
-  persistTokenData(token, calculatedExpiresAt.toString());
+export const login = async (token) => {
+  persistTokenData(token);
   window.location.href = "/dashboard?tab=summary";
 };
 
@@ -28,4 +66,3 @@ export const logout = () => {
   clearTokenData();
   window.location.href = "/auth?tab=login";
 };
-

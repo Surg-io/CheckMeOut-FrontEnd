@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <UserContext.Provider value={{ token, isAuthenticated, logout }}>
+    <UserContext.Provider value={{ token, isAuthenticated, logout, setToken }}>
       {children}
     </UserContext.Provider>
   );

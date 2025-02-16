@@ -21,24 +21,7 @@ const HomePage = () => {
   };
 
   const handleReserveNow = () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/auth");
-      return;
-    }
-    const parsedToken = parseJwt(token);
-    if (!parsedToken) {
-      localStorage.removeItem("token");
-      navigate("/auth");
-      return;
-    }
-    const currentTime = Date.now() / 1000;
-    if (parsedToken.exp < currentTime) {
-      localStorage.removeItem("token");
-      navigate("/auth");
-    } else {
-      navigate("/dashboard");
-    }
+    navigate("/auth?tab=login", { state: { form: "login" } });
   };
 
   const menuComponent = (
