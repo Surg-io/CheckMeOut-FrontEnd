@@ -10,8 +10,9 @@ export const handleRegister = async (value) => {
     Password: value.password,
     Major: value.major,
     DOB: value.birthday,
+    Code: value.confirm
   };
-
+  console.log(payload)
   return handleApiRequest(() =>
     apiClient.post("/register", payload, { withCredentials: false })
   );
@@ -22,3 +23,9 @@ export const handleLogin = async (values) => {
     apiClient.post("/login", values, { withCredentials: false })
   );
 };
+
+export const handleGetCode = async (values) => {
+  return handleApiRequest(() =>
+    apiClient.post("/getregistercode", values, { withCredentials: false })
+  );
+}

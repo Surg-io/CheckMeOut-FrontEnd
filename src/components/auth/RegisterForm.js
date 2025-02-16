@@ -9,12 +9,73 @@ import {
   sanitizeVerificationCode,
   sanitizeName,
   sanitizePassword,
-} from "utils/Sanitizers";
+} from "utils/sanitizers";
+import { handleRegister, handleGetCode } from "services/Authentication";
+import { useNotification } from "context/NotificationContext";
+import { useNavigate } from "react-router-dom";
+
 const { Option } = Select;
 
-const RegisterForm = ({ onFinish }) => {
+const RegisterForm = () => {
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const showNotification = useNotification();
   const [dobState, setDobState] = useState({ isValid: true, errorMessage: "" });
-
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const onEmailChange = () => {
+    const newEmail = form.getFieldValue('email');
+    setEmail(newEmail);
+  }
+  const handleGetCodeWithVerification = async () => {
+    try {
+      if (email=="") {
+        showNotification("error", "Error", "Please enter your email.");
+        return;
+      }
+      await form.validateFields([
+        "firstName",
+        "lastName",
+        "birthday",
+        "major",
+        "email",
+        "password",
+        "confirm"
+      ]);
+      await handleGetCode(email);
+      showNotification("success", "Verification Code Sent", "Check your email.");
+    } catch (error) {
+      showNotification("error", "Error", "Please complete all required fields before requesting a code.");
+    }
+  }
+  const handleRegisterWithNotification = async (values) => {
+    setLoading(true);
+    try {
+      const response = await handleRegister(values);
+      if (response.success){
+        showNotification(
+          "success",
+          "You have signed up successfully.",
+          "Redirecting...",
+          500,
+          () => navigate("/auth?tab=login"),
+        );
+      } else {
+        showNotification(
+          "error",
+          "Registration Failed",
+          error.message + "Please try again.",
+          0,
+          null,
+        );
+      }
+    } catch (error) {
+      console.log("Registration error: " + error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
   const validateDateOfBirth = (dob) => {
     const { month, day, year } = dob || {};
     if (!month || !day || !year) {
@@ -54,7 +115,7 @@ const RegisterForm = ({ onFinish }) => {
       return; // Prevent form submission if DOB is invalid
     }
     // Proceed with form submission
-    onFinish(values);
+    handleRegisterWithNotification(values);
   };
 
   const handleDobChange = (dob) => {
@@ -65,6 +126,7 @@ const RegisterForm = ({ onFinish }) => {
   return (
     <Form
       name="Register"
+      form={form}
       initialValues={{
         remember: true,
       }}
@@ -135,7 +197,7 @@ const RegisterForm = ({ onFinish }) => {
         </Select>
       </Form.Item>
       <Form.Item
-        name="Email"
+        name="email"
         rules={[
           {
             required: true,
@@ -147,6 +209,7 @@ const RegisterForm = ({ onFinish }) => {
           },
         ]}
         normalize={(value) => sanitizeEmail(value)}
+        onChange={onEmailChange}
       >
         <Input placeholder="Email" />
       </Form.Item>
@@ -195,12 +258,6 @@ const RegisterForm = ({ onFinish }) => {
         <Col span={18}>
           <Form.Item
             name="code"
-            rules={[
-              {
-                required: true,
-                message: "Please check your email and enter verification code",
-              },
-            ]}
             normalize={(value) => sanitizeVerificationCode(value)}
           >
             <Input placeholder="Verification code" />
@@ -213,6 +270,7 @@ const RegisterForm = ({ onFinish }) => {
             style={{
               width: "100%",
             }}
+            onClick={handleGetCodeWithVerification}
           >
             Get Code
           </Button>
