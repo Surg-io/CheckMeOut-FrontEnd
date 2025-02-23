@@ -1,6 +1,6 @@
 {
   "success": true,
   "message": "Login successful",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywiZXhwIjoxNzQwODY2MzA4LCJwZXJtaXNzaW9ucyI6MzUwMjl9.67I-hxaSHZIZOIG8lIv7TETFp6X2q1xIg99KTqRytFA",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywiZXhwIjoxNzQwODY2MzA4LCJwZXJtaXNzaW9ucyI6NTI0Mjg3fQ.NjOOkU0rNHvPh_d-nmC91SgdXR8AWKnh0Xwnf27MeB8",
   "expiresIn": 3600
 }

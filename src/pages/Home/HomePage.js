@@ -2,8 +2,8 @@
 // This page is the homepage of the website, should only appear when not authed?
 
 import React from "react";
-import { MainLayout } from "layouts";
-import { HomeMenu } from "components";
+import MainLayout from "layouts/MainLayout";
+import HomeMenu from "components/home/HomeMenu";
 import { Flex, Button } from "antd";
 import { blue, gold } from "@ant-design/colors";
 import { useNavigate } from "react-router-dom";

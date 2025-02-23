@@ -230,21 +230,33 @@ const History = () => {
           style={{
             width: "100%",
             display: "flex",
-            justifyContent:"flex-end",
+            justifyContent:"space-between",
             gap: "8px",
           }}
         >
-          <Form.Item name="dateRange">
-            <RangePicker disabledDate={disabledDate} format="YYYY-MM-DD" />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              icon={<SearchOutlined />}
-              loading={loading}
-            />
-          </Form.Item>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent:"flex-start",
+              gap: "8px",
+            }}
+          >
+            <Form.Item name="dateRange">
+              <RangePicker disabledDate={disabledDate} format="YYYY-MM-DD" />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                icon={<SearchOutlined />}
+                loading={loading}
+              />
+            </Form.Item>
+          </div>
+          <Button
+            type='primary'
+          >Export as CSV</Button>
         </div>
       </Form>
       

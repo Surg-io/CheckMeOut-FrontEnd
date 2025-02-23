@@ -1,15 +1,15 @@
 // src/layouts/MainLayout.js
 // This layout is for the auth page, it takes a form (either login or sign up form)
-// TODO: Make the form appropriate size not stretching too long when width is large
 import React from "react";
 import { Flex, Layout } from "antd";
-import { Footer, Icon } from "components";
+import Footer from "components/common/Footer";
+import Icon from "components/common/Icon";
 
 import "./AuthLayout.css";
 
 const { Content } = Layout;
 
-const LoginLayout = ({ menuComponent, formComponent }) => (
+const AuthLayout = ({ menuComponent, formComponent }) => (
   <Layout className="auth-layout">
     <Content>
       <Flex className="auth-container">
@@ -22,4 +22,4 @@ const LoginLayout = ({ menuComponent, formComponent }) => (
   </Layout>
 );
 
-export default LoginLayout;
+export default AuthLayout;

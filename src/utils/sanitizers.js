@@ -45,11 +45,11 @@ export const sanitizeEmail = (email) => {
     .substring(0, 254); // Enforce RFC max length
 };
 
-// Sanitize passwords
 export const sanitizePassword = (password) => {
-  return password
-    .replace(/[\n\t<>]/g, "") // Remove line breaks and angle brackets
-    .substring(0, 64); // Enforce max length
+  const safePassword = password || "";
+  return safePassword
+    .replace(/[\n\t<>]/g, "")
+    .substring(0, 64);
 };
 
 // Validate major selection
@@ -85,7 +85,8 @@ export const sanitizeBirthdate = (month, day, year) => {
   }
 };
 
-// Password confirmation validation
 export const validatePasswordMatch = (password, confirmPassword) => {
-  return sanitizePassword(password) === sanitizePassword(confirmPassword);
+  const pwd1 = typeof password === "string" ? password : "";
+  const pwd2 = typeof confirmPassword === "string" ? confirmPassword : "";
+  return sanitizePassword(pwd1) === sanitizePassword(pwd2);
 };

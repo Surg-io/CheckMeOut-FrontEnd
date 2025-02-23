@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Row, Col, Select } from "antd";
-import { DateOfBirthInput } from "components";
+import DateOfBirthInput from "components/common/DOB";
 import majors from "config/majorList";
 import {
   validatePasswordMatch,
@@ -30,18 +30,8 @@ const RegisterForm = () => {
   const handleGetCodeWithVerification = async () => {
     try {
       if (email=="") {
-        showNotification("error", "Error", "Please enter your email.");
-        return;
+        throw new Error("Please enter your email.");
       }
-      await form.validateFields([
-        "firstName",
-        "lastName",
-        "birthday",
-        "major",
-        "email",
-        "password",
-        "confirm"
-      ]);
       await handleGetCode(email);
       showNotification("success", "Verification Code Sent", "Check your email.");
     } catch (error) {
@@ -243,7 +233,9 @@ const RegisterForm = () => {
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (validatePasswordMatch(getFieldValue("confirm"), value)) {
+              const passwordValue = getFieldValue("password") || "";
+              const confirmValue = value || "";
+              if (validatePasswordMatch(passwordValue, confirmValue)) {
                 return Promise.resolve();
               }
               return Promise.reject(new Error("Passwords do not match!"));

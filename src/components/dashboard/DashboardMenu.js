@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Badge, Modal, QRCode, Row, Button, Drawer } from "antd";
 import {
   NotificationOutlined,
@@ -7,12 +7,31 @@ import {
 } from "@ant-design/icons";
 import { useUser } from "context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { handleQrcode } from "services/Qrcode";
+import { useNotification } from "context/NotificationContext";
 const DashboardMenu = ({ hasNotification }) => {
+  const showNotification = useNotification();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [qrtext] = useState("This QR code is for testing.");
   const [isSettingOpen, setIsSettingOpen] = useState(false);
+  const [qrcode, setQrcode] = useState("");
   const { logout } = useUser();
   const navigate = useNavigate();
+  const handleFetchQrcode = async () => {
+    try {
+      const response = await handleQrcode();
+      if (response.success) {
+        setQrcode(response.qrcode);
+        showModal();
+      }
+      else {
+        throw new Error("Failed to get QRcode, please try again.");
+      }
+    } catch (error) {
+      console.log("Qrcode error: " + error);
+      showNotification("error","Failed to get QRcode, please try again.");
+      throw error;
+    }
+  }
 
   const showSettings = () => {
     setIsSettingOpen(true);
@@ -56,7 +75,7 @@ const DashboardMenu = ({ hasNotification }) => {
             <NotificationOutlined />
           </Badge>
         </span>
-        <span onClick={showModal} style={{ cursor: "pointer" }}>
+        <span onClick={handleFetchQrcode} style={{ cursor: "pointer" }}>
           <QrcodeOutlined />
         </span>
         <Modal
@@ -75,7 +94,12 @@ const DashboardMenu = ({ hasNotification }) => {
               alignItems: "center",
             }}
           >
-            <QRCode value={qrtext} errorLevel="Q" />
+            <QRCode
+              size={320}
+              value={qrcode || "ERROR"}
+              status={!qrcode ? "loading" : "active"}
+              errorLevel="Q"
+            />
           </div>
         </Modal>
         <Drawer

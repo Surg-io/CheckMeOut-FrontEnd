@@ -1,8 +1,9 @@
 // src/pages/Auth/Auth.js
 import React, { useState, useEffect } from "react";
 import { Menu } from "antd";
-import { AuthLayout } from "layouts";
-import { LoginForm, RegisterForm } from "components";
+import AuthLayout from "layouts/AuthLayout";
+import LoginForm from "components/auth/LoginForm";
+import RegisterForm from "components/auth/RegisterForm";
 import { useSearchParams } from "react-router-dom";
 import "./Auth.css";
 

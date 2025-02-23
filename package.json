@@ -25,6 +25,7 @@
     "less-loader": "^12.2.0",
     "qrcode.react": "^3.1.0",
     "react-acl-router": "^1.0.0",
+    "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^5.0.0",
     "react-markdown": "^9.0.3",

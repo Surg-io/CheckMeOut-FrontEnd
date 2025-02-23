@@ -1,13 +1,12 @@
 // src/pages/Dashboard/Dashboard.js
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { DashboardLayout } from "layouts";
-import {
-  DashboardSider,
-  DashboardMenu,
-  CombinedReservationMaker,
-  History,
-} from "components";
+import DashboardLayout from "layouts/DashboardLayout";
+import DashboardSider from "components/dashboard/DashboardSider";
+import DashboardMenu from "components/dashboard/DashboardMenu";
+import CombinedReservationMaker from "components/dashboard/reservation/CombinedReservationMaker";
+import History from "components/dashboard/History";
+import Summary from "components/dashboard/Summary";
 import { Card } from "antd";
 
 const Dashboard = () => {
@@ -31,7 +30,7 @@ const Dashboard = () => {
         return (
           <div>
             <h1>Summary</h1>
-            <Card />
+            <Summary />
           </div>
         );
       case "reservation":

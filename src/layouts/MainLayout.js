@@ -4,7 +4,9 @@
 // It takes a children as content
 import React from "react";
 import { Layout } from "antd";
-import { Footer, Header, Icon } from "components";
+import Footer from "components/common/Footer";
+import Header from "components/common/Header";
+import Icon from "components/common/Icon";
 
 const { Content } = Layout;
 
