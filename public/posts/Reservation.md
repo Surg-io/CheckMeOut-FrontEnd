@@ -1,7 +1,7 @@
 Welcome to MCMakerspace! To ensure fair access and efficient use of our facilities, please review the following guidelines before booking a time slot:
 
 > 1. Reserve Responsibly  
->    Please select only the time you need to avoid unnecessary reservations and maximize availability for others.
+>    Please select only the time you need to avoid unnecessary reservations and maximize availability for others. Each user may reserve up to **two time slots** at a time to ensure fair access for everyone.
 > 
 > 2. Extended Usage  
 >    If you require a long session (e.g., for **3D printing large models**), we encourage you to book evening slots whenever possible to reduce daytime congestion.

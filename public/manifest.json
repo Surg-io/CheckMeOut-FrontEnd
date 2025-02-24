@@ -16,5 +16,33 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "spaces": [
+    {
+      "name": "space1",
+      "title": "Makerspace",
+      "cover": "posts/space/space1/cover.jpg",
+      "index": "posts/space/space1/space1.md"
+    },
+    {
+      "name": "space2",
+      "title": "Study Room",
+      "cover": "posts/space/space2/cover.jpg",
+      "index": "posts/space/space2/space2.md"
+    }
+  ],
+  "equipments": [
+    {
+      "name": "device1",
+      "title": "3D Printer",
+      "cover": "images/3D_Printer.jpg",
+      "index": "posts/equipment/3d_printer/3d_printer.md"
+    },
+    {
+      "name": "device2",
+      "title": "Laser Cutter",
+      "cover": "images/Laser_Cutter.jpg",
+      "index": "posts/equipment/laser_cutter/laser_cutter.md"
+    }
+  ]
 }

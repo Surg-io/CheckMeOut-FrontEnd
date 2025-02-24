@@ -6,30 +6,15 @@ import MainLayout from "layouts/MainLayout";
 import HomeMenu from "components/home/HomeMenu";
 import { Flex, Button } from "antd";
 import { blue, gold } from "@ant-design/colors";
-import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
-
-  const handleLoginClick = () => {
-    navigate("/auth?tab=login", { state: { form: "login" } });
-  };
-
-  const handleRegisterClick = () => {
-    navigate("/auth?tab=signup", { state: { form: "signup" } });
-  };
-
   const handleReserveNow = () => {
     navigate("/auth?tab=login", { state: { form: "login" } });
   };
 
-  const menuComponent = (
-    <HomeMenu
-      onRegisterClick={handleRegisterClick}
-      onLoginClick={handleLoginClick}
-    />
-  );
   const content = (
     <div className="homepage-container">
       {" "}
@@ -73,7 +58,7 @@ const HomePage = () => {
     </div>
   );
 
-  return <MainLayout menuComponent={menuComponent} content={content} />;
+  return <MainLayout menuComponent={<HomeMenu/>} content={content} />;
 };
 
 export default HomePage;

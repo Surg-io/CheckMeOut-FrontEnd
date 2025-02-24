@@ -8,6 +8,7 @@ import CombinedReservationMaker from "components/dashboard/reservation/CombinedR
 import History from "components/dashboard/History";
 import Summary from "components/dashboard/Summary";
 import { Card } from "antd";
+import { Articles } from "components/common/ArticleDisplay";
 
 const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,28 +30,33 @@ const Dashboard = () => {
       case "summary":
         return (
           <div>
-            <h1>Summary</h1>
             <Summary />
           </div>
         );
       case "reservation":
         return (
           <div>
-            <h1>Reservation</h1>
             <CombinedReservationMaker />;
           </div>
         );
       case "history":
         return (
           <div>
-            <h1>History</h1>
             <History />
           </div>
         );
       case "space":
-        return <Card />;
+        return (
+          <div>
+            <Articles category={"spaces"}/>
+          </div>
+        );
       case "equipment":
-        return <Card />;
+        return (
+          <div>
+            <Articles category={"equipments"}/>
+          </div>
+        );
       case "guides":
         return <Card />;
       case "courses":

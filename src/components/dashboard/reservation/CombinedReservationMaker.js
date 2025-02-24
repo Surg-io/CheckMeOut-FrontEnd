@@ -37,7 +37,7 @@ const CombinedReservationMaker = () => {
         setScheduleLoading(false);
       });
 
-    fetch("/docs/reservation.md")
+    fetch("/posts/reservation.md")
       .then((res) => res.text())
       .then((text) => setContent(text))
       .catch(() => setContent("Failed to load guidelines."))

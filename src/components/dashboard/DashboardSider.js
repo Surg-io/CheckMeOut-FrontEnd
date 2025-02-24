@@ -59,8 +59,8 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
       icon: <HistoryOutlined className="icon" />,
     },
     {
-      key: "status",
-      label: "Status",
+      key: "facilities",
+      label: "Facilities",
       icon: <FundViewOutlined className="icon" />,
       children: [
         {
