@@ -8,8 +8,15 @@ export const handleGetHistory = async (values) => {
   )
 };
 
-export const handleCancelReservation = async (values) => {
+export const handleGetUserReservation = async (values) => {
   return handleApiRequest(() => 
-    apiClient.post("/cancel", values, { withCredentials: true })
+    apiClient.post("/getuserreservation", values, { withCredentials: true })
+  )
+};
+
+export const handleCancelReservation = async (values) => {
+  console.log(values)
+  return handleApiRequest(() => 
+    apiClient.post("/cancelReservation", values, { withCredentials: true })
   )
 };

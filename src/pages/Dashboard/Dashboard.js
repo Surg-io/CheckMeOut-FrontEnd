@@ -9,6 +9,7 @@ import History from "components/dashboard/History";
 import Summary from "components/dashboard/Summary";
 import { Card } from "antd";
 import { Articles } from "components/common/ArticleDisplay";
+import Ongoing from "components/dashboard/Ongoing";
 
 const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,6 +38,12 @@ const Dashboard = () => {
         return (
           <div>
             <CombinedReservationMaker />;
+          </div>
+        );
+      case "ongoing":
+        return (
+          <div>
+            <Ongoing />
           </div>
         );
       case "history":

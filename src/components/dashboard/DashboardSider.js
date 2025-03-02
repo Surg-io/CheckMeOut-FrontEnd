@@ -54,9 +54,21 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
       icon: <CalendarOutlined className="icon" />,
     },
     {
-      key: "history",
-      label: "History",
+      key: "activity",
+      label: "Activity",
       icon: <HistoryOutlined className="icon" />,
+      children: [
+        {
+          key: "ongoing",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Ongoing</span>,
+        },
+        {
+          key: "history",
+          label: (
+            <span style={{ marginLeft: subMenuMarginLeft }}>History</span>
+          ),
+        },
+      ]
     },
     {
       key: "facilities",
@@ -92,11 +104,6 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
     },
     {
       type: "divider",
-    },
-    {
-      key: "teams",
-      label: "Teams",
-      icon: <SmileOutlined className="icon" />,
     },
     {
       key: "report",

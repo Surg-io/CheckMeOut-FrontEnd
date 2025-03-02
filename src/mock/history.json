@@ -1,39 +1,22 @@
-[
-  {
-    "recordId": 1,
-    "userId": 1,
-    "reservationDevice": "3D Printer",
-    "reservationDeviceId": 13,
-    "reservationStartTime": "2025-01-01T15:30:00.000Z",
-    "reservationEndTime": "2025-01-01T16:00:00+00:00Z"
-  },
-  {
-    "recordId": 2,
-    "userId": 2,
-    "checkin": "2025-01-12T16:00:00.000Z",
-    "checkout": "2025-01-12T18:00:00.000Z",
-    "status": "Checked Out"
-  },
-  {
-    "recordId": 3,
-    "userId": 3,
-    "checkin": "2025-02-01T14:00:00.000Z",
-    "checkout": null,
-    "status": "Not Checked Out"
-  },
-  {
-    "recordId": 4,
-    "userId": 4,
-    "reservationDevice": "Laser Cutter",
-    "reservationDeviceId": 14,
-    "reservationStartTime": "2025-01-12T18:00:00.000Z",
-    "reservationEndTime": "2025-01-12T19:00:00.000Z"
-  },
-  {
-    "recordId": 5,
-    "userId": 5,
-    "checkin": "2025-02-01T14:00:00.000Z",
-    "checkout": null,
-    "status": "Auto Checkout"
-  }
-]
+{
+  "success": true,
+  "message": "Success in returning info",
+  "ScanHistory": [
+    {
+      "AccountID": "U123",
+      "StartTime": "2023-10-01T08:00:00.000Z",
+      "EndTime": "2023-10-01T09:00:00.000Z"
+    }
+  ],
+  "ReservationHistory": [
+    {
+      "ReservationID": 201,
+      "AccountID": "U123",
+      "DeviceID": 5,
+      "DeviceName": "3D Printer",
+      "StartTime": "2023-10-01T10:00:00.000Z",
+      "EndTime": "2023-10-01T11:00:00.000Z",
+      "ResStatus": "Confirmed"
+    }
+  ]
+}

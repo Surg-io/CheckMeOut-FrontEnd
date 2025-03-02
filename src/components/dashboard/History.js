@@ -1,51 +1,17 @@
-import { Form, DatePicker, Button, Table, Tag, Switch } from "antd";
+import { Form, DatePicker, Button, Table, Tag, Segmented } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { handleCancelReservation, handleGetHistory } from "services/HistoryApi";
-import { useNotification } from "context/NotificationContext";
-import { useNavigate } from "react-router-dom";
+import { handleGetHistory } from "services/HistoryApi";
 import dayjs from "dayjs";
 
 const { RangePicker } = DatePicker;
 
 const History = () => {
-  const [record, setRecord] = useState([]);
+  const [scanRecords, setScanRecords] = useState([]);
+  const [reservationRecords, setReservationRecords] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dataType, setDataType] = useState('reservation');
   const now = dayjs();
-  const showNotification = useNotification();
-  const navigate = useNavigate();
-
-  const handleCancelReservationWithNotification = async (values) => {
-    const payload = {
-      recordId:values.recordId
-    };
-    try {
-      if (dayjs(values.reservationEndTime).isBefore(dayjs())) {
-        throw new Error("Cannot cancel past reservation.")
-      }
-      const response = await handleCancelReservation(payload);
-      if (response.success){
-        showNotification(
-          "success",
-          "You have cancelled your reservation successfully.",
-          "Reloading...",
-          500,
-          () => navigate(0),
-        );
-      } else {
-        showNotification(
-          "error",
-          "Cancellation failed.",
-          "Please try again.",
-          0,
-          null
-        );
-      }
-    } catch (error) {
-      console.log("Reservation cancellation error: " + error);
-      throw error;
-    }
-  };
 
   const disabledDate = (current) => {
     return current > now.startOf("day") || current < now.subtract(3, "month").endOf("day");
@@ -54,6 +20,7 @@ const History = () => {
   const handleFetchHistory = async (values) => {
     if (loading) return;
     setLoading(true);
+    
     let startDate = now.subtract(3, "month").startOf("day");
     let endDate = now.endOf("day");
 
@@ -64,22 +31,15 @@ const History = () => {
     }
 
     try {
-      let data = await handleGetHistory({
+      const response = await handleGetHistory({
         startdate: startDate.toISOString(),
         enddate: endDate.toISOString(),
       });
 
-      const formattedData = data.map((item, index) => ({
-        Id: index + 1,
-        recordId: item.recordId,
-        checkin: formatTime(item.checkin),
-        checkout: item.checkout ? formatTime(item.checkout) : "-",
-        reservationStartTime: item.reservationStartTime ? formatTime(item.reservationStartTime) : "-",
-        reservationEndTime: item.reservationEndTime ? formatTime(item.reservationEndTime) : "-",
-        reservationDevice: item.reservationDevice || "Not Specified",
-        status: item.status,
-      }));
-      setRecord(formattedData);
+      if (response.success) {
+        setScanRecords(response.ScanHistory);
+        setReservationRecords(response.ReservationHistory);
+      }
     } catch (error) {
       console.error("Failed to fetch history:", error);
     } finally {
@@ -87,11 +47,9 @@ const History = () => {
     }
   };
 
-  const formatTime = (time) => {
-    return dayjs(time).format("YYYY-MM-DD HH:mm");
-  };
+  const formatTime = (time) => dayjs(time).format("YYYY-MM-DD HH:mm");
 
-  const columns = [
+  const reservationColumns = [
     {
       title: "",
       dataIndex: "Id",
@@ -102,64 +60,37 @@ const History = () => {
       render: (_, __, index) => index + 1,
     },
     {
-      title: "Reservation Period",
+      title: "From",
+      dataIndex: "StartTime",
+      key: "startTime",
       ellipsis: false,
-      children: 
-      [
-        {
-          title: "Start",
-          dataIndex: "reservationStartTime",
-          key: "startTime",
-          ellipsis: false,
-          width: 180,
-          align: 'center',
-          render: (time) =>
-            (time!="-" ? formatTime(time) : <>-</>),
-        },
-        {
-          title: "End",
-          dataIndex: "reservationEndTime",
-          key: "endTime",
-          ellipsis: false,
-          width: 180,
-          align: 'center',
-          render: (time) =>
-            (time!="-" ? formatTime(time) : <>-</>),
-        }
-      ]
+      width: 180,
+      align: 'center',
+      render: (time) =>
+        (time!="-" ? formatTime(time) : <>-</>),
+    },
+    {
+      title: "To",
+      dataIndex: "EndTime",
+      key: "endTime",
+      ellipsis: false,
+      width: 180,
+      align: 'center',
+      render: (time) =>
+        (time!="-" ? formatTime(time) : <>-</>),
     },
     {
       title: "Reservation Device",
-      dataIndex: "reservationDevice",
-      key: "reservationDevice",
+      dataIndex: "DeviceName",
+      key: "deviceName",
       ellipsis: false,
       width: 180,
       align: 'center',
       render: (device) => device || "Not Specified",
     },
     {
-      title: "Check-in Time",
-      dataIndex: "checkin",
-      key: "checkin",
-      ellipsis: false,
-      width: 180,
-      align: 'center',
-      render: (time) =>
-        (time!="-" ? formatTime(time) : <>-</>),
-    },
-    {
-      title: "Check-out Time",
-      dataIndex: "checkout",
-      key: "checkout",
-      ellipsis: false,
-      width: 180,
-      align: 'center',
-      render: (time) =>
-        (time!="-" ? formatTime(time) : <>-</>),
-    },
-    {
       title: "Status",
-      dataIndex: "status",
+      dataIndex: "ResStatus",
       key: "status",
       ellipsis: false,
       width: 90,
@@ -167,53 +98,51 @@ const History = () => {
       render: (status) => {
         let color;
         switch (status) {
-          case "Checked Out": 
+          case "Confirmed": 
+            color="green";
+            break;
+          case "Pending": 
             color="blue";
-            break;
-          case "Not Checked Out": 
-            color="red";
-            break;
-          case "Auto Checkout": 
-            color="yellow";
             break;
           default: 
-            color="blue";
+            color="red";
         }
         return <Tag color={color}>{status}</Tag>;
       },
     },
+  ]
+
+  const scanColumns = [
     {
-      title: "Actions",
-      key: "actions",
+      title: "",
+      dataIndex: "Id",
+      key: "Id",
       ellipsis: false,
-      width: 90,
+      width: 0,
       align: 'center',
-      render: (_, record) => {
-        const reservationEndTime = record.reservationEndTime ? dayjs(record.reservationEndTime) : null;
-        const isCancelable = reservationEndTime && now.isBefore(reservationEndTime);
-  
-        return isCancelable ? (
-          <Button 
-            type="link" 
-            danger 
-            onClick={() => handleCancelReservationWithNotification(record)}
-          >
-            Cancel
-          </Button>
-        ) : (
-          <Button 
-            type="link" 
-            danger
-            disabled={true}
-            onClick={() => handleCancelReservationWithNotification(record)}
-          >
-            Cancel
-          </Button>
-        );
-      },
+      render: (_, __, index) => index + 1,
+    },
+    {
+      title: "From",
+      dataIndex: "StartTime",
+      key: "startTime",
+      ellipsis: false,
+      width: 180,
+      align: 'center',
+      render: (time) =>
+        (time!="-" ? formatTime(time) : <>-</>),
+    },
+    {
+      title: "To",
+      dataIndex: "EndTime",
+      key: "endTime",
+      ellipsis: false,
+      width: 180,
+      align: 'center',
+      render: (time) =>
+        (time!="-" ? formatTime(time) : <>-</>),
     },
   ];
-
   useEffect(() => {
     handleFetchHistory();
   }, []);
@@ -223,25 +152,10 @@ const History = () => {
       <Form
         name="historyForm"
         initialValues={{ dateRange: null }}
-        style={{ maxWidth: "100%" }}
         onFinish={handleFetchHistory}
       >
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent:"space-between",
-            gap: "8px",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent:"flex-start",
-              gap: "8px",
-            }}
-          >
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+          <div style={{ display: 'flex', gap: 8 }}>
             <Form.Item name="dateRange">
               <RangePicker disabledDate={disabledDate} format="YYYY-MM-DD" />
             </Form.Item>
@@ -253,21 +167,25 @@ const History = () => {
                 loading={loading}
               />
             </Form.Item>
+            <Segmented
+              options={[
+                { label: 'Reservations', value: 'reservation' },
+                { label: 'Checkins', value: 'scan' },
+              ]}
+              value={dataType}
+              onChange={setDataType}
+              style={{marginBottom:25}}
+            />
           </div>
-          <Button
-            type='primary'
-          >Export as CSV</Button>
+          <Button type="primary">Export CSV</Button>
         </div>
       </Form>
-      
+
       <Table
-        columns={columns}
-        dataSource={record}
+        columns={dataType === 'reservation' ? reservationColumns : scanColumns}
+        dataSource={dataType === 'reservation' ? reservationRecords : scanRecords}
         rowKey="Id"
-        scroll={{
-          x: "max-content",
-          y: "max-content",
-        }}
+        scroll={{ x: 'max-content' }}
         pagination={{ pageSize: 10 }}
       />
     </>

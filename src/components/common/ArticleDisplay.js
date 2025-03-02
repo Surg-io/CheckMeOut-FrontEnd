@@ -31,8 +31,9 @@ export const Articles = ({ category }) => {
 
   return (
     <Card
-      variant="borderless"
+      variant='borderless'
       style={{
+        boxShadow: 'none',
         borderRadius: "0",
         margin: '10px',
       }}

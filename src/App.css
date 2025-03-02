@@ -10,3 +10,12 @@
   overflow: visible !important;
   text-overflow: clip !important;
 }
+
+@media (max-width: 768px) {
+  .fixed-header {
+    padding: 12px 16px;
+  }
+  .fixed-header button {
+    padding: 4px 8px;
+  }
+}
