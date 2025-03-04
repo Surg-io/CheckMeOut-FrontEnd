@@ -25,6 +25,6 @@ export const handleLogin = async (values) => {
 
 export const handleGetCode = async (values) => {
   return handleApiRequest(() =>
-    apiClient.post("/getregistercode", values, { withCredentials: false })
+    apiClient.post("/getregistercode", {Email: values}, { withCredentials: false })
   );
 }
