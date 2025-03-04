@@ -48,10 +48,10 @@ const Icon = ({ size = 1, clickable = false }) => {
         <div className="brand-name" style={{ marginLeft: "10px" }}>
           {/**Assign different colors*/}
           <span className="brand-maker" style={{ color: blue[5] }}>
-            MC
+            Maker
           </span>
           <span className="brand-space" style={{ color: red[3] }}>
-            MakerSpace
+            Space
           </span>
         </div>
       </div>

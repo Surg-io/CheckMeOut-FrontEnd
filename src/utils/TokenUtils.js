@@ -1,5 +1,7 @@
 // src/utils/TokenUtils.js
+import e from "cors";
 import Cookies from "js-cookie";
+import { valid } from "mockjs";
 
 export const getToken = () => Cookies.get("token");
 
@@ -66,3 +68,12 @@ export const logout = () => {
   clearTokenData();
   window.location.href = "/auth?tab=login";
 };
+
+export const autoLogin = () => {
+  const token = getToken();
+  if (validateToken(token)){
+    login(token);
+  } else {
+    logout();
+  }
+}

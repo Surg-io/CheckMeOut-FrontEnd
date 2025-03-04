@@ -15,3 +15,8 @@ The makerspace is open to students, faculty, and community members who want to e
 
 ## How to Reserve Equipment
 Reservations can be made through our online system, ensuring access to specific tools and workstations at designated times.
+
+---
+
+*Last updated: 2025/03/04*  
+*Document version: 0.1*  

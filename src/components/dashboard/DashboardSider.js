@@ -42,8 +42,8 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
     ...(hasPermission(ROLE_ADMIN)
       ? [
           {
-            key: "summary",
-            label: "Summary",
+            key: "management",
+            label: "Management",
             icon: <DashboardOutlined className="icon" />,
           },
         ]
@@ -108,12 +108,12 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
     {
       key: "report",
       label: "Report",
-      icon: <ExclamationCircleOutlined className="icon" />,
+      icon: <PhoneOutlined className="icon" />,
     },
     {
-      key: "contact",
-      label: "Contact",
-      icon: <PhoneOutlined className="icon" />,
+      key: "support",
+      label: "Support",
+      icon: <ExclamationCircleOutlined className="icon" />,
     },
   ];
 

@@ -17,11 +17,10 @@ const ProtectedRoute = ({
   const [isChecking, setIsChecking] = React.useState(true);
 
   useEffect(() => {
-    const checkAccess = () => {
-      if (token === undefined) return;
+    const checkAccess = async () => {
 
-      if (!token) {
-        navigate("/auth", { replace: true });
+      if (!token || token === undefined) {
+        navigate("/auth?tab=login", { replace: true });
         setIsChecking(false);
         return;
       }
@@ -42,7 +41,7 @@ const ProtectedRoute = ({
     };
 
     checkAccess();
-  }, [location, token, requiredPermission, redirectPath]);
+  }, [location, token, requiredPermission, redirectPath, navigate, hasPermission]);
 
   if (isChecking) return <Spin />;
   return <Component />;

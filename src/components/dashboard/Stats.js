@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Statistic, Segmented, Select, Button } from 'antd';
+import { Card, Col, Row, Statistic, Segmented, Select, Button, Divider } from 'antd';
 import { handleStats } from 'services/Stats';
 import { exportCSV } from 'utils/ExportCSV';
 import CountUp from 'react-countup';
-const Summary = () => {
+export const Stats = () => {
   const [stats, setStats] = useState(null);
   const [timeRange, setTimeRange] = useState('past24h'); // Default time range
   const [selectedDevice, setSelectedDevice] = useState('total'); // Default device
@@ -89,7 +89,7 @@ const Summary = () => {
       <Row gutter={16}>
         {/* New Users */}
         <Col span={8}>
-          <Card title="New Users" style={{ height: 200 }}>
+          <Card title="New Users" style={{ height: 200, boxShadow: 'revert' }}>
             <Statistic
               value={stats.newUsers[timeRange] || 0} // Default to 0 if data is not available
               formatter={formatter}
@@ -207,5 +207,3 @@ const Summary = () => {
     </div>
   );
 };
-
-export default Summary;

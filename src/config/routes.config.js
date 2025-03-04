@@ -4,8 +4,9 @@ import Dashboard from "pages/Dashboard/Dashboard";
 import HomePage from "pages/Home/HomePage";
 import Auth from "pages/Auth/Auth";
 import Unauthorized from "pages/Unauthorized";
-import Space from "pages/Space/SpacePage";
-import EquipmentPage from "pages/Equipment/EquipmentPage";
+import Space from "pages/SpacePage";
+import EquipmentPage from "pages/EquipmentPage";
+import SupportPage from "pages/Support";
 
 export const ROUTES = {
   PUBLIC: [
@@ -24,6 +25,10 @@ export const ROUTES = {
     {
       path: "/equipment",
       component: EquipmentPage,
+    },
+    {
+      path: "/support",
+      component: SupportPage,
     },
   ],
   PRIVATE: [

@@ -8,7 +8,7 @@ const { Footer: AntFooter } = Layout;
 
 const Footer = () => (
   <AntFooter style={{ textAlign: "center" }}>
-    MCMakerSpace © 2024 - 2025 | All Rights Reserved
+    MakerSpace © 2024 - 2025 | All Rights Reserved
   </AntFooter>
 );
 

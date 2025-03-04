@@ -19,3 +19,28 @@
     padding: 4px 8px;
   }
 }
+
+.markdown-content {
+  line-height: 1.8;
+  
+  h1, h2, h3 {
+    margin: 1.5em 0 1em;
+  }
+
+  ul, ol {
+    padding-left: 2em;
+  }
+
+  blockquote {
+    border-left: 4px solid #1890ff;
+    background: #f0f9ff;
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 4px;
+  }
+
+  pre {
+    border-radius: 8px;
+    margin: 1.5em 0;
+  }
+}

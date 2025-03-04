@@ -44,5 +44,13 @@
       "cover": "images/Laser_Cutter.jpg",
       "index": "posts/equipment/laser_cutter/laser_cutter.md"
     }
+  ],
+  "support": [
+    {
+      "name": "support",
+      "title": "Support",
+      "cover": "",
+      "index": "posts/support.md"
+    }
   ]
 }

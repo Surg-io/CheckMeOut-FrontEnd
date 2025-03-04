@@ -35,3 +35,8 @@ Regular maintenance ensures the longevity and efficiency of the laser cutter:
 
 ## Conclusion
 Laser cutters are invaluable tools in a modern makerspace, offering unparalleled precision and versatility for various creative and industrial applications. Whether you are cutting out prototypes or engraving detailed artwork, a laser cutter can help bring your ideas to life.
+
+---
+
+*Last updated: 2025/03/04*  
+*Document version: 0.1*  

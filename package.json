@@ -28,9 +28,11 @@
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^5.0.0",
-    "react-markdown": "^9.0.3",
+    "react-markdown": "^9.1.0",
     "react-router-dom": "^6.27.0",
     "react-scripts": "^5.0.1",
+    "react-syntax-highlighter": "^15.6.1",
+    "remark-gfm": "^4.0.1",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.5",
     "web-vitals": "^4.2.4"

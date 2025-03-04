@@ -6,7 +6,7 @@ import DashboardSider from "components/dashboard/DashboardSider";
 import DashboardMenu from "components/dashboard/DashboardMenu";
 import CombinedReservationMaker from "components/dashboard/reservation/CombinedReservationMaker";
 import History from "components/dashboard/History";
-import Summary from "components/dashboard/Summary";
+import { Management } from "components/dashboard/Management";
 import { Card } from "antd";
 import { Articles } from "components/common/ArticleDisplay";
 import Ongoing from "components/dashboard/Ongoing";
@@ -28,10 +28,10 @@ const Dashboard = () => {
 
   const renderContent = () => {
     switch (selectedKey) {
-      case "summary":
+      case "management":
         return (
           <div>
-            <Summary />
+            <Management />
           </div>
         );
       case "reservation":
@@ -72,8 +72,8 @@ const Dashboard = () => {
         return <Card />;
       case "report":
         return <Card />;
-      case "contact":
-        return <Card />;
+      case "support":
+        return <Articles category={"support"} renderBackButton={false}/>;
       default:
         return <Card />;
     }

@@ -44,3 +44,8 @@ The 3D printing process involves several key steps:
 ## Conclusion
 
 3D printing is revolutionizing the way products are designed and produced. Whether for rapid prototyping, custom manufacturing, or artistic expression, 3D printing is a powerful tool that offers unprecedented flexibility and creativity.
+
+---
+
+*Last updated: 2025/03/04*  
+*Document version: 0.1*  

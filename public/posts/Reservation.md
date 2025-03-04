@@ -1,4 +1,4 @@
-Welcome to MCMakerspace! To ensure fair access and efficient use of our facilities, please review the following guidelines before booking a time slot:
+Welcome! To ensure fair access and efficient use of our facilities, please review the following guidelines before booking a time slot:
 
 > 1. Reserve Responsibly  
 >    Please select only the time you need to avoid unnecessary reservations and maximize availability for others. Each user may reserve up to **two time slots** at a time to ensure fair access for everyone.
@@ -16,3 +16,8 @@ Welcome to MCMakerspace! To ensure fair access and efficient use of our faciliti
 >    Clean up after your session and ensure all tools and materials are properly stored for the next user.
 
 By booking a time slot, you agree to follow these policies to maintain a **productive and collaborative environment**.
+
+---
+
+*Last updated: 2025/03/04*  
+*Document version: 0.1*  

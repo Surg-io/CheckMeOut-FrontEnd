@@ -18,3 +18,7 @@ Study rooms can be reserved in advance through the online system. Walk-in usage 
 - Clean up after use.
 - Respect reservation times to ensure fair access for others.
 
+---
+
+*Last updated: 2025/03/04*  
+*Document version: 0.1*  

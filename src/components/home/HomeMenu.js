@@ -1,16 +1,17 @@
 import React from "react";
 import { Menu, Button, Row, Col } from "antd";
 import { useNavigate } from "react-router-dom";
+import { autoLogin } from "utils/TokenUtils";
 
 const HomeMenu = ({ defaultKey = "1" }) => { // Default to "1" if no defaultKey is provided
   const navigate = useNavigate();
   
   const handleLoginClick = () => {
-    navigate("/auth?tab=login", { state: { form: "login" } });
+    autoLogin();
   };
   
   const handleRegisterClick = () => {
-    navigate("/auth?tab=signup", { state: { form: "signup" } });
+    navigate("/auth?tab=signup");
   };
   
   const handleSpace = () => {
@@ -21,15 +22,11 @@ const HomeMenu = ({ defaultKey = "1" }) => { // Default to "1" if no defaultKey 
     navigate("/equipment");
   };
   
-  const handleContact = () => {
-    navigate("/contact");
-  };
-  
-  const handleFAQ = () => {
-    navigate("/faq");
+  const handleSupport = () => {
+    navigate("/support");
   };
 
-  const labels = ["Space", "Equipment", "Contact", "FAQ"];
+  const labels = ["Space", "Equipment", "Support"];
 
   const items = labels.map((label, index) => ({
     key: (index + 1).toString(), // Ensure key is a string
@@ -40,10 +37,8 @@ const HomeMenu = ({ defaultKey = "1" }) => { // Default to "1" if no defaultKey 
         handleSpace();
       } else if (label === "Equipment") {
         handleEquipment();
-      } else if (label === "Contact") {
-        handleContact();
-      } else if (label === "FAQ") {
-        handleFAQ();
+      } else if (label === "Support") {
+        handleSupport();
       }
     },
   }));
