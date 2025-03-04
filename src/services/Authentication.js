@@ -2,15 +2,15 @@
 import { apiClient } from "utils/ApiClient";
 import { handleApiRequest } from "utils/ApiUtils";
 
-export const handleRegister = async (value) => {
+export const handleRegister = async (values) => {
   const payload = {
-    LN: value.lastName,
-    FN: value.firstName,
-    Email: value.email,
-    Password: value.password,
-    Major: value.major,
-    DOB: value.birthday,
-    Code: value.confirm
+    LN: values.lastName,
+    FN: values.firstName,
+    Email: values.email,
+    Password: values.password,
+    Major: values.major,
+    DOB: values.birthday,
+    Code: values.confirm
   };
   return handleApiRequest(() =>
     apiClient.post("/register", payload, { withCredentials: false })
@@ -18,8 +18,12 @@ export const handleRegister = async (value) => {
 };
 
 export const handleLogin = async (values) => {
+  const payload = {
+    username: values.Email,
+    password: values.password,
+  };
   return handleApiRequest(() =>
-    apiClient.post("/login", values, { withCredentials: false })
+    apiClient.post("/login", payload, { withCredentials: false })
   );
 };
 

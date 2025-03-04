@@ -1,9 +1,9 @@
 import axios from "axios";
 import config from "config/config";
 import { getToken, logout } from "utils/TokenUtils";
-
+const URL = process.env.NODE_ENV === "production" ? config.apiBaseUrl : (config.useMockData ? config.mockURL : config.apiBaseUrl);
 export const apiClient = axios.create({
-  baseURL: config.useMockData ? config.mockURL : config.apiBaseUrl,
+  baseURL: URL,
   timeout: 10000,
   responseType: "json",
   headers: {
