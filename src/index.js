@@ -5,7 +5,10 @@ import App from "App";
 import reportWebVitals from "reportWebVitals";
 import { Buffer } from "buffer";
 
-require('mock/mockServer');
+if (process.env.NODE_ENV === 'development'){
+  require('mock/mockServer');
+}
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 global.Buffer = Buffer;
