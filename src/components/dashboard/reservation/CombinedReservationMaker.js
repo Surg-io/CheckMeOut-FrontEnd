@@ -101,7 +101,7 @@ const CombinedReservationMaker = () => {
           <Skeleton active paragraph={{ rows: 9 }} />
         ) : (
           <div style={{ visibility: contentLoading ? "hidden" : "visible" }}>
-            <ReactMarkdown>{content}</ReactMarkdown>
+            <ReactMarkdown escapeHtml={false}>{content}</ReactMarkdown>
           </div>
         )}
       </div>
