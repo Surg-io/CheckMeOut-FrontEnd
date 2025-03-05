@@ -1,4 +1,3 @@
-console.log('Mock server is running...');
 import Mock from 'mockjs';
 import config from 'config/config';
 import login from './login.json';

@@ -11,20 +11,83 @@ import { Radio, Space, Divider, Button, Row, Col, Skeleton } from "antd";
 import ReactMarkdown from "react-markdown";
 import { useNotification } from "context/NotificationContext";
 import { useNavigate } from "react-router-dom";
-
+import remarkGfm from "remark-gfm";
 const CombinedReservationMaker = () => {
   const showNotification = useNotification();
   const [scheduleData, setScheduleData] = useState(null);
   const [purposeValue, setPurposeValue] = useState(null);
   const [pendingSlots, setPendingSlots] = useState([]);
-  const [content, setContent] = useState("");
-  const [contentLoading, setContentLoading] = useState(true);
+  const [state, setState] = useState({
+    items: [],
+    selectedArticle: null,
+    articleContent: "",
+    loading: false,
+    error: null
+  });
+  const manifestPath = "/manifest.json";
+  const contentRoot = "/";
+  const category = "reservation";
   const [scheduleLoading, setScheduleLoading] = useState(true);
   const [showSkeleton, setShowSkeleton] = useState(true);
   const navigate = useNavigate();
 
+  const markdownComponents = {
+    code({ node, inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || "");
+      return !inline && match ? (
+        <SyntaxHighlighter
+          style={materialLight}
+          language={match[1]}
+          PreTag="div"
+          {...props}
+        >
+          {String(children).replace(/\n$/, "")}
+        </SyntaxHighlighter>
+      ) : (
+        <code className={className} {...props}>
+          {children}
+        </code>
+      );
+    },
+    table: ({ node, ...props }) => (
+      <div style={{ overflowX: "auto", margin: "16px 0" }}>
+        <table style={{ 
+          width: "100%", 
+          borderCollapse: "collapse",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.12)"
+        }} {...props} />
+      </div>
+    ),
+    th: ({ node, ...props }) => (
+      <th style={{ 
+        padding: "12px",
+        backgroundColor: "#fafafa",
+        border: "1px solid #e8e8e8",
+        fontWeight: 600 
+      }} {...props} />
+    ),
+    td: ({ node, ...props }) => (
+      <td style={{ 
+        padding: "12px",
+        border: "1px solid #e8e8e8"
+      }} {...props} />
+    ),
+    img: ({ src, alt }) => (
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+          borderRadius: "8px",
+          margin: "16px 0",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+        }}
+      />
+    )
+  };
+
   useEffect(() => {
-    setContentLoading(true);
     setScheduleLoading(true);
 
     handleFetchSchedule(dayjs())
@@ -37,17 +100,50 @@ const CombinedReservationMaker = () => {
         setScheduleLoading(false);
       });
 
-    fetch("/posts/reservation.md")
-      .then((res) => res.text())
-      .then((text) => setContent(text))
-      .catch(() => setContent("Failed to load guidelines."))
-      .finally(() => setContentLoading(false));
+      const loadData = async () => {
+        try {
+          setState(prev => ({ ...prev, loading: true }));
+          
+          const manifestRes = await fetch(manifestPath);
+          if (!manifestRes.ok) throw new Error("Manifest load failed");
+          
+          const manifest = await manifestRes.json();
+          const categoryItems = manifest[category] || [];
+          
+          if (categoryItems.length === 1) {
+            const contentRes = await fetch(`${contentRoot}${categoryItems[0].index}`);
+            const content = await contentRes.text();
+            setState({
+              items: categoryItems,
+              selectedArticle: categoryItems[0],
+              articleContent: content,
+              loading: false,
+              error: null
+            });
+          } else {
+            setState({
+              items: categoryItems,
+              selectedArticle: null,
+              articleContent: "",
+              loading: false,
+              error: null
+            });
+          }
+        } catch (err) {
+          setState(prev => ({
+            ...prev,
+            loading: false,
+            error: err.message
+          }));
+        }
+      };
+  
+      loadData();
   }, []);
 
   useEffect(() => {
     if (!scheduleLoading) {
-      const timer = setTimeout(() => setShowSkeleton(false), 200); // 延迟 200ms
-      return () => clearTimeout(timer);
+      const timer = setTimeout(() => setShowSkeleton(false), 200);
     }
   }, [scheduleLoading]);
 
@@ -97,11 +193,16 @@ const CombinedReservationMaker = () => {
   return (
     <>
       <div style={{ position: "relative", minHeight: "200px" }}>
-        {contentLoading ? (
+        {state.loading ? (
           <Skeleton active paragraph={{ rows: 9 }} />
         ) : (
-          <div style={{ visibility: contentLoading ? "hidden" : "visible" }}>
-            <ReactMarkdown escapeHtml={false}>{content}</ReactMarkdown>
+          <div style={{ visibility: state.loading ? "hidden" : "visible" }}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={markdownComponents}
+            >
+              {state.articleContent}
+            </ReactMarkdown>
           </div>
         )}
       </div>

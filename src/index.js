@@ -7,6 +7,7 @@ import { Buffer } from "buffer";
 
 if (process.env.NODE_ENV === 'development'){
   require('mock/mockServer');
+  console.log('Mock server is running...');
 }
 
 

@@ -52,5 +52,13 @@
       "cover": "",
       "index": "posts/support.md"
     }
+  ],
+  "reservation": [
+    {
+      "name": "reservation",
+      "title": "Reservation",
+      "cover": "",
+      "index": "posts/Reservation.md"
+    }
   ]
 }
