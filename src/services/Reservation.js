@@ -11,7 +11,7 @@ const handleFetchSchedule = async (date) => {
     fullDate: dayjs(date).toISOString(),
   };
   return handleApiRequest(() =>
-    apiClient.post("/searchdate", payload, { withCredentials: false })
+    apiClient.post("/searchdate", payload, { withCredentials: true })
   );
 };
 
