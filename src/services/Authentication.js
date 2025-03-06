@@ -11,7 +11,7 @@ export const handleRegister = async (values) => {
     password: values.password,
     major: values.major,
     dateOfBirth: dateOfBirth,
-    code: values.confirm
+    code: values.code
   };
   return handleApiRequest(() =>
     apiClient.post("/api/register-user", payload, { withCredentials: false })
