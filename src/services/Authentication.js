@@ -20,8 +20,8 @@ export const handleRegister = async (values) => {
 
 export const handleLogin = async (values) => {
   const payload = {
-    Username: values.Email,
-    Password: values.password,
+    username: values.Email,
+    password: values.password,
   };
   return handleApiRequest(() =>
     apiClient.post("/api/login", payload, { withCredentials: false })
