@@ -20,7 +20,7 @@ const DashboardMenu = ({ hasNotification }) => {
     try {
       const response = await handleQrcode();
       if (response.success) {
-        setQrcode(response.qrcode);
+        setQrcode(response.qrcode[0].QRCode);
         showModal();
       }
       else {
