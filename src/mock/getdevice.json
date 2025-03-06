@@ -1,91 +1,87 @@
-{
-  "success": true,
-  "message": "Success",
-  "Devices": [
-    {
-      "DeviceName": "3D Printer",
-      "DeviceID": 1,
-      "Description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-      "DeviceName": "Laser Cutter",
-      "DeviceID": 2,
-      "Description": "150W CO2 laser cutting machine for acrylic and wood materials"
-    },
-    {
-      "DeviceName": "CNC Milling Machine",
-      "DeviceID": 3,
-      "Description": "5-axis precision machining center with automatic tool changer"
-    },
-    {
-      "DeviceName": "Industrial Robot Arm",
-      "DeviceID": 4,
-      "Description": "6-axis articulated robot with 10kg payload capacity"
-    },
-    {
-      "DeviceName": "Vacuum Forming Machine",
-      "DeviceID": 5,
-      "Description": "Heavy-duty thermoforming equipment for plastic sheets"
-    },
-    {
-      "DeviceName": "Waterjet Cutter",
-      "DeviceID": 6,
-      "Description": "60,000 PSI abrasive waterjet cutting system for metals"
-    },
-    {
-      "DeviceName": "Electron Microscope",
-      "DeviceID": 7,
-      "Description": "Scanning electron microscope with 5nm resolution"
-    },
-    {
-      "DeviceName": "Injection Molding Machine",
-      "DeviceID": 8,
-      "Description": "200-ton clamping force vertical injection press"
-    },
-    {
-      "DeviceName": "Spectrometer",
-      "DeviceID": 9,
-      "Description": "FTIR spectrometer with ATR sampling accessory"
-    },
-    {
-      "DeviceName": "Industrial Oven",
-      "DeviceID": 10,
-      "Description": "Programmable curing oven with 300°C max temperature"
-    },
-    {
-      "DeviceName": "Coordinate Measuring Machine",
-      "DeviceID": 11,
-      "Description": "Bridge-type CMM with 0.9μm measurement accuracy"
-    },
-    {
-      "DeviceName": "Ultrasonic Welder",
-      "DeviceID": 12,
-      "Description": "20kHz ultrasonic plastic welding system"
-    },
-    {
-      "DeviceName": "Industrial 3D Scanner",
-      "DeviceID": 13,
-      "Description": "Structured light scanner with 0.05mm accuracy"
-    },
-    {
-      "DeviceName": "Plasma Cutter",
-      "DeviceID": 14,
-      "Description": "CNC plasma cutting table for steel plates"
-    },
-    {
-      "DeviceName": "Surface Grinder",
-      "DeviceID": 15,
-      "Description": "Precision surface grinding machine with magnetic chuck"
-    },
-    {
-      "DeviceName": "EDM Machine",
-      "DeviceID": 16,
-      "Description": "Wire electrical discharge machining system"
-    },
-    {
-      "DeviceName": "Industrial CT Scanner",
-      "DeviceID": 17,
-      "Description": "X-ray computed tomography for nondestructive testing"
-    }
-  ]
-}
+[
+  {
+    "DeviceName": "3D Printer",
+    "DeviceID": 1,
+    "Description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  {
+    "DeviceName": "Laser Cutter",
+    "DeviceID": 2,
+    "Description": "150W CO2 laser cutting machine for acrylic and wood materials"
+  },
+  {
+    "DeviceName": "CNC Milling Machine",
+    "DeviceID": 3,
+    "Description": "5-axis precision machining center with automatic tool changer"
+  },
+  {
+    "DeviceName": "Industrial Robot Arm",
+    "DeviceID": 4,
+    "Description": "6-axis articulated robot with 10kg payload capacity"
+  },
+  {
+    "DeviceName": "Vacuum Forming Machine",
+    "DeviceID": 5,
+    "Description": "Heavy-duty thermoforming equipment for plastic sheets"
+  },
+  {
+    "DeviceName": "Waterjet Cutter",
+    "DeviceID": 6,
+    "Description": "60,000 PSI abrasive waterjet cutting system for metals"
+  },
+  {
+    "DeviceName": "Electron Microscope",
+    "DeviceID": 7,
+    "Description": "Scanning electron microscope with 5nm resolution"
+  },
+  {
+    "DeviceName": "Injection Molding Machine",
+    "DeviceID": 8,
+    "Description": "200-ton clamping force vertical injection press"
+  },
+  {
+    "DeviceName": "Spectrometer",
+    "DeviceID": 9,
+    "Description": "FTIR spectrometer with ATR sampling accessory"
+  },
+  {
+    "DeviceName": "Industrial Oven",
+    "DeviceID": 10,
+    "Description": "Programmable curing oven with 300°C max temperature"
+  },
+  {
+    "DeviceName": "Coordinate Measuring Machine",
+    "DeviceID": 11,
+    "Description": "Bridge-type CMM with 0.9μm measurement accuracy"
+  },
+  {
+    "DeviceName": "Ultrasonic Welder",
+    "DeviceID": 12,
+    "Description": "20kHz ultrasonic plastic welding system"
+  },
+  {
+    "DeviceName": "Industrial 3D Scanner",
+    "DeviceID": 13,
+    "Description": "Structured light scanner with 0.05mm accuracy"
+  },
+  {
+    "DeviceName": "Plasma Cutter",
+    "DeviceID": 14,
+    "Description": "CNC plasma cutting table for steel plates"
+  },
+  {
+    "DeviceName": "Surface Grinder",
+    "DeviceID": 15,
+    "Description": "Precision surface grinding machine with magnetic chuck"
+  },
+  {
+    "DeviceName": "EDM Machine",
+    "DeviceID": 16,
+    "Description": "Wire electrical discharge machining system"
+  },
+  {
+    "DeviceName": "Industrial CT Scanner",
+    "DeviceID": 17,
+    "Description": "X-ray computed tomography for nondestructive testing"
+  }
+]

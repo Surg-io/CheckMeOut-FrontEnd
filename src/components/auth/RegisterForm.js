@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Row, Col, Select, Steps, DatePicker, message } from "antd";
-import { UserOutlined, MailOutlined, LockOutlined, BookOutlined } from "@ant-design/icons";
+import { UserOutlined, MailOutlined, LockOutlined, BookOutlined, EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import majors from "config/majorList";
 import { useNotification } from "context/NotificationContext";
 import { useNavigate } from "react-router-dom";
 import { handleRegister, handleGetCode } from "services/Authentication";
-import { sanitizeName } from "utils/sanitizers";
+import { sanitizeName, sanitizeVerificationCode, sanitizePassword, sanitizeEmail } from "utils/sanitizers";
 
 const { Step } = Steps;
 const { Option } = Select;
@@ -130,13 +130,13 @@ const RegisterForm = () => {
       icon: <MailOutlined />,
       content: (
         <>
-          <Form.Item name="email" rules={[{ required: true, type: "email", message: "Please enter a valid email" }]}>
+          <Form.Item name="email" rules={[{ required: true, type: "email", message: "Please enter a valid email" }]} normalize={(value) => sanitizeEmail(value)}>
             <Input placeholder="Email" />
           </Form.Item>
           <Row gutter={8}>
             <Col span={18}>
               <Form.Item name="code" rules={[{ required: true, message: "Please enter the verification code" }]}>
-                <Input placeholder="Verification Code" disabled={!codeSent}/>
+                <Input placeholder="Verification Code" disabled={!codeSent} normalize={(value) => sanitizeVerificationCode(value)}/>
               </Form.Item>
             </Col>
             <Col span={6}>
@@ -158,8 +158,9 @@ const RegisterForm = () => {
               { required: true, message: "Please enter your password" },
               { min: 6, message: "Password must be at least 6 characters" },
             ]}
+            normalize={(value) => sanitizePassword(value)}
           >
-            <Input type="password" placeholder="Password" />
+            <Input.Password type="password" placeholder="Password" iconRender={(visible) => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}/>
           </Form.Item>
           <Form.Item
             name="confirm"

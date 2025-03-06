@@ -7,6 +7,7 @@ import {
 } from "services/Reservation";
 import dayjs from "dayjs";
 import config from "config/config";
+import { handleGetDevice } from "services/Device";
 import { Radio, Space, Divider, Button, Row, Col, Skeleton } from "antd";
 import ReactMarkdown from "react-markdown";
 import { useNotification } from "context/NotificationContext";
@@ -17,6 +18,7 @@ const CombinedReservationMaker = () => {
   const [scheduleData, setScheduleData] = useState(null);
   const [purposeValue, setPurposeValue] = useState(null);
   const [pendingSlots, setPendingSlots] = useState([]);
+  const [devices, setDevices] = useState([]);
   const [state, setState] = useState({
     items: [],
     selectedArticle: null,
@@ -90,13 +92,17 @@ const CombinedReservationMaker = () => {
   useEffect(() => {
     setScheduleLoading(true);
 
-    handleFetchSchedule(dayjs())
+    handleGetDevice()
+      .then((deviceList) => {
+        setDevices(deviceList);
+        return handleFetchSchedule(dayjs());
+      })
       .then((scheduleResponse) => {
         setScheduleData(scheduleResponse);
         setScheduleLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching schedule:", error);
+        console.error("Error fetching schedule or devices:", error);
         setScheduleLoading(false);
       });
 
@@ -334,6 +340,7 @@ const CombinedReservationMaker = () => {
           ) : (
             <div style={{ visibility: showSkeleton ? "hidden" : "visible" }}>
               <ScheduleDisplay
+                devices={devices}
                 response={scheduleData}
                 pendingSlots={pendingSlots}
                 setPendingSlots={setPendingSlots}

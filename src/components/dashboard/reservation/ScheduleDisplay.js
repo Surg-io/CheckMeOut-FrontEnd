@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
+import { Table, Tooltip } from "antd";
 import config from "config/config";
-import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
-const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
+const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) => {
+  console.log(response)
   const { startTime, endTime } = config.timeRange;
 
   const parseTimeToDecimal = (timeString) => {
@@ -16,11 +16,13 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
   const endDecimal = parseTimeToDecimal(endTime);
 
   const [dataSource, setDataSource] = useState([]);
-
+  const fixedColumnWidth = 200;
+  const dynamicColumnWidth = 70 * ((endDecimal - startDecimal) * 2);
+  
   useEffect(() => {
-    if (response?.devices) {
-      const initialDataSource = response.devices.map((device) => {
-        const row = { key: device.deviceId, device: device.deviceName };
+    if (devices.length > 0) {
+      const initialDataSource = devices.map((device) => {
+        const row = { key: device.DeviceID, device: device.DeviceName };
 
         for (
           let timeDecimal = startDecimal;
@@ -32,16 +34,18 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
           row[dataIndex] = "available";
         }
 
-        device.timeWindows.forEach(({ startTime, endTime, status }) => {
-          const start = parseTimeToDecimal(startTime);
-          const end = parseTimeToDecimal(endTime);
-
-          for (let timeDecimal = start; timeDecimal < end; timeDecimal += 0.5) {
-            const hour = Math.floor(timeDecimal);
-            const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
-            row[dataIndex] = status;
-          }
-        });
+        const scheduleDevice = response?.devices?.find(d => d.deviceId === device.deviceId);
+        if (scheduleDevice) {
+          scheduleDevice.timeWindows.forEach(({ startTime, endTime, status }) => {
+            const start = parseTimeToDecimal(startTime);
+            const end = parseTimeToDecimal(endTime);
+            for (let timeDecimal = start; timeDecimal < end; timeDecimal += 0.5) {
+              const hour = Math.floor(timeDecimal);
+              const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
+              row[dataIndex] = status;
+            }
+          });
+        }
 
         return row;
       });
@@ -84,7 +88,8 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
         dataIndex: dataIndex,
         key: dataIndex,
         align: "center",
-        width: "70px",
+        fixed: false,
+        width: 70,
         onCell: (record) => {
           const status = record[dataIndex];
           const statusConfig = config.reservationStatus[status] || {};
@@ -171,6 +176,7 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
   );
 
   columns.unshift({
+    fixed: "left",
     title: (
       <span
         style={{
@@ -185,9 +191,22 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
     ),
     dataIndex: "device",
     key: "device",
-    fixed: "left",
-    width: "120px",
+    
+    width: 200,
     align: "center",
+    render: (text) => (
+      <Tooltip title={text}>
+        <span style={{
+          display: "inline-block",
+          maxWidth: 150,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap"
+        }}>
+          {text}
+        </span>
+      </Tooltip>
+    )
   });
 
   return (
@@ -197,8 +216,8 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
       dataSource={dataSource}
       pagination={false}
       scroll={{
-        x: "max-content",
-        y: "400px",
+        x: fixedColumnWidth + dynamicColumnWidth,
+        y: 400
       }}
       components={{
         header: {
@@ -206,9 +225,9 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
             <th
               {...props}
               style={{
-                lineHeight: "16px",
+                ...props.style,
                 padding: "8px 0",
-                backgroundColor: "#fafafa",
+                backgroundColor: "#fafafa"
               }}
             />
           ),
