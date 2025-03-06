@@ -42,9 +42,12 @@ const RegisterForm = () => {
   const handleRegisterWithNotification = async () => {
     setLoading(true);
     try {
-      const values = await form.validateFields();
-      setFormData((prev) => ({ ...prev, ...values }));
-      const response = await handleRegister(formData);
+      const major = form.getFieldValue("major");
+      const updatedFormData = { ...formData, major };
+
+      setFormData(updatedFormData);
+
+      const response = await handleRegister(updatedFormData);
       if (response.success) {
         showNotification("success", "Registration Successful", "Redirecting to login page...",500,() => navigate("/auth?tab=login"));
         
