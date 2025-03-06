@@ -54,8 +54,9 @@ export const sanitizePassword = (password) => {
 
 // Validate major selection
 export const sanitizeMajor = (input, validMajors) => {
-  return validMajors.includes(input) ? input : "";
+  return validMajors.some((major) => major.acronym === input) ? input : "";
 };
+
 
 // Sanitize verification codes
 export const sanitizeVerificationCode = (code) => {
