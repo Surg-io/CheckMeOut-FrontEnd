@@ -10,7 +10,7 @@ export const NotificationProvider = ({ children }) => {
     type,
     message,
     description = "",
-    timeout = 0,
+    timeout = 500,
     action = null,
   ) => {
     api[type]({

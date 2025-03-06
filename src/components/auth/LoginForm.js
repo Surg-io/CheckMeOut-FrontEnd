@@ -36,7 +36,7 @@ const LoginForm = () => {
         "error",
         "Login Failed",
         error + " Please try again.",
-        0,
+        500,
         null,
       );
     } finally {
@@ -80,7 +80,7 @@ const LoginForm = () => {
       >
         <Input.Password
           prefix={<LockOutlined />}
-          placeholder="input password"
+          placeholder="Password"
           iconRender={(visible) =>
             visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
           }
