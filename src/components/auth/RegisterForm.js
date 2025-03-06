@@ -17,7 +17,7 @@ const RegisterForm = () => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-
+  const [codeSent, setCodeSent] = useState(false);
   // Proceed to the next step
   const next = async () => {
     try {
@@ -49,6 +49,16 @@ const RegisterForm = () => {
       setLoading(false);
     }
   };
+
+  const handleGetCodeWithVerification = async () => {
+    try {
+      const email = form.getFieldValue("email");
+      await handleGetCode(email);
+      showNotification("success", "Verification Code Sent", "Check your email.",500,()=>setCodeSent(true));
+    } catch (error) {
+      showNotification("error", "Error", "Failed to send verification code: ", error);
+    }
+  }
 
   const steps = [
     {
@@ -105,11 +115,11 @@ const RegisterForm = () => {
           <Row gutter={8}>
             <Col span={18}>
               <Form.Item name="code" rules={[{ required: true, message: "Please enter the verification code" }]}>
-                <Input placeholder="Verification Code" />
+                <Input placeholder="Verification Code" disabled={!codeSent}/>
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Button style={{ width: "100%" }} onClick={() => handleGetCode(formData.email)}>Get Code</Button>
+              <Button style={{ width: "100%" }} onClick={() => handleGetCodeWithVerification()}>Get Code</Button>
             </Col>
           </Row>
         </>
