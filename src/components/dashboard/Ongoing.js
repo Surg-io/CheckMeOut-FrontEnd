@@ -42,7 +42,7 @@ const Ongoing = () => {
     }
   };
 
-  const handleFetchReservation = async (values) => {
+  const handleFetchReservation = async () => {
     if (loading) return;
     setLoading(true);
     try {

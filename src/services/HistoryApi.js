@@ -4,19 +4,19 @@ import { handleApiRequest } from "utils/ApiUtils";
 
 export const handleGetHistory = async (values) => {
   return handleApiRequest(() => 
-    apiClient.post("/scanHistory", values, { withCredentials: true })
+    apiClient.post("/api/history", values, { withCredentials: true })
   )
 };
 
-export const handleGetUserReservation = async (values) => {
+export const handleGetUserReservation = async () => {
   return handleApiRequest(() => 
-    apiClient.post("/getuserreservation", values, { withCredentials: true })
+    apiClient.get("/api/user-reservations", {}, { withCredentials: true })
   )
 };
 
 export const handleCancelReservation = async (values) => {
   console.log(values)
   return handleApiRequest(() => 
-    apiClient.post("/cancelReservation", values, { withCredentials: true })
+    apiClient.post("/api/cancel-reservation", values, { withCredentials: true })
   )
 };

@@ -15,7 +15,7 @@ export const DeviceManagement = () => {
   const fetchDevices = () => {
     handleGetDevice()
       .then((response) => {
-        setData(response.Devices);
+        setData(response);
       })
       .catch((error) => {
         showNotification('error', 'Failed to Load Device List', error.message);
@@ -135,7 +135,7 @@ export const DeviceManagement = () => {
           onFinish={handleSubmit}
         >
           <Form.Item
-            name="DeviceName"
+            name="deviceName"
             label="Device Name"
             rules={[
               { required: true, message: 'Device name is required.' },
@@ -146,7 +146,7 @@ export const DeviceManagement = () => {
           </Form.Item>
 
           <Form.Item
-            name="Description"
+            name="description"
             label="Description"
             rules={[
               { max: 256, message: 'Description up to 256 characters.' }

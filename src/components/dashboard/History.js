@@ -32,13 +32,13 @@ const History = () => {
 
     try {
       const response = await handleGetHistory({
-        startdate: startDate.toISOString(),
-        enddate: endDate.toISOString(),
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
       });
 
       if (response.success) {
-        setScanRecords(response.ScanHistory);
-        setReservationRecords(response.ReservationHistory);
+        setScanRecords(response.scanHistory);
+        setReservationRecords(response.eservationHistory);
       }
     } catch (error) {
       console.error("Failed to fetch history:", error);
@@ -52,7 +52,6 @@ const History = () => {
   const reservationColumns = [
     {
       title: "",
-      dataIndex: "Id",
       key: "Id",
       ellipsis: false,
       width: 0,
