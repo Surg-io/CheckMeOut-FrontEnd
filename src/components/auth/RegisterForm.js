@@ -179,9 +179,9 @@ const RegisterForm = () => {
           showSearch
           optionFilterProp="children"
         >
-          {majors.map((major, index) => (
-            <Option key={index} value={major}>
-              {major}
+          {majors.map((major) => (
+            <Option key={major.acronym} value={major.acronym}>
+              {major.name}
             </Option>
           ))}
         </Select>
