@@ -35,7 +35,7 @@ const RegisterForm = () => {
       await handleGetCode(email);
       showNotification("success", "Verification Code Sent", "Check your email.");
     } catch (error) {
-      showNotification("error", "Error", "Please complete all required fields before requesting a code.");
+      showNotification("error", "Error", "Failed to send verification code: ", error);
     }
   }
   const handleRegisterWithNotification = async (values) => {
@@ -50,18 +50,15 @@ const RegisterForm = () => {
           500,
           () => navigate("/auth?tab=login"),
         );
-      } else {
-        showNotification(
-          "error",
-          "Registration Failed",
-          error.message + "Please try again.",
-          0,
-          null,
-        );
       }
     } catch (error) {
-      console.log("Registration error: " + error);
-      throw error;
+      showNotification(
+        "error",
+        "Registration Failed",
+        error + "Please try again.",
+        0,
+        null,
+      );
     } finally {
       setLoading(false);
     }
@@ -135,6 +132,10 @@ const RegisterForm = () => {
                 required: true,
                 message: "Please enter your first name",
               },
+              {
+                pattern: /^[A-Z][a-zA-Z]*$/,
+                message: "First name must start with an uppercase letter",
+              },
             ]}
             normalize={(value) => sanitizeName(value)}
           >
@@ -148,6 +149,10 @@ const RegisterForm = () => {
               {
                 required: true,
                 message: "Please enter your last name",
+              },
+              {
+                pattern: /^[A-Z][a-zA-Z]*$/,
+                message: "Last name must start with an uppercase letter",
               },
             ]}
             normalize={(value) => sanitizeName(value)}

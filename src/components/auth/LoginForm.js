@@ -30,18 +30,15 @@ const LoginForm = () => {
             login(response.token);
           },
         );
-      } else {
-        showNotification(
-          "error",
-          "Login Failed",
-          "Please check your credentials and try again.",
-          0,
-          null,
-        );
       }
     } catch (error) {
-      console.log("Login error: " + error);
-      throw error;
+      showNotification(
+        "error",
+        "Login Failed",
+        error + " Please try again.",
+        0,
+        null,
+      );
     } finally {
       setLoading(false);
     }
