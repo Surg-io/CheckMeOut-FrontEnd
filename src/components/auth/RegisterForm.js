@@ -18,11 +18,15 @@ const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [codeSent, setCodeSent] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   // Proceed to the next step
   const next = async () => {
     try {
       const values = await form.validateFields();
-      setFormData((prev) => ({ ...prev, ...values }));
+      setFormData((prev) => {
+        const updatedFormData = { ...prev, ...values };
+        return updatedFormData;
+      });
       setCurrentStep((prev) => prev + 1);
     } catch (error) {
       message.error("Please complete all required fields.");
@@ -52,15 +56,27 @@ const RegisterForm = () => {
     }
   };
 
+  
+
   const handleGetCodeWithVerification = async () => {
+    if (cooldown > 0) return;
+    
     try {
       const email = form.getFieldValue("email");
       await handleGetCode(email);
-      showNotification("success", "Verification Code Sent", "Check your email.",500,()=>setCodeSent(true));
+      showNotification("success", "Verification Code Sent", "Check your email.", 500, () => setCodeSent(true));
+      let timeLeft = 60;
+      setCooldown(timeLeft);
+      const timer = setInterval(() => {
+        timeLeft -= 1;
+        setCooldown(timeLeft);
+        if (timeLeft === 0) clearInterval(timer);
+      }, 1000);
+      
     } catch (error) {
-      showNotification("error", "Error", "Failed to send verification code: ", error);
+      showNotification("error", "Error", "Failed to send verification code: " + (error.message || error));
     }
-  }
+  };
 
   const steps = [
     {
@@ -121,7 +137,9 @@ const RegisterForm = () => {
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Button style={{ width: "100%" }} onClick={() => handleGetCodeWithVerification()}>Get Code</Button>
+            <Button style={{ width: "100%" }} onClick={handleGetCodeWithVerification} disabled={cooldown > 0}>
+              {cooldown > 0 ? `${cooldown}s` : "Get Code"}
+            </Button>
             </Col>
           </Row>
         </>

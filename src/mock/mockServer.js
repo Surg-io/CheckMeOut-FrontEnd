@@ -15,7 +15,7 @@ Mock.mock(`${config.mockURL}/login`, 'post', login);
 Mock.mock(`${config.mockURL}/scanHistory`, 'post', history);
 Mock.mock(`${config.mockURL}/searchdate`, 'post', searchdate);
 Mock.mock(`${config.mockURL}/cancelReservation`, 'post', cancelReservation);
-Mock.mock(`${config.mockURL}/getregistercode`, 'post', getregistercode);
+Mock.mock(`${config.mockURL}/api/register-code`, 'post', getregistercode);
 Mock.mock(`${config.mockURL}/register`, 'post', register);
 Mock.mock(`${config.mockURL}/qrcode`, 'get', qrcode);
 Mock.mock(`${config.mockURL}/getStats`, 'post', statistics);
