@@ -38,6 +38,8 @@ const RegisterForm = () => {
   const handleRegisterWithNotification = async () => {
     setLoading(true);
     try {
+      const values = await form.validateFields();
+      setFormData((prev) => ({ ...prev, ...values }));
       const response = await handleRegister(formData);
       if (response.success) {
         showNotification("success", "Registration Successful", "Redirecting to login page...",500,() => navigate("/auth?tab=login"));
@@ -93,7 +95,7 @@ const RegisterForm = () => {
           </Row>
           {/* Updated DatePicker for birthday input */}
           <Form.Item 
-            name="birthday" 
+            name="dateOfBirth" 
             rules={[{ required: true, message: "Please select your date of birth" }]}
           >
             <DatePicker 
