@@ -4,6 +4,6 @@ import { handleApiRequest } from "utils/ApiUtils";
 
 export const handleQrcode = async () => {
   return handleApiRequest(() =>
-    apiClient.get("/qrcode", {}, { withCredentials: true })
+    apiClient.get("/api/qrcode", {}, { withCredentials: true })
   );
 };

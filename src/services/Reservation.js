@@ -11,7 +11,7 @@ const handleFetchSchedule = async (date) => {
     fullDate: dayjs(date).toISOString(),
   };
   return handleApiRequest(() =>
-    apiClient.post("/searchdate", payload, { withCredentials: true })
+    apiClient.post("/api/search-date", payload, { withCredentials: true })
   );
 };
 
@@ -24,7 +24,7 @@ const handleSubmitReservation = async (pendingSlots) => {
     })),
   };
   return handleApiRequest(() =>
-    apiClient.post("/reserve", payload, { withCredentials: true })
+    apiClient.post("/api/reserve", payload, { withCredentials: true })
   );
 };
 

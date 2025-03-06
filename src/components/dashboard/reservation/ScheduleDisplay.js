@@ -133,7 +133,7 @@ const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
                     deviceId: record.key,
                     device: record.device,
                     time: dayjs(
-                      `${response.selectedDate}T${startTimeStr}`,
+                      `${response.selectedDate}T${startTimeStr}`, //TODO: MM/DD/YYYY
                     ).toDate(),
                   },
                 ]);
