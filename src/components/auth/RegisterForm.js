@@ -1,284 +1,202 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Row, Col, Select } from "antd";
-import DateOfBirthInput from "components/common/DOB";
+import { Form, Input, Button, Row, Col, Select, Steps, DatePicker, message } from "antd";
+import { UserOutlined, MailOutlined, LockOutlined, BookOutlined } from "@ant-design/icons";
 import majors from "config/majorList";
-import {
-  validatePasswordMatch,
-  sanitizeEmail,
-  sanitizeMajor,
-  sanitizeVerificationCode,
-  sanitizeName,
-  sanitizePassword,
-} from "utils/sanitizers";
-import { handleRegister, handleGetCode } from "services/Authentication";
 import { useNotification } from "context/NotificationContext";
 import { useNavigate } from "react-router-dom";
+import { handleRegister, handleGetCode } from "services/Authentication";
+import { sanitizeName } from "utils/sanitizers";
 
+const { Step } = Steps;
 const { Option } = Select;
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const [form] = Form.useForm();
   const showNotification = useNotification();
-  const [dobState, setDobState] = useState({ isValid: true, errorMessage: "" });
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const onEmailChange = () => {
-    const newEmail = form.getFieldValue('email');
-    setEmail(newEmail);
-  }
-  const handleGetCodeWithVerification = async () => {
+  const [form] = Form.useForm();
+
+  // Proceed to the next step
+  const next = async () => {
     try {
-      if (email=="") {
-        throw new Error("Please enter your email.");
-      }
-      await handleGetCode(email);
-      showNotification("success", "Verification Code Sent", "Check your email.");
+      const values = await form.validateFields();
+      setFormData((prev) => ({ ...prev, ...values }));
+      setCurrentStep((prev) => prev + 1);
     } catch (error) {
-      showNotification("error", "Error", "Failed to send verification code: ", error);
+      message.error("Please complete all required fields.");
     }
-  }
-  const handleRegisterWithNotification = async (values) => {
+  };
+
+  // Go back to the previous step
+  const prev = () => {
+    setCurrentStep((prev) => prev - 1);
+  };
+
+  // Submit registration data
+  const handleRegisterWithNotification = async () => {
     setLoading(true);
     try {
-      const response = await handleRegister(values);
-      if (response.success){
-        showNotification(
-          "success",
-          "You have signed up successfully.",
-          "Redirecting...",
-          500,
-          () => navigate("/auth?tab=login"),
-        );
+      const response = await handleRegister(formData);
+      if (response.success) {
+        showNotification("success", "Registration Successful", "Redirecting to login page...",500,() => navigate("/auth?tab=login"));
+        
       }
     } catch (error) {
-      showNotification(
-        "error",
-        "Registration Failed",
-        error + "Please try again.",
-        0,
-        null,
-      );
+      showNotification("error", "Registration Failed", error.message || "Please try again later.");
     } finally {
       setLoading(false);
     }
   };
-  const validateDateOfBirth = (dob) => {
-    const { month, day, year } = dob || {};
-    if (!month || !day || !year) {
-      return {
-        isValid: false,
-        errorMessage: "Please complete your date of birth.",
-      };
-    }
 
-    const m = parseInt(month, 10);
-    const d = parseInt(day, 10);
-    const y = parseInt(year, 10);
-
-    if (m < 1 || m > 12 || d < 1 || d > 31) {
-      return { isValid: false, errorMessage: "Invalid date of birth." };
-    }
-
-    if (m === 2) {
-      const isLeapYear = (y) => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
-      if (d > 29 || (d === 29 && !isLeapYear(y))) {
-        return { isValid: false, errorMessage: "Invalid date for February." };
-      }
-    }
-
-    if (["4", "6", "9", "11"].includes(String(m)) && d > 30) {
-      return { isValid: false, errorMessage: "Invalid date for this month." };
-    }
-
-    return { isValid: true, errorMessage: "" };
-  };
-
-  const handleFinish = async (values) => {
-    const dobValidation = validateDateOfBirth(values.birthday);
-    setDobState(dobValidation);
-
-    if (!dobValidation.isValid) {
-      return; // Prevent form submission if DOB is invalid
-    }
-    // Proceed with form submission
-    handleRegisterWithNotification(values);
-  };
-
-  const handleDobChange = (dob) => {
-    const dobValidation = validateDateOfBirth(dob);
-    setDobState(dobValidation); // Update the error state dynamically
-  };
+  const steps = [
+    {
+      icon: <UserOutlined />,
+      content: (
+        <>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item 
+                name="firstName" 
+                rules={[
+                  { required: true, message: "Please enter your first name" },
+                  { pattern: /^[A-Z][a-zA-Z]*$/, message: "First name must start with an uppercase letter" }
+                ]}
+                normalize={(value) => sanitizeName(value)}
+              >
+                <Input placeholder="First Name" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item 
+                name="lastName" 
+                rules={[
+                  { required: true, message: "Please enter your last name" },
+                  { pattern: /^[A-Z][a-zA-Z]*$/, message: "Last name must start with an uppercase letter" }
+                ]}
+                normalize={(value) => sanitizeName(value)}
+              >
+                <Input placeholder="Last Name" />
+              </Form.Item>
+            </Col>
+          </Row>
+          {/* Updated DatePicker for birthday input */}
+          <Form.Item 
+            name="birthday" 
+            rules={[{ required: true, message: "Please select your date of birth" }]}
+          >
+            <DatePicker 
+              style={{ width: "100%" }} 
+              format="YYYY-MM-DD"
+              placeholder="Select your birth date"
+            />
+          </Form.Item>
+        </>
+      ),
+    },
+    {
+      icon: <MailOutlined />,
+      content: (
+        <>
+          <Form.Item name="email" rules={[{ required: true, type: "email", message: "Please enter a valid email" }]}>
+            <Input placeholder="Email" />
+          </Form.Item>
+          <Row gutter={8}>
+            <Col span={18}>
+              <Form.Item name="code" rules={[{ required: true, message: "Please enter the verification code" }]}>
+                <Input placeholder="Verification Code" />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Button style={{ width: "100%" }} onClick={() => handleGetCode(formData.email)}>Get Code</Button>
+            </Col>
+          </Row>
+        </>
+      ),
+    },
+    {
+      icon: <LockOutlined />,
+      content: (
+        <>
+          <Form.Item
+            name="password"
+            rules={[
+              { required: true, message: "Please enter your password" },
+              { min: 6, message: "Password must be at least 6 characters" },
+            ]}
+          >
+            <Input type="password" placeholder="Password" />
+          </Form.Item>
+          <Form.Item
+            name="confirm"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Please confirm your password" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  return value === getFieldValue("password")
+                    ? Promise.resolve()
+                    : Promise.reject("Passwords do not match!");
+                },
+              }),
+            ]}
+          >
+            <Input type="password" placeholder="Confirm Password" />
+          </Form.Item>
+        </>
+      ),
+    },
+    {
+      icon: <BookOutlined />,
+      content: (
+        <>
+          <Form.Item name="major" rules={[{ required: true, message: "Please select your major" }]}>
+            <Select placeholder="Choose a Major">
+              {majors.map((major) => (
+                <Option key={major.acronym} value={major.acronym}>
+                  {major.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </>
+      ),
+    },
+  ];
 
   return (
-    <Form
-      name="Register"
-      form={form}
-      initialValues={{
-        remember: true,
-      }}
-      style={{
-        maxWidth: "50vw",
-        width: "50vw",
-      }}
-      onFinish={handleFinish}
-    >
-      <Row gutter={16}>
-        <Col span={12}>
-          <Form.Item
-            name="firstName"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your first name",
-              },
-              {
-                pattern: /^[A-Z][a-zA-Z]*$/,
-                message: "First name must start with an uppercase letter",
-              },
-            ]}
-            normalize={(value) => sanitizeName(value)}
-          >
-            <Input placeholder="First Name" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="lastName"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your last name",
-              },
-              {
-                pattern: /^[A-Z][a-zA-Z]*$/,
-                message: "Last name must start with an uppercase letter",
-              },
-            ]}
-            normalize={(value) => sanitizeName(value)}
-          >
-            <Input placeholder="Last Name" />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Form.Item
-        name="birthday"
-        validateStatus={!dobState.isValid ? "error" : ""}
-        help={!dobState.isValid ? dobState.errorMessage : ""}
-      >
-        <DateOfBirthInput onChange={handleDobChange} />
-      </Form.Item>
-      <Form.Item
-        name="major"
-        rules={[
-          {
-            required: true,
-            message: "Please select your major",
-          },
-        ]}
-        normalize={(value) => sanitizeMajor(value, majors)}
-      >
-        <Select
-          placeholder="Choose a major"
-          allowClear
-          showSearch
-          optionFilterProp="children"
-        >
-          {majors.map((major) => (
-            <Option key={major.acronym} value={major.acronym}>
-              {major.name}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your email",
-          },
-          {
-            type: "email",
-            message: "Please enter a valid email address",
-          },
-        ]}
-        normalize={(value) => sanitizeEmail(value)}
-        onChange={onEmailChange}
-      >
-        <Input placeholder="Email" />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your password",
-          },
-          {
-            min: 6,
-            message: "Password must be at least 6 characters",
-          },
-          {
-            pattern: /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/,
-            message: "Password must include both letters and numbers",
-          },
-        ]}
-        normalize={(value) => sanitizePassword(value)}
-      >
-        <Input type="password" placeholder="Password" />
-      </Form.Item>
-      <Form.Item
-        name="confirm"
-        dependencies={["password"]}
-        rules={[
-          {
-            required: true,
-            message: "Please confirm your password",
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              const passwordValue = getFieldValue("password") || "";
-              const confirmValue = value || "";
-              if (validatePasswordMatch(passwordValue, confirmValue)) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error("Passwords do not match!"));
-            },
-          }),
-        ]}
-        normalize={(value) => sanitizePassword(value)}
-      >
-        <Input type="password" placeholder="Confirm password" />
-      </Form.Item>
-      <Row>
-        <Col span={18}>
-          <Form.Item
-            name="code"
-            normalize={(value) => sanitizeVerificationCode(value)}
-          >
-            <Input placeholder="Verification code" />
-          </Form.Item>
-        </Col>
-        <Col span={1}></Col>
-        <Col span={5}>
-          <Button
-            type="default"
-            style={{
-              width: "100%",
-            }}
-            onClick={handleGetCodeWithVerification}
-          >
-            Get Code
-          </Button>
-        </Col>
-      </Row>
-      <Form.Item>
-        <Button block type="primary" htmlType="submit">
-          Sign Up
-        </Button>
-      </Form.Item>
-    </Form>
+    <div style={{ width: '100%', padding: "20px" }}>
+      {/* Progress Steps with Icons */}
+      <Steps current={currentStep} size="default" style={{ width: '100%' }}>
+        {steps.map((step, index) => (
+          <Step key={index} icon={step.icon} />
+        ))}
+      </Steps>
+
+      {/* Form */}
+      <Form form={form} layout="vertical" style={{ marginTop: 20 }}>
+        {steps[currentStep].content}
+
+        {/* Navigation Buttons */}
+        <div style={{ marginTop: 20 }}>
+          {currentStep > 0 && (
+            <Button style={{ marginRight: 8 }} onClick={prev}>
+              Previous
+            </Button>
+          )}
+          {currentStep < steps.length - 1 ? (
+            <Button type="primary" onClick={next}>
+              Next
+            </Button>
+          ) : (
+            <Button type="primary" loading={loading} onClick={handleRegisterWithNotification}>
+              Submit
+            </Button>
+          )}
+        </div>
+      </Form>
+    </div>
   );
 };
 
