@@ -93,9 +93,11 @@ const CombinedReservationMaker = () => {
     setScheduleLoading(true);
 
     handleGetDevice()
-      .then((deviceList) => {
-        setDevices(deviceList);
-        return handleFetchSchedule(dayjs());
+      .then((response) => {
+        if(response.success){
+          setDevices(response.devices);
+          return handleFetchSchedule(dayjs());
+        }
       })
       .then((scheduleResponse) => {
         setScheduleData(scheduleResponse);
