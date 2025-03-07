@@ -17,7 +17,7 @@ const handleFetchSchedule = async (date) => {
 
 const handleSubmitReservation = async (pendingSlots) => {
   const payload = {
-    reservations: pendingSlots.map(({ deviceId, device, time }) => ({
+    reservations: pendingSlots.map(({ deviceId, deviceName, time }) => ({
       deviceId,
       deviceName,
       time,
