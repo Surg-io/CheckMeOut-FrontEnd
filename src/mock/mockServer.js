@@ -11,6 +11,7 @@ import statistics from './statistics';
 import getuserreservation from './getuserreservation';
 import getdevice from './getdevice';
 import createdevice from './createdevice';
+import reserve from './reserve'
 Mock.mock(`${config.mockURL}/api/login`, 'post', login);
 Mock.mock(`${config.mockURL}/scanHistory`, 'post', history);
 Mock.mock(`${config.mockURL}/api/search-date`, 'post', searchdate);
@@ -23,3 +24,4 @@ Mock.mock(`${config.mockURL}/getuserreservation`, 'post', getuserreservation);
 Mock.mock(`${config.mockURL}/cancelReservation`, 'post', cancelReservation);
 Mock.mock(`${config.mockURL}/api/get-devices`, 'get', getdevice);
 Mock.mock(`${config.mockURL}/createdevice`, 'post', createdevice);
+Mock.mock(`${config.mockURL}/api/reserve`,'post',reserve);

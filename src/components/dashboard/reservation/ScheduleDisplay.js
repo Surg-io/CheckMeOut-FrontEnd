@@ -4,7 +4,6 @@ import config from "config/config";
 import dayjs from "dayjs";
 
 const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) => {
-  console.log(response)
   const { startTime, endTime } = config.timeRange;
 
   const parseTimeToDecimal = (timeString) => {

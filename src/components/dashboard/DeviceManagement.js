@@ -15,7 +15,11 @@ export const DeviceManagement = () => {
   const fetchDevices = () => {
     handleGetDevice()
       .then((response) => {
-        setData(response);
+        if(response.success){
+          setData(response.devices);
+        } else {
+          throw new Error();
+        }
       })
       .catch((error) => {
         showNotification('error', 'Failed to Load Device List', error.message);
