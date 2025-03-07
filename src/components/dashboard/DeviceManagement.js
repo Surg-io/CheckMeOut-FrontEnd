@@ -160,7 +160,7 @@ export const DeviceManagement = () => {
               rows={4} 
               placeholder="Please enter description"
               showCount 
-              maxLength={256}
+              maxLength={250}
             />
           </Form.Item>
         </Form>

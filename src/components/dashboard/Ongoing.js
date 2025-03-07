@@ -38,7 +38,6 @@ const Ongoing = () => {
       }
     } catch (error) {
       console.log("Reservation cancellation error: " + error);
-      throw error;
     }
   };
 

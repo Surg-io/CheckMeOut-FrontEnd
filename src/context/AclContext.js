@@ -38,7 +38,7 @@ export const AclProvider = ({ children }) => {
 export const useAcl = () => {
   const context = useContext(AclContext);
   if (!context) {
-    throw new Error("useAcl must be used within an AclProvider");
+    console.log("useAcl must be used within an AclProvider");
   }
   return context;
 };

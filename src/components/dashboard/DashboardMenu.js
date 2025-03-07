@@ -29,7 +29,6 @@ const DashboardMenu = ({ hasNotification }) => {
     } catch (error) {
       console.log("Qrcode error: " + error);
       showNotification("error","Failed to get QRcode, please try again.");
-      throw error;
     }
   }
 

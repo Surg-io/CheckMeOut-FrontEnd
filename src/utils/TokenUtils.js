@@ -40,7 +40,7 @@ export const getPermissions = () => {
 export const persistTokenData = (token) => {
   const payload = parseJwtPayload(token);
   if (!payload || !payload.exp) {
-    throw new Error("Invalid token: missing expiration time");
+    console.log("Invalid token: missing expiration time");
   }
 
   const expiresAt = new Date(payload.exp * 1000);
