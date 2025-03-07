@@ -171,20 +171,18 @@ const CombinedReservationMaker = () => {
 
   const handleSubmit = async () => {
     try {
-      setTimeout(async () => {
-        const response = await handleSubmitReservation(pendingSlots);
-        if (response.success) {
-          showNotification(
-            "success",
-            "All reservations were submitted successfully.",
-            "Reloading...",
-            1500,
-            () => navigate(0),
-          );
-        } else {
-          throw new Error(response.message);
-        }
-      }, 20000);
+      const response = await handleSubmitReservation(pendingSlots);
+      if (response.success) {
+        showNotification(
+          "success",
+          "All reservations were submitted successfully.",
+          "Reloading...",
+          1500,
+          () => navigate(0),
+        );
+      } else {
+        throw new Error(response.message);
+      }
     } catch (error) {
       console.error("Error submitting reservation:", error);
       showNotification(

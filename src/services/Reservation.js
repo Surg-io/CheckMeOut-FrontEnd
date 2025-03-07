@@ -19,7 +19,7 @@ const handleSubmitReservation = async (pendingSlots) => {
   const payload = {
     reservations: pendingSlots.map(({ deviceId, device, time }) => ({
       deviceId,
-      device,
+      deviceName,
       time,
     })),
   };
