@@ -1,12 +1,5 @@
 {
-  "errorIndicies": [0],
-  "reservations":
-  {
-    "deviceId": 1,
-    "device": "something",
-    "time": "2023-10-01T09:00:00.000Z",
-    "status": "success",
-    "reason": "random"
+  "success": true,
+  "message": "Success"
   }
-}
   

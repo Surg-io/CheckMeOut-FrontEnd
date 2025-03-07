@@ -173,7 +173,7 @@ const CombinedReservationMaker = () => {
     try {
       setTimeout(async () => {
         const response = await handleSubmitReservation(pendingSlots);
-        if (response.errorIndicies?.length === 0) {
+        if (response.success) {
           showNotification(
             "success",
             "All reservations were submitted successfully.",

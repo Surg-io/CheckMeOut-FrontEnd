@@ -100,28 +100,6 @@ const Ongoing = () => {
       render: (device) => device || "Not Specified",
     },
     {
-      title: "Status",
-      dataIndex: "ResStatus",
-      key: "status",
-      ellipsis: false,
-      width: 90,
-      align: 'center',
-      render: (status) => {
-        let color;
-        switch (status) {
-          case "Confirmed": 
-            color="green";
-            break;
-          case "Pending": 
-            color="blue";
-            break;
-          default: 
-            color="red";
-        }
-        return <Tag color={color}>{status}</Tag>;
-      },
-    },
-    {
       title: "Actions",
       key: "actions",
       ellipsis: false,
