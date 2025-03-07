@@ -30,12 +30,14 @@ const LoginForm = () => {
             login(response.token);
           },
         );
+      } else {
+        throw new Error(response.message);
       }
     } catch (error) {
       showNotification(
         "error",
         "Login Failed",
-        error + " Please try again.",
+        error.message + " Please try again.",
         500,
         null,
       );
