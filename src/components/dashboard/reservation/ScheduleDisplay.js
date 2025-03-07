@@ -135,7 +135,7 @@ const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) =
                   ...prevSlots,
                   {
                     deviceId: record.key,
-                    device: record.device,
+                    deviceName: record.device,
                     time: dayjs(
                       `${response.selectedDate}T${startTimeStr}`, //TODO: MM/DD/YYYY
                     ).toDate(),

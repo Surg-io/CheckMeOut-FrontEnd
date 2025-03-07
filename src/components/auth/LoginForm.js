@@ -25,7 +25,7 @@ const LoginForm = () => {
           "success",
           "You have logged in successfully.",
           "Redirecting...",
-          500,
+          1500,
           () => {
             login(response.token);
           },
@@ -38,7 +38,7 @@ const LoginForm = () => {
         "error",
         "Login Failed",
         error.message + " Please try again.",
-        500,
+        1500,
         null,
       );
     } finally {

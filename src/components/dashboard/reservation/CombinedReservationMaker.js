@@ -178,17 +178,13 @@ const CombinedReservationMaker = () => {
             "success",
             "All reservations were submitted successfully.",
             "Reloading...",
-            500,
+            1500,
             () => navigate(0),
           );
         } else {
-          showNotification(
-            "error",
-            "Some reservations failed.",
-            "Please try again.",
-          );
+          throw new Error(response.message);
         }
-      }, 50);
+      }, 20000);
     } catch (error) {
       console.error("Error submitting reservation:", error);
       showNotification(

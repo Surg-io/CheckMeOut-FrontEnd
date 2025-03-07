@@ -24,7 +24,7 @@ const Ongoing = () => {
           "success",
           "You have cancelled your reservation successfully.",
           "Reloading...",
-          500,
+          1500,
           () => navigate(0),
         );
       } else {
