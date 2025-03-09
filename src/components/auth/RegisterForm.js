@@ -29,7 +29,7 @@ const RegisterForm = () => {
       });
       setCurrentStep((prev) => prev + 1);
     } catch (error) {
-      message.error("Please complete all required fields.");
+      showNotification("error", "Please complete all required fields");
     }
   };
 

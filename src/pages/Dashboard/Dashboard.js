@@ -9,7 +9,8 @@ import History from "components/dashboard/History";
 import { Management } from "components/dashboard/Management";
 import { Card } from "antd";
 import { Articles } from "components/common/ArticleDisplay";
-import Ongoing from "components/dashboard/Ongoing";
+import Recent from "components/dashboard/Recent";
+import { Report } from "components/dashboard/Report";
 
 const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,10 +41,10 @@ const Dashboard = () => {
             <CombinedReservationMaker />;
           </div>
         );
-      case "ongoing":
+      case "recent":
         return (
           <div>
-            <Ongoing />
+            <Recent />
           </div>
         );
       case "history":
@@ -68,10 +69,8 @@ const Dashboard = () => {
         return <Card />;
       case "courses":
         return <Card />;
-      case "teams":
-        return <Card />;
       case "report":
-        return <Card />;
+        return <Report />;
       case "support":
         return <Articles category={"support"} renderBackButton={false}/>;
       default:

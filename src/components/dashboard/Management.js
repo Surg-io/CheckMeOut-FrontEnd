@@ -3,7 +3,7 @@ import { PieChartTwoTone, AppstoreTwoTone, FireTwoTone, ArrowLeftOutlined } from
 import { Card, Col, Row, Button } from 'antd';
 import { Stats } from './Stats';
 import { DeviceManagement } from './DeviceManagement';
-import { Report } from './Report';
+import { ReportList } from './ReportList';
 const BackButton = ({onBack}) => {
   return <Button 
       type="link" 
@@ -58,7 +58,7 @@ const StatisticPanel = ({ onBack }) => (
 const ReportPanel = ({ onBack }) => (
   <div style={{ padding: 24, height: '100%' }}>
     <BackButton onBack={onBack}/>
-    <Report/>
+    <ReportList />
   </div>
 );
 

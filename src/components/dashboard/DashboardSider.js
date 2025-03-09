@@ -59,8 +59,8 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
       icon: <HistoryOutlined className="icon" />,
       children: [
         {
-          key: "ongoing",
-          label: <span style={{ marginLeft: subMenuMarginLeft }}>Ongoing</span>,
+          key: "recent",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Recent</span>,
         },
         {
           key: "history",

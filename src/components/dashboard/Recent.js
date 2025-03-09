@@ -6,7 +6,7 @@ import { useNotification } from "context/NotificationContext";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-const Ongoing = () => {
+const Recent = () => {
   const [record, setRecord] = useState([]);
   const [loading, setLoading] = useState(false);
   const now = dayjs();
@@ -147,4 +147,4 @@ const Ongoing = () => {
   );
 };
 
-export default Ongoing;
+export default Recent;
