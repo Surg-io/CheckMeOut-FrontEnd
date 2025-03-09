@@ -157,16 +157,6 @@ const RegisterForm = () => {
             name="password"
             rules={[
               { required: true, message: "Please enter your password" },
-              { min: 6, message: "Password must be at least 6 characters" },
-            ]}
-            normalize={(value) => sanitizePassword(value)}
-          >
-            <Input.Password type="password" placeholder="Password" iconRender={(visible) => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}/>
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[
-              { required: true, message: "Please enter your password" },
               { min: 8, message: "Password must be at least 8 characters" },
               {
                 pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
@@ -179,6 +169,22 @@ const RegisterForm = () => {
               placeholder="Password"
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
+          </Form.Item>
+          <Form.Item
+            name="confirm"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Please confirm your password" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  return value === getFieldValue("password")
+                    ? Promise.resolve()
+                    : Promise.reject("Passwords do not match!");
+                },
+              }),
+            ]}
+          >
+            <Input type="password" placeholder="Confirm Password" />
           </Form.Item>
         </>
       ),
