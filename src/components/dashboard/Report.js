@@ -42,7 +42,7 @@ export const Report = () => {
       };
 
       const response = await handleSubmitReport(payload);
-      if (responsesuccess) {
+      if (response.success) {
         showNotification("success","Success","Report submitted successfully!",1500,null)
         form.resetFields();
       } else {
