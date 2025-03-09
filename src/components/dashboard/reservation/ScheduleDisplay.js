@@ -9,15 +9,14 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
   
   if (!selectedDate) return <div>Loading...</div>;
   const { startTime, endTime } = config.timeRange;
-
   const parseTimeToDecimal = (timeString) => {
-    const time = dayjs(timeString, 'HH:mm');
-    return time.hour() + time.minute()/60;
+    const time = dayjs.utc(timeString);
+    return time.hour() + time.minute() / 60;
   };
 
   const startDecimal = parseTimeToDecimal(startTime);
   const endDecimal = parseTimeToDecimal(endTime);
-
+  console.log(startTime)
   const [dataSource, setDataSource] = useState([]);
   const fixedColumnWidth = 200;
   const dynamicColumnWidth = 70 * ((endDecimal - startDecimal) * 2);
@@ -58,11 +57,11 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
   }, [response, devices]);
 
   const parseDecimalToTime = (decimal) => {
-  return dayjs()
-    .startOf('day')
-    .add(decimal * 60, 'minute')
-    .format('HH:mm');
-};
+    return dayjs.utc()
+      .startOf('day')
+      .add(decimal * 60, 'minute')
+      .format('HH:mm');
+  };
 
   const columns = Array.from(
     { length: (endDecimal - startDecimal) * 2 },

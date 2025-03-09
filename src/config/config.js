@@ -4,8 +4,8 @@ const config = {
   apiBaseUrl: process.env.REACT_APP_API_BASE_URL || "http://localhost:8000",
   timeRange: {
     // Available time range
-    startTime: "08:00",
-    endTime: "19:30",
+    startTime: "2025-03-09T08:00:00Z",
+    endTime: "2025-03-09T19:30:00Z",
   },
   useMockData: true,
   mockURL: "https://6ee3a34f-3379-4e24-8bfb-8feb925e01da.mock.pstmn.io",
