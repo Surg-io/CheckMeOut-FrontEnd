@@ -30,7 +30,15 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
         ) {
           const hour = Math.floor(timeDecimal);
           const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
-          row[dataIndex] = "available";
+          const timeStr = parseDecimalToTime(timeDecimal);
+          const currentTime = dayjs.utc();
+          const slotTime = dayjs(`${selectedDate.format('YYYY-MM-DD')}T${timeStr}`).utc();
+
+          if (slotTime.isBefore(currentTime)) {
+            row[dataIndex] = "expired";
+          } else {
+            row[dataIndex] = "available";
+          }
         }
 
         const scheduleDevice = response?.devices?.find((d) => d.deviceId == device.DeviceID);
@@ -109,8 +117,8 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
               padding: "0px",
               userSelect: "none",
               cursor:
-                status === "available" &&
-                pendingSlots.length >= config.maxSlotsPicked
+                status === "expired" ||
+                (status === "available" && pendingSlots.length >= config.maxSlotsPicked)
                   ? "not-allowed"
                   : status === "available" || status === "pending"
                     ? "pointer"

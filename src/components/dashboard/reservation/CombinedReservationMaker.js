@@ -336,6 +336,25 @@ const CombinedReservationMaker = () => {
             />
             <>Selected</>
           </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px 10px 0px 0px",
+            }}
+          >
+            <div
+              style={{
+                background: config.reservationStatus.expired.color,
+                height: "8px",
+                width: "8px",
+                margin: "0px 5px",
+              }}
+            />
+            <>Expired</>
+          </div>
         </div>
         <div style={{ position: "relative", minHeight: "200px" }}>
           {showSkeleton ? (

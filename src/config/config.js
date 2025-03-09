@@ -10,11 +10,11 @@ const config = {
   useMockData: true,
   mockURL: "https://6ee3a34f-3379-4e24-8bfb-8feb925e01da.mock.pstmn.io",
   reservationStatus: {
-    available: { label: "available", color: "#52c41a" },
-    reserved: { label: "reserved", color: "#ff4d4f" },
-    pending: { label: "pending", color: "#1770ff" },
-    outOfService: { label: "oos", color: "#ffae17" },
-    unknown: { label: "unknown", color: "#8a8a8a" },
+    available: { label: "available", color: "#92FFA5" },
+    reserved: { label: "reserved", color: "#FF929D" },
+    pending: { label: "pending", color: "#92BBFF" },
+    outOfService: { label: "oos", color: "#FFD492" },
+    expired: { label: "expired", color: "#E1E1E1" },
   },
   maxSlotsPicked: 2,
 };
