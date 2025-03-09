@@ -39,6 +39,8 @@ const History = () => {
       if (response.success) {
         setScanRecords(response.scanHistory);
         setReservationRecords(response.eservationHistory);
+      } else {
+        throw new Error(response.message);
       }
     } catch (error) {
       console.error("Failed to fetch history:", error);

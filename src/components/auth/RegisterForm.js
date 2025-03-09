@@ -50,7 +50,8 @@ const RegisterForm = () => {
       const response = await handleRegister(updatedFormData);
       if (response.success) {
         showNotification("success", "Registration Successful", "Redirecting to login page...",500,() => navigate("/auth?tab=login"));
-        
+      } else {
+        throw new Error(response.message);
       }
     } catch (error) {
       showNotification("error", "Registration Failed", error.message || "Please try again later.");
@@ -163,20 +164,21 @@ const RegisterForm = () => {
             <Input.Password type="password" placeholder="Password" iconRender={(visible) => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}/>
           </Form.Item>
           <Form.Item
-            name="confirm"
-            dependencies={["password"]}
+            name="password"
             rules={[
-              { required: true, message: "Please confirm your password" },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  return value === getFieldValue("password")
-                    ? Promise.resolve()
-                    : Promise.reject("Passwords do not match!");
-                },
-              }),
+              { required: true, message: "Please enter your password" },
+              { min: 8, message: "Password must be at least 8 characters" },
+              {
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
+                message:
+                  "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)",
+              },
             ]}
           >
-            <Input type="password" placeholder="Confirm Password" />
+            <Input.Password
+              placeholder="Password"
+              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            />
           </Form.Item>
         </>
       ),

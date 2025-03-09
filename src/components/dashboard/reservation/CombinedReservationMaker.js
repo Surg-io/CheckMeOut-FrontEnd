@@ -99,6 +99,8 @@ const CombinedReservationMaker = () => {
           setDevices(response.devices);
           setSelectedDate(dayjs())
           return handleFetchSchedule(dayjs());
+        } else {
+          throw new Error(response.message);
         }
       })
       .then((scheduleResponse) => {

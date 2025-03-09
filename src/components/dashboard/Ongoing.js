@@ -26,15 +26,9 @@ const Ongoing = () => {
           "Reloading...",
           1500,
           () => navigate(0),
-        );
+        ); 
       } else {
-        showNotification(
-          "error",
-          "Cancellation failed.",
-          "Please try again.",
-          0,
-          null
-        );
+        throw new Error(response.message);
       }
     } catch (error) {
       console.log("Reservation cancellation error: " + error);
@@ -48,6 +42,8 @@ const Ongoing = () => {
       let response = await handleGetUserReservation();
       if(response.success){
         setRecord(response.Reservations);
+      } else {
+        throw new Error(response.message);
       }
     } catch (error) {
       console.error("Failed to fetch reservations:", error);
