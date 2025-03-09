@@ -11,7 +11,7 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
   const { startTime, endTime } = config.timeRange;
 
   const parseTimeToDecimal = (timeString) => {
-    const time = dayjs(timeString, 'HH:mm:ss');
+    const time = dayjs(timeString, 'HH:mm');
     return time.hour() + time.minute()/60;
   };
 
