@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "config/config";
 import { getToken, logout } from "utils/TokenUtils";
+import { showNotification } from "utils/NotificationUtils";
 
 const URL = process.env.NODE_ENV === "production" 
   ? config.apiBaseUrl 
@@ -30,8 +31,16 @@ let isRefreshing = false;
 const handleUnauthorized = async () => {
   if (!isRefreshing) {
     isRefreshing = true;
-    logout();
-    window.location.href = "/auth?tab=login"; 
+    showNotification(
+      "error",
+      "Session Expired",
+      "Please log in again.",
+      1500,
+      ()=>{
+        logout();
+        window.location.href = "/auth?tab=login"; 
+      }
+    );
   }
 };
 
