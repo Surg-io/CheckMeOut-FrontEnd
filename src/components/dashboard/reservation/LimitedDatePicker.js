@@ -19,13 +19,9 @@ const LimitedDatePicker = ({ onDatePicked }) => {
       defaultValue={now}
       disabledDate={disabledDate} // Restrict selectable dates
       onChange={(date) => {
-        if (date && onDatePicked) {
-          // Format the date as { year, month, day }
-          const formattedDate = dayjs(
-            new Date(date.year(), date.month(), date.date()),
-          );
-          onDatePicked(formattedDate); // Pass the formatted date object
-        }
+        if (!date) return;
+        const utcDate = date.utc().startOf('day');
+        onDatePicked(utcDate);
       }}
     />
   );

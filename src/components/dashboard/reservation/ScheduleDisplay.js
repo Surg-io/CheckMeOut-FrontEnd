@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Tooltip } from "antd";
 import config from "config/config";
 import dayjs from "dayjs";
+var utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 
-const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) => {
+const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPendingSlots }) => {
+  
+  if (!selectedDate) return <div>Loading...</div>;
   const { startTime, endTime } = config.timeRange;
 
   const parseTimeToDecimal = (timeString) => {
@@ -19,7 +23,7 @@ const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) =
   const dynamicColumnWidth = 70 * ((endDecimal - startDecimal) * 2);
   
   useEffect(() => {
-    if (devices.length > 0) {
+    if (devices.length > 0 && response) {
       const initialDataSource = devices.map((device) => {
         const row = { key: device.DeviceID, device: device.DeviceName };
 
@@ -51,7 +55,7 @@ const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) =
 
       setDataSource(initialDataSource);
     }
-  }, [response]);
+  }, [response, devices]);
 
   const parseDecimalToTime = (decimal) => {
     const hours = Math.floor(decimal);
@@ -136,9 +140,7 @@ const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) =
                   {
                     deviceId: record.key,
                     deviceName: record.device,
-                    time: dayjs(
-                      `${response.selectedDate}T${startTimeStr}`, //TODO: MM/DD/YYYY
-                    ).toDate(),
+                    time: dayjs(`${selectedDate.format('YYYY-MM-DD')}T${startTimeStr}`).utc().toDate()
                   },
                 ]);
               } else if (status === "pending") {
@@ -159,12 +161,12 @@ const ScheduleDisplay = ({ devices, response, pendingSlots, setPendingSlots }) =
                       !(
                         slot.deviceId === record.key &&
                         slot.time.getTime() ===
-                          dayjs(`${response.selectedDate}T${startTimeStr}`)
-                            .toDate()
-                            .getTime()
+                          dayjs(`${selectedDate.format('YYYY-MM-DD')}T${startTimeStr}`).utc().toDate()
+                          .getTime()
                       ),
                   ),
                 );
+                console.log(pendingSlots)
               }
             },
           };

@@ -14,6 +14,7 @@ import { useNotification } from "context/NotificationContext";
 import { useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 const CombinedReservationMaker = () => {
+  const [selectedDate, setSelectedDate] = useState(null);
   const showNotification = useNotification();
   const [scheduleData, setScheduleData] = useState(null);
   const [purposeValue, setPurposeValue] = useState(null);
@@ -96,6 +97,7 @@ const CombinedReservationMaker = () => {
       .then((response) => {
         if(response.success){
           setDevices(response.devices);
+          setSelectedDate(dayjs())
           return handleFetchSchedule(dayjs());
         }
       })
@@ -162,6 +164,7 @@ const CombinedReservationMaker = () => {
   const handleDatePicked = async (date) => {
     try {
       const response = await handleFetchSchedule(date);
+      setSelectedDate(date);
       setScheduleData(response);
       setPendingSlots([]);
     } catch (error) {
@@ -171,14 +174,17 @@ const CombinedReservationMaker = () => {
 
   const handleSubmit = async () => {
     try {
+      if(pendingSlots.length == 0) throw new Error("Please choose a time to continue with your reservation.");
       const response = await handleSubmitReservation(pendingSlots);
       if (response.success) {
+        const freshData = await handleFetchSchedule(selectedDate);
+        setScheduleData(freshData);
+        setPendingSlots([]);
         showNotification(
           "success",
           "All reservations were submitted successfully.",
           "Reloading...",
-          1500,
-          () => navigate(0),
+          1500
         );
       } else {
         throw new Error(response.message);
@@ -187,7 +193,8 @@ const CombinedReservationMaker = () => {
       console.error("Error submitting reservation:", error);
       showNotification(
         "error",
-        "An unexpected error occurred while submitting reservations.",
+        "An error Occurred.",
+        error.message || "An unexpected error occurred while submitting reservations.",
       );
     }
   };
@@ -336,6 +343,7 @@ const CombinedReservationMaker = () => {
           ) : (
             <div style={{ visibility: showSkeleton ? "hidden" : "visible" }}>
               <ScheduleDisplay
+                selectedDate={selectedDate}
                 devices={devices}
                 response={scheduleData}
                 pendingSlots={pendingSlots}
