@@ -36,7 +36,7 @@ export const Report = () => {
       const payload = {
         type: values.type.join(" - "),
         time: values.time,
-        deviceID: values.deviceId,
+        deviceId: values.deviceID,
         deviceName: devices.find((device) => device.DeviceID === values.deviceID)?.DeviceName,
         description: values.description,
       };
