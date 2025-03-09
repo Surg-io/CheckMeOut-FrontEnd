@@ -61,7 +61,7 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
   return dayjs()
     .startOf('day')
     .add(decimal * 60, 'minute')
-    .format('HH:mm:ss');
+    .format('HH:mm');
 };
 
   const columns = Array.from(

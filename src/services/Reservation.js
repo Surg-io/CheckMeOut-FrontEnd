@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 
 const handleFetchSchedule = async (date) => {
   const payload = {
-    fullDate: dayjs(date).toISOString(),
+    fullDate: dayjs(date).format("YYYY-MM-DD"),
   };
   return handleApiRequest(() =>
     apiClient.post("/api/search-date", payload, { withCredentials: true })
