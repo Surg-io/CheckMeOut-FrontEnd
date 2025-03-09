@@ -16,7 +16,6 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
 
   const startDecimal = parseTimeToDecimal(startTime);
   const endDecimal = parseTimeToDecimal(endTime);
-  console.log(startTime)
   const [dataSource, setDataSource] = useState([]);
   const fixedColumnWidth = 200;
   const dynamicColumnWidth = 70 * ((endDecimal - startDecimal) * 2);
@@ -36,15 +35,15 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
           row[dataIndex] = "available";
         }
 
-        const scheduleDevice = response?.devices?.find(d => d.deviceId === device.deviceId);
+        const scheduleDevice = response?.devices?.find((d) => d.deviceId == device.DeviceID);
         if (scheduleDevice) {
-          scheduleDevice.timeWindows.forEach(({ startTime, endTime, status }) => {
+          scheduleDevice.timeWindows.forEach(({ startTime, endTime,}) => {
             const start = parseTimeToDecimal(startTime);
             const end = parseTimeToDecimal(endTime);
             for (let timeDecimal = start; timeDecimal < end; timeDecimal += 0.5) {
               const hour = Math.floor(timeDecimal);
               const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
-              row[dataIndex] = status;
+              row[dataIndex] = "reserved";
             }
           });
         }
