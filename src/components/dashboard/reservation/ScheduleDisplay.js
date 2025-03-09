@@ -11,8 +11,8 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
   const { startTime, endTime } = config.timeRange;
 
   const parseTimeToDecimal = (timeString) => {
-    const [hours, minutes] = timeString.split(":").map(Number);
-    return hours + minutes / 60;
+    const time = dayjs(timeString, 'HH:mm:ss');
+    return time.hour() + time.minute()/60;
   };
 
   const startDecimal = parseTimeToDecimal(startTime);
@@ -58,10 +58,11 @@ const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPen
   }, [response, devices]);
 
   const parseDecimalToTime = (decimal) => {
-    const hours = Math.floor(decimal);
-    const minutes = (decimal % 1) * 60;
-    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-  };
+  return dayjs()
+    .startOf('day')
+    .add(decimal * 60, 'minute')
+    .format('HH:mm:ss');
+};
 
   const columns = Array.from(
     { length: (endDecimal - startDecimal) * 2 },
