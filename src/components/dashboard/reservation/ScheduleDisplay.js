@@ -8,14 +8,12 @@ dayjs.extend(utc);
 const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPendingSlots }) => {
   
   if (!selectedDate) return <div>Loading...</div>;
-  const { startTime, endTime } = config.timeRange;
+  const { startDecimal, endDecimal } = config.timeRange;
   const parseTimeToDecimal = (timeString) => {
-    const time = dayjs.utc(timeString);
-    return time.hour() + time.minute() / 60;
+    const localTime = dayjs.utc(timeString).local();
+    return localTime.hour() + localTime.minute() / 60;
   };
 
-  const startDecimal = parseTimeToDecimal(startTime);
-  const endDecimal = parseTimeToDecimal(endTime);
   const [dataSource, setDataSource] = useState([]);
   const fixedColumnWidth = 200;
   const dynamicColumnWidth = 70 * ((endDecimal - startDecimal) * 2);
