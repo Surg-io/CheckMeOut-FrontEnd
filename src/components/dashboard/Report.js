@@ -61,67 +61,67 @@ export const Report = () => {
       label: "Equipment Issues",
       children: [
         {
-          value: "damage",
+          value: "Damage",
           label: "Equipment Damage or Malfunction",
         },
         {
-          value: "software",
+          value: "Software",
           label: "Software Issues",
         },
         {
-          value: "material_shortage",
+          value: "Material Shortage",
           label: "Material Shortages",
         },
       ],
     },
     {
-      value: "cleanliness",
+      value: "Cleanliness",
       label: "Cleanliness Issues",
       children: [
         {
-          value: "dirty_equipment",
+          value: "Dirty Equipment",
           label: "Dirty Equipment",
         },
         {
-          value: "dirty_workspace",
+          value: "Dirty Workspace",
           label: "Dirty Workspace",
         },
       ],
     },
     {
-      value: "safety",
+      value: "Safety",
       label: "Safety Concerns",
       children: [
         {
-          value: "equipment_hazard",
+          value: "Equipment Hazard",
           label: "Equipment Safety Hazard",
         },
         {
-          value: "workspace_hazard",
+          value: "Workspace Hazard",
           label: "Workspace Safety Hazard",
         },
         {
-          value: "user_behavior",
+          value: "User Behavior",
           label: "Unsafe User Behavior",
         },
       ],
     },
     {
-      value: "policy",
+      value: "Policy Violations",
       label: "User Policy Violations",
       children: [
         {
-          value: "unauthorized_use",
+          value: "Unauthorized Use",
           label: "Unauthorized Use",
         },
         {
-          value: "safety_gear",
+          value: "Safety Gear",
           label: "Failure to Wear Safety Gear",
         },
       ],
     },
     {
-      value: "other",
+      value: "Other",
       label: "Other Issues",
     },
   ];
