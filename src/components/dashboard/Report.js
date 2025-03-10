@@ -176,7 +176,7 @@ export const Report = () => {
           label="Description"
           rules={[{ required: true, message: "Please enter a description" }]}
         >
-          <Input.TextArea rows={4} placeholder="Describe the issue" />
+          <Input.TextArea rows={4} placeholder="Describe the issue" maxLength={250}/>
         </Form.Item>
 
         <Form.Item>
