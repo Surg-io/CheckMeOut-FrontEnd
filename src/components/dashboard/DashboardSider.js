@@ -71,10 +71,14 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
       ]
     },
     {
-      key: "facilities",
-      label: "Facilities",
-      icon: <FundViewOutlined className="icon" />,
+      key: "resources",
+      label: "Resources",
+      icon: <ReadOutlined className="icon" />,
       children: [
+        {
+          key: "courses",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
+        },
         {
           key: "space",
           label: <span style={{ marginLeft: subMenuMarginLeft }}>Space</span>,
@@ -84,21 +88,6 @@ const DashboardSider = ({ onSelectKey, selectedKey }) => {
           label: (
             <span style={{ marginLeft: subMenuMarginLeft }}>Equipment</span>
           ),
-        },
-      ],
-    },
-    {
-      key: "resources",
-      label: "Resources",
-      icon: <ReadOutlined className="icon" />,
-      children: [
-        {
-          key: "guides",
-          label: <span style={{ marginLeft: subMenuMarginLeft }}>Guides</span>,
-        },
-        {
-          key: "courses",
-          label: <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
         },
       ],
     },

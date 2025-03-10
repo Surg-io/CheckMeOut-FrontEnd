@@ -69,11 +69,6 @@ const DashboardMenu = ({ hasNotification }) => {
         <span>
           <SettingOutlined onClick={showSettings} />
         </span>
-        <span>
-          <Badge dot={hasNotification}>
-            <NotificationOutlined />
-          </Badge>
-        </span>
         <span onClick={handleFetchQrcode} style={{ cursor: "pointer" }}>
           <QrcodeOutlined />
         </span>

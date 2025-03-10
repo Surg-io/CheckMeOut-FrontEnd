@@ -68,7 +68,7 @@ const Dashboard = () => {
       case "guides":
         return <Card />;
       case "courses":
-        return <Card />;
+        return <Articles category={"course"}/>;
       case "report":
         return <Report />;
       case "support":

@@ -21,14 +21,14 @@
     {
       "name": "space1",
       "title": "Makerspace",
-      "cover": "posts/space/space1/cover.jpg",
-      "index": "posts/space/space1/space1.md"
+      "cover": "images/space1.jpg",
+      "index": "posts/space1.md"
     },
     {
       "name": "space2",
       "title": "Study Room",
-      "cover": "posts/space/space2/cover.jpg",
-      "index": "posts/space/space2/space2.md"
+      "cover": "images/space2.jpg",
+      "index": "posts/space2.md"
     }
   ],
   "equipments": [
@@ -36,13 +36,37 @@
       "name": "device1",
       "title": "3D Printer",
       "cover": "images/3D_Printer.jpg",
-      "index": "posts/equipment/3d_printer/3d_printer.md"
+      "index": "posts/equipment/3d_printer.md"
     },
     {
       "name": "device2",
       "title": "Laser Cutter",
       "cover": "images/Laser_Cutter.jpg",
-      "index": "posts/equipment/laser_cutter/laser_cutter.md"
+      "index": "posts/equipment/laser_cutter.md"
+    },
+    {
+      "name": "device3",
+      "title": "CNC Milling Machine",
+      "cover": "images/cnc.jpg",
+      "index": "posts/equipment/cnc.md"
+    },
+    {
+      "name": "device4",
+      "title": "Heat Press Machine",
+      "cover": "images/heat_press.jpg",
+      "index": "posts/equipment/heating_press.md"
+    },
+    {
+      "name": "device5",
+      "title": "Soldering Station",
+      "cover": "images/soldering.jpg",
+      "index": "posts/equipment/soldering.md"
+    },
+    {
+      "name": "device6",
+      "title": "Spray Painting Booth",
+      "cover": "images/spray.jpg",
+      "index": "posts/equipment/spray.md"
     }
   ],
   "support": [
@@ -59,6 +83,20 @@
       "title": "Reservation",
       "cover": "",
       "index": "posts/Reservation.md"
+    }
+  ],
+  "course": [
+    {
+      "name": "mak200",
+      "title": "MAK 200: Intro to Laser Cutting",
+      "cover": "images/mak210.png",
+      "index": "posts/course/mak200.md"
+    },
+    {
+      "name": "mak210",
+      "title": "MAK 210: Intro to 3D Printing & CNC Milling",
+      "cover": "images/mak210.png",
+      "index": "posts/course/mak210.md"
     }
   ]
 }
