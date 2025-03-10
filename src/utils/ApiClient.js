@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "config/config";
 import { getToken, logout } from "utils/TokenUtils";
-import { showNotification } from "utils/NotificationUtils";
+import { useNotification } from "context/NotificationContext";
 
 const URL = process.env.NODE_ENV === "production" 
   ? config.apiBaseUrl 
@@ -31,6 +31,7 @@ let isRefreshing = false;
 const handleUnauthorized = async () => {
   if (!isRefreshing) {
     isRefreshing = true;
+    const {showNotification} = useNotification();
     showNotification(
       "error",
       "Session Expired",
