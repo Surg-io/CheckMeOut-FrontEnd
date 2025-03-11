@@ -28,14 +28,14 @@ apiClient.interceptors.request.use(
 );
 
 let isRefreshing = false;
-const handleUnauthorized = async () => {
+const handleUnauthorized = async (response) => {
   if (!isRefreshing) {
     isRefreshing = true;
     const {showNotification} = useNotification();
     showNotification(
       "error",
-      "Session Expired",
-      "Please log in again.",
+      response.message,
+      "",
       1500,
       ()=>{
         logout();
@@ -59,8 +59,8 @@ apiClient.interceptors.response.use(
 
     if (status === 401) {
       console.warn("Unauthorized error:", data);
-      handleUnauthorized();
-      return Promise.reject(new Error("Login expired."));
+      handleUnauthorized(data);
+      return Promise.reject(new Error("Authentication Failed."));
     }
 
     if (status === 403) {
