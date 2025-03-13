@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, Typography, Button, Spin } from "antd";
+import { List, Typography, Button, Spin, Divider } from "antd";
 import { handleGetReport } from "services/ReportApi";
 import { useNotification } from "context/NotificationContext";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
@@ -80,21 +80,7 @@ export const ReportList = () => {
 
               {/* Main content: [Type] Date More */}
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <Text
-                  style={{
-                    position:'relative',
-                    color: "rgba(0, 0, 0, 0.45)",
-                  }}
-                >
-                  ID:{report.ReportID}
-                </Text>
-                <Text
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 100,
-                  }}
-                >
+                <Text strong>
                   {report.Type}
                 </Text>
                 {report.Description.length > 100 && ( // Show "More" button if description is long
@@ -111,7 +97,17 @@ export const ReportList = () => {
               {/* Expanded description */}
               {expandedReports[report.ReportID] && (
                 <div style={{ marginTop: 8 }}>
-                  {report.Description}
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Text style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+                      Report: {report.ReportID}
+                    </Text>
+                    <Text>
+                      Device: {report.DeviceID}
+                    </Text>
+                  </div>
+                  <div>
+                    {report.Description}
+                  </div>
                 </div>
               )}
             </div>
