@@ -23,7 +23,244 @@ export const Stats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await handleStats();
+        const response = {
+          "newUsers": {
+            "past24h": 12,
+            "past7d": 85,
+            "past30d": 320,
+            "past6m": 360
+          },
+          "reservationsMade": {
+            "past24h": {
+              "devices": [
+                {
+                  "deviceId": 1,
+                  "deviceName": "3D Printer",
+                  "count": 15
+                },
+                {
+                  "deviceId": 2,
+                  "deviceName": "Laser Cutter",
+                  "count": 10
+                },
+                {
+                  "deviceId": 3,
+                  "deviceName": "CNC Router",
+                  "count": 20
+                },
+                {
+                  "deviceId": 4,
+                  "deviceName": "Vinyl Cutter",
+                  "count": 7
+                },
+                {
+                  "deviceId": 5,
+                  "deviceName": "UV Printer",
+                  "count": 19
+                }
+              ],
+              "total": 71
+            },
+            "past7d": {
+              "devices": [
+                {
+                  "deviceId": 1,
+                  "deviceName": "3D Printer",
+                  "count": 110
+                },
+                {
+                  "deviceId": 2,
+                  "deviceName": "Laser Cutter",
+                  "count": 85
+                },
+                {
+                  "deviceId": 3,
+                  "deviceName": "CNC Router",
+                  "count": 125
+                },
+                {
+                  "deviceId": 4,
+                  "deviceName": "Vinyl Cutter",
+                  "count": 24
+                },
+                {
+                  "deviceId": 5,
+                  "deviceName": "UV Printer",
+                  "count": 66
+                }
+              ],
+              "total": 410
+            },
+            "past30d": {
+              "devices": [
+                {
+                  "deviceId": 1,
+                  "deviceName": "3D Printer",
+                  "count": 500
+                },
+                {
+                  "deviceId": 2,
+                  "deviceName": "Laser Cutter",
+                  "count": 420
+                },
+                {
+                  "deviceId": 3,
+                  "deviceName": "CNC Router",
+                  "count": 480
+                },
+                {
+                  "deviceId": 4,
+                  "deviceName": "Vinyl Cutter",
+                  "count": 108
+                },
+                {
+                  "deviceId": 5,
+                  "deviceName": "UV Printer",
+                  "count": 292
+                }
+              ],
+              "total": 1800
+            },
+            "past6m": {
+              "devices": [
+                {
+                  "deviceId": 1,
+                  "deviceName": "3D Printer",
+                  "count": 2800
+                },
+                {
+                  "deviceId": 2,
+                  "deviceName": "Laser Cutter",
+                  "count": 2500
+                },
+                {
+                  "deviceId": 3,
+                  "deviceName": "CNC Router",
+                  "count": 2300
+                },
+                {
+                  "deviceId": 4,
+                  "deviceName": "Vinyl Cutter",
+                  "count": 592
+                },
+                {
+                  "deviceId": 5,
+                  "deviceName": "UV Printer",
+                  "count": 1608
+                }
+              ],
+              "total": 9800
+            }
+          },
+          "checkinsMade": {
+            "past24h": 55,
+            "past7d": 380,
+            "past30d": 1600,
+            "past6m": 8700
+          },
+          "peakTime": {
+            "past24h": {
+              "start": "15:00",
+              "end": "17:00"
+            },
+            "past7d": {
+              "start": "14:00",
+              "end": "16:00"
+            }
+          },
+          "errorRate": {
+            "past7d": {
+              "devices": [
+                {
+                  "deviceId": 1,
+                  "deviceName": "3D Printer",
+                  "rate": 0.020
+                },
+                {
+                  "deviceId": 2,
+                  "deviceName": "Laser Cutter",
+                  "rate": 0.017
+                },
+                {
+                  "deviceId": 3,
+                  "deviceName": "CNC Router",
+                  "rate": 0.014
+                },
+                {
+                  "deviceId": 4,
+                  "deviceName": "Vinyl Cutter",
+                  "rate": 0.008
+                },
+                {
+                  "deviceId": 5,
+                  "deviceName": "UV Printer",
+                  "rate": 0.011
+                }
+              ],
+              "average": 0.014
+            },
+            "past30d": {
+              "devices": [
+                {
+                  "deviceId": 1,
+                  "deviceName": "3D Printer",
+                  "rate": 0.018
+                },
+                {
+                  "deviceId": 2,
+                  "deviceName": "Laser Cutter",
+                  "rate": 0.016
+                },
+                {
+                  "deviceId": 3,
+                  "deviceName": "CNC Router",
+                  "rate": 0.013
+                },
+                {
+                  "deviceId": 4,
+                  "deviceName": "Vinyl Cutter",
+                  "rate": 0.007
+                },
+                {
+                  "deviceId": 5,
+                  "deviceName": "UV Printer",
+                  "rate": 0.011
+                }
+              ],
+              "average": 0.013
+            },
+            "past6m": {
+              "devices": [
+                {
+                  "deviceId": 1,
+                  "deviceName": "3D Printer",
+                  "rate": 0.016
+                },
+                {
+                  "deviceId": 2,
+                  "deviceName": "Laser Cutter",
+                  "rate": 0.014
+                },
+                {
+                  "deviceId": 3,
+                  "deviceName": "CNC Router",
+                  "rate": 0.012
+                },
+                {
+                  "deviceId": 4,
+                  "deviceName": "Vinyl Cutter",
+                  "rate": 0.008
+                },
+                {
+                  "deviceId": 5,
+                  "deviceName": "UV Printer",
+                  "rate": 0.010
+                }
+              ],
+              "average": 0.012
+            }
+          }
+        };
         setStats(response);
 
         // Set default device when data loads
