@@ -5,7 +5,7 @@ import React from "react";
 import MainLayout from "layouts/MainLayout";
 import HomeMenu from "components/home/HomeMenu";
 import { Flex, Button } from "antd";
-import { blue, red } from "@ant-design/colors";
+import { blue, orange, red } from "@ant-design/colors";
 import "./HomePage.css";
 import { useNavigate } from "react-router-dom";
 
@@ -32,10 +32,10 @@ const HomePage = () => {
           <h1 className="Slogan_heading" style={{ color: blue[5] }}>
             Build.
           </h1>
-          <h1 className="Slogan_heading" style={{ color: red[3] }}>
+          <h1 className="Slogan_heading" style={{ color: orange[3] }}>
             — Your project
           </h1>
-          <h1 className="Slogan_heading" style={{ color: red[3] }}>
+          <h1 className="Slogan_heading" style={{ color: orange[3] }}>
             Starts Here.
           </h1>
           <Button

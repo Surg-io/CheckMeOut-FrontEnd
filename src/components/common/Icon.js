@@ -3,7 +3,7 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { blue, red } from "@ant-design/colors";
+import { blue, orange, red } from "@ant-design/colors";
 import "./Icon.css";
 
 const Icon = ({ size = 1, clickable = false }) => {
@@ -48,10 +48,10 @@ const Icon = ({ size = 1, clickable = false }) => {
         <div className="brand-name" style={{ marginLeft: "10px" }}>
           {/**Assign different colors*/}
           <span className="brand-maker" style={{ color: blue[5] }}>
-            Maker
+            CheckMe
           </span>
-          <span className="brand-space" style={{ color: red[3] }}>
-            Space
+          <span className="brand-space" style={{ color: orange[3] }}>
+            Out
           </span>
         </div>
       </div>

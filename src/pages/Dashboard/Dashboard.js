@@ -38,7 +38,7 @@ const Dashboard = () => {
       case "reservation":
         return (
           <div>
-            <CombinedReservationMaker />;
+            <CombinedReservationMaker />
           </div>
         );
       case "recent":
