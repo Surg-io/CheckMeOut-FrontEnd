@@ -1,0 +1,46 @@
+.ant-table-thead > tr > th {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  min-width: fit-content;
+}
+
+.ant-table-thead > tr > th .ant-table-cell {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+@media (max-width: 768px) {
+  .fixed-header {
+    padding: 12px 16px;
+  }
+  .fixed-header button {
+    padding: 4px 8px;
+  }
+}
+
+.markdown-content {
+  line-height: 1.8;
+  
+  h1, h2, h3 {
+    margin: 1.5em 0 1em;
+  }
+
+  ul, ol {
+    padding-left: 2em;
+  }
+
+  blockquote {
+    border-left: 4px solid #1890ff;
+    background: #f0f9ff;
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 4px;
+  }
+
+  pre {
+    border-radius: 8px;
+    margin: 1.5em 0;
+  }
+}

@@ -1,164 +1,246 @@
 import React, { useState, useEffect } from "react";
-import { Table, Spin } from "antd";
-import config from "@root/config/config";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Tooltip } from "antd";
+import config from "config/config";
 import dayjs from "dayjs";
+var utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 
-const ScheduleDisplay = ({ response, pendingSlots, setPendingSlots }) => {
-    const { startTime, endTime } = config.timeRange;
+const ScheduleDisplay = ({ selectedDate, devices, response, pendingSlots, setPendingSlots }) => {
+  
+  if (!selectedDate) return <div>Loading...</div>;
+  const { startDecimal, endDecimal } = config.timeRange;
+  const parseTimeToDecimal = (timeString) => {
+    const localTime = dayjs.utc(timeString).local();
+    return localTime.hour() + localTime.minute() / 60;
+  };
 
-    const parseTimeToDecimal = (timeString) => {
-        const [hours, minutes] = timeString.split(":").map(Number);
-        return hours + minutes / 60;
-    };
+  const [dataSource, setDataSource] = useState([]);
+  const fixedColumnWidth = 200;
+  const dynamicColumnWidth = 70 * ((endDecimal - startDecimal) * 2);
+  
+  useEffect(() => {
+    if (devices.length > 0 && response) {
+      const initialDataSource = devices.map((device) => {
+        const row = { key: device.DeviceID, device: device.DeviceName };
 
-    const startDecimal = parseTimeToDecimal(startTime);
-    const endDecimal = parseTimeToDecimal(endTime);
+        for (
+          let timeDecimal = startDecimal;
+          timeDecimal < endDecimal;
+          timeDecimal += 0.5
+        ) {
+          const hour = Math.floor(timeDecimal);
+          const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
+          const timeStr = parseDecimalToTime(timeDecimal);
+          const currentTime = dayjs.utc();
+          const slotTime = dayjs(`${selectedDate.format('YYYY-MM-DD')}T${timeStr}`).utc();
 
-    const [dataSource, setDataSource] = useState([]);
-
-    useEffect(() => {
-        if (response?.devices) {
-            const initialDataSource = response.devices.map((device) => {
-                const row = { key: device.deviceId, device: device.deviceName };
-
-                for (let timeDecimal = startDecimal; timeDecimal < endDecimal; timeDecimal += 0.5) {
-                    const hour = Math.floor(timeDecimal);
-                    const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
-                    row[dataIndex] = "available";
-                }
-
-                device.timeWindows.forEach(({ startTime, endTime, status }) => {
-                    const start = parseTimeToDecimal(startTime);
-                    const end = parseTimeToDecimal(endTime);
-
-                    for (let timeDecimal = start; timeDecimal < end; timeDecimal += 0.5) {
-                        const hour = Math.floor(timeDecimal);
-                        const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
-                        row[dataIndex] = status;
-                    }
-                });
-
-                return row;
-            });
-
-            setDataSource(initialDataSource);
+          if (slotTime.isBefore(currentTime)) {
+            row[dataIndex] = "expired";
+          } else {
+            row[dataIndex] = "available";
+          }
         }
-    }, [response, startDecimal, endDecimal]);
 
-    const columns = Array.from({ length: (endDecimal - startDecimal) * 2 }, (_, i) => {
-        const timeDecimal = startDecimal + i * 0.5;
-        const hour = Math.floor(timeDecimal);
-        const timeLabel = `${hour.toString().padStart(2, "0")}:${timeDecimal % 1 === 0 ? "00" : "30"}`;
-        const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
+        const scheduleDevice = response?.devices?.find((d) => d.deviceId == device.DeviceID);
+        if (scheduleDevice) {
+          scheduleDevice.timeWindows.forEach(({ startTime, endTime,}) => {
+            const start = parseTimeToDecimal(startTime);
+            const end = parseTimeToDecimal(endTime);
+            for (let timeDecimal = start; timeDecimal < end; timeDecimal += 0.5) {
+              const hour = Math.floor(timeDecimal);
+              const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
+              row[dataIndex] = "reserved";
+            }
+          });
+        }
 
-        return {
-            title: timeLabel,
-            dataIndex: dataIndex,
-            key: dataIndex,
-            align: "center",
-            width: "70px",
-            onCell: (record) => {
-                const status = record[dataIndex];
-                const statusConfig = config.reservationStatus[status] || {};
-                const bgColor = statusConfig.color || "#ffffff";
+        return row;
+      });
 
-                return {
-                    style: {
-                        backgroundColor: bgColor,
-                        color: "#fff",
-                        textAlign: "center",
-                        height: "70px",
-                        width: "70px",
-                        lineHeight: "70px",
-                        borderRadius: "10px",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        padding: "0px",
-                        userSelect: "none",
-                        cursor:
-                            status === "available" && pendingSlots.length >= config.maxSlotsPicked
-                                ? "not-allowed"
-                                : status === "available" || status === "pending"
-                                ? "pointer"
-                                : "not-allowed",
-                    },
-                    onClick: () => {
-                        if (status === "available" && pendingSlots.length < config.maxSlotsPicked) {
-                            setDataSource(
-                                dataSource.map((row) => {
-                                    if (row.key === record.key) {
-                                        return {
-                                            ...row,
-                                            [dataIndex]: "pending",
-                                        };
-                                    }
-                                    return row;
-                                })
-                            );
-                            setPendingSlots((prevSlots) => [
-                                ...prevSlots,
-                                {
-                                    deviceId: record.key,
-                                    device: record.device,
-                                    time: dayjs(`${response.selectedDate}T${timeLabel}`).toDate(),
-                                },
-                            ]);
-                        } else if (status === "pending") {
-                            setDataSource(
-                                dataSource.map((row) => {
-                                    if (row.key === record.key) {
-                                        return {
-                                            ...row,
-                                            [dataIndex]: "available",
-                                        };
-                                    }
-                                    return row;
-                                })
-                            );
-                            setPendingSlots((prevSlots) =>
-                                prevSlots.filter(
-                                    (slot) =>
-                                        !(
-                                            slot.deviceId === record.key &&
-                                            slot.time.getTime() ===
-                                                dayjs(`${response.selectedDate}T${timeLabel}`).toDate().getTime()
-                                        )
-                                )
-                            );
-                        }
-                    },
-                };
-            },
-            render: () => null,
-        };
-    });
-
-    columns.unshift({
-        title: "Device",
-        dataIndex: "device",
-        key: "device",
-        fixed: "left",
-        width: "120px",
-        align: "center",
-    });
-
-    if (!response || !response.devices) {
-        return <Spin indicator={<LoadingOutlined spin />} size="large" />;
+      setDataSource(initialDataSource);
     }
+  }, [response, devices]);
 
-    return (
-        <Table
-            bordered
-            columns={columns}
-            dataSource={dataSource}
-            pagination={false}
-            scroll={{
-                x: "max-content",
-                y: "400px",
+  const parseDecimalToTime = (decimal) => {
+    return dayjs.utc()
+      .startOf('day')
+      .add(decimal * 60, 'minute')
+      .format('HH:mm');
+  };
+
+  const columns = Array.from(
+    { length: (endDecimal - startDecimal) * 2 },
+    (_, i) => {
+      const timeDecimal = startDecimal + i * 0.5;
+      const hour = Math.floor(timeDecimal);
+      const dataIndex = `time${hour}${timeDecimal % 1 === 0 ? "00" : "30"}`;
+
+      const startTimeStr = parseDecimalToTime(timeDecimal);
+      const endTimeStr = parseDecimalToTime(timeDecimal + 0.5);
+
+      return {
+        title: (
+          <div
+            style={{
+              fontSize: 12,
+              lineHeight: "16px",
+              textAlign: "center",
+              whiteSpace: "normal",
             }}
-        />
-    );
+          >
+            {startTimeStr}
+            <br />-<br />
+            {endTimeStr}
+          </div>
+        ),
+        dataIndex: dataIndex,
+        key: dataIndex,
+        align: "center",
+        fixed: false,
+        width: 70,
+        onCell: (record) => {
+          const status = record[dataIndex];
+          const statusConfig = config.reservationStatus[status] || {};
+          const bgColor = statusConfig.color || "#ffffff";
+
+          return {
+            style: {
+              backgroundColor: bgColor,
+              color: "#fff",
+              textAlign: "center",
+              height: "70px",
+              width: "70px",
+              lineHeight: "70px",
+              borderRadius: "10px",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0px",
+              userSelect: "none",
+              cursor:
+                status === "expired" ||
+                (status === "available" && pendingSlots.length >= config.maxSlotsPicked)
+                  ? "not-allowed"
+                  : status === "available" || status === "pending"
+                    ? "pointer"
+                    : "not-allowed",
+            },
+            onClick: () => {
+              if (
+                status === "available" &&
+                pendingSlots.length < config.maxSlotsPicked
+              ) {
+                setDataSource(
+                  dataSource.map((row) => {
+                    if (row.key === record.key) {
+                      return {
+                        ...row,
+                        [dataIndex]: "pending",
+                      };
+                    }
+                    return row;
+                  }),
+                );
+                setPendingSlots((prevSlots) => [
+                  ...prevSlots,
+                  {
+                    deviceId: record.key,
+                    deviceName: record.device,
+                    time: dayjs(`${selectedDate.format('YYYY-MM-DD')}T${startTimeStr}`).utc().toDate()
+                  },
+                ]);
+              } else if (status === "pending") {
+                setDataSource(
+                  dataSource.map((row) => {
+                    if (row.key === record.key) {
+                      return {
+                        ...row,
+                        [dataIndex]: "available",
+                      };
+                    }
+                    return row;
+                  }),
+                );
+                setPendingSlots((prevSlots) =>
+                  prevSlots.filter(
+                    (slot) =>
+                      !(
+                        slot.deviceId === record.key &&
+                        slot.time.getTime() ===
+                          dayjs(`${selectedDate.format('YYYY-MM-DD')}T${startTimeStr}`).utc().toDate()
+                          .getTime()
+                      ),
+                  ),
+                );
+                console.log(pendingSlots)
+              }
+            },
+          };
+        },
+        render: () => null,
+      };
+    },
+  );
+
+  columns.unshift({
+    fixed: "left",
+    title: (
+      <span
+        style={{
+          fontSize: 12,
+          textAlign: "center",
+          display: "block",
+          width: "100%",
+        }}
+      >
+        Device
+      </span>
+    ),
+    dataIndex: "device",
+    key: "device",
+    
+    width: 200,
+    align: "center",
+    render: (text) => (
+      <Tooltip title={text}>
+        <span style={{
+          display: "inline-block",
+          maxWidth: 150,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap"
+        }}>
+          {text}
+        </span>
+      </Tooltip>
+    )
+  });
+
+  return (
+    <Table
+      bordered
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+      scroll={{
+        x: fixedColumnWidth + dynamicColumnWidth,
+        y: 400
+      }}
+      components={{
+        header: {
+          cell: (props) => (
+            <th
+              {...props}
+              style={{
+                ...props.style,
+                padding: "8px 0",
+                backgroundColor: "#fafafa"
+              }}
+            />
+          ),
+        },
+      }}
+    />
+  );
 };
 
 export default ScheduleDisplay;

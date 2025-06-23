@@ -1,49 +1,92 @@
 // src/pages/Dashboard/Dashboard.js
-// TODO: hasNotification
-import React, { useState, useEffect } from 'react';
-import { DashboardLayout } from "@root/layouts";
-import { DashboardSider, DashboardMenu, CombinedReservationMaker } from '@root/components';
-import { Card } from 'antd';
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import DashboardLayout from "layouts/DashboardLayout";
+import DashboardSider from "components/dashboard/DashboardSider";
+import DashboardMenu from "components/dashboard/DashboardMenu";
+import CombinedReservationMaker from "components/dashboard/reservation/CombinedReservationMaker";
+import History from "components/dashboard/History";
+import { Management } from "components/dashboard/Management";
+import { Card } from "antd";
+import { Articles } from "components/common/ArticleDisplay";
+import Recent from "components/dashboard/Recent";
+import { Report } from "components/dashboard/Report";
 
 const Dashboard = () => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-    const [selectedKey, setSelectedKey] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedKey, setSelectedKey] = useState(
+    searchParams.get("tab") || "summary",
+  );
 
-    // Update window dimensions on resize
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-            setWindowHeight(window.innerHeight);
-        };
+  useEffect(() => {
+    setSearchParams({ tab: selectedKey });
+  }, [selectedKey, searchParams]);
 
-        window.addEventListener('resize', handleResize);
-        
-        // Cleanup listener on component unmount
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+  const sider = (
+    <DashboardSider onSelectKey={setSelectedKey} selectedKey={selectedKey} />
+  );
+  const dashboardMenu = <DashboardMenu hasNotification={true} />;
 
-    const sider = <DashboardSider onSelectKey={setSelectedKey}/>;
-    const dashboardMenu = <DashboardMenu hasNotification={true} screenWidth={windowWidth} screenHeight={windowHeight}/>;
-    
-    const renderContent = () => {
-        switch (selectedKey) {
-        case '1':
-            return <Card />;
-        case '2':
-            return <CombinedReservationMaker />;
-        case '3':
-            return <div>History</div>;
-        default:
-            return <Card />;
-        }
-    };
+  const renderContent = () => {
+    switch (selectedKey) {
+      case "management":
+        return (
+          <div>
+            <Management />
+          </div>
+        );
+      case "reservation":
+        return (
+          <div>
+            <CombinedReservationMaker />
+          </div>
+        );
+      case "recent":
+        return (
+          <div>
+            <Recent />
+          </div>
+        );
+      case "history":
+        return (
+          <div>
+            <History />
+          </div>
+        );
+      case "space":
+        return (
+          <div>
+            <Articles category={"spaces"}/>
+          </div>
+        );
+      case "equipment":
+        return (
+          <div>
+            <Articles category={"equipments"}/>
+          </div>
+        );
+      case "guides":
+        return <Card />;
+      case "courses":
+        return <Articles category={"course"}/>;
+      case "report":
+        return <Report />;
+      case "support":
+        return <Articles category={"support"} renderBackButton={false}/>;
+      default:
+        return <Card />;
+    }
+  };
 
-    return <DashboardLayout
-        menuComponent = {dashboardMenu}
-        siderComponent = {sider}
-        content = {renderContent()}
-    />;
+  return (
+    <div>
+      <DashboardLayout
+        menuComponent={dashboardMenu}
+        siderComponent={sider}
+        content={renderContent()}
+      />
+    </div>
+  );
 };
 
 export default Dashboard;

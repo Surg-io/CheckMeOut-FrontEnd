@@ -1,72 +1,63 @@
 // src/pages/HomePage.js
 // This page is the homepage of the website, should only appear when not authed?
-// TODO: Bcackground img streches as window stretches, weird
-// TODO: What happens when an authed user access this page?
-// TODO: Config is odd and unstable
 
-import React, { useState, useEffect } from 'react';
-import { MainLayout } from '@root/layouts';
-import { HomeMenu } from '@root/components';
-import { Flex, Button } from 'antd';
-import { blue, gold } from '@ant-design/colors';
-import { useNavigate } from 'react-router-dom';
-import './HomePage.css'
+import React from "react";
+import MainLayout from "layouts/MainLayout";
+import HomeMenu from "components/home/HomeMenu";
+import { Flex, Button } from "antd";
+import { blue, orange, red } from "@ant-design/colors";
+import "./HomePage.css";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-
-  // Update window dimensions on resize
-  useEffect(() => {
-      const handleResize = () => {
-          setWindowWidth(window.innerWidth);
-          setWindowHeight(window.innerHeight);
-      };
-
-      window.addEventListener('resize', handleResize);
-      
-      // Cleanup listener on component unmount
-      return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   const navigate = useNavigate();
-  const handleLoginClick = () => {
-    navigate('/auth', { state: { form: 'login' } });
+  const handleReserveNow = () => {
+    navigate("/auth?tab=login", { state: { form: "login" } });
   };
 
-  const handleRegisterClick = () => {
-    navigate('/auth', { state: { form: 'signup' } });
-  };
-  const menuComponent = <HomeMenu onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>;
-  const content =
-    <div className="homepage-container"> {/**Separately contain background and main content */}
+  const content = (
+    <div className="homepage-container">
+      {" "}
+      {/**Separately contain background and main content */}
       <div className="blurred-background"></div>
-      <div className='homepage-content'>
-        <Flex className='flex' vertical gap='small'>
+      <div className="homepage-content">
+        <Flex className="flex" vertical gap="small">
           {/**Slogan part */}
-          <h1 className='Slogan_heading' style={{color:blue[6]}}>Dream,</h1>
-          <h1 className='Slogan_heading' style={{color:blue[6]}}>Design,</h1>
-          <h1 className='Slogan_heading' style={{color:blue[6]}}>Build.</h1>
-          <h1 className='Slogan_heading' style={{color:gold[5]}}>— Your project</h1>
-          <h1 className='Slogan_heading' style={{color:gold[5]}}>Starts Here.</h1>
-          <Button type='primary' size='large' style={{
-            fontFamily: 'Montserrat',
-            fontSize: '24px',
-            width: '9em',
-            height: '70px',
-            margin:'50px 0px 0px 0px'
-            }}>Reserve Now
+          <h1 className="Slogan_heading" style={{ color: blue[5] }}>
+            Dream,
+          </h1>
+          <h1 className="Slogan_heading" style={{ color: blue[5] }}>
+            Design,
+          </h1>
+          <h1 className="Slogan_heading" style={{ color: blue[5] }}>
+            Build.
+          </h1>
+          <h1 className="Slogan_heading" style={{ color: orange[3] }}>
+            — Your project
+          </h1>
+          <h1 className="Slogan_heading" style={{ color: orange[3] }}>
+            Starts Here.
+          </h1>
+          <Button
+            type="primary"
+            size="large"
+            style={{
+              fontFamily: "Montserrat",
+              fontSize: "24px",
+              width: "9em",
+              height: "70px",
+              margin: "50px 0px 0px 0px",
+            }}
+            onClick={handleReserveNow}
+          >
+            Reserve Now
           </Button>
         </Flex>
-      </div>;
+      </div>
     </div>
+  );
 
-  return (
-    <MainLayout
-      menuComponent={menuComponent}
-      content={content}
-    />);
+  return <MainLayout menuComponent={<HomeMenu/>} content={content} />;
 };
 
 export default HomePage;
-

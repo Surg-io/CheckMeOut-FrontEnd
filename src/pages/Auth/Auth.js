@@ -1,55 +1,30 @@
 // src/pages/Auth/Auth.js
-// This page is the auth page
-// It can switch between login and sign up without redirecting
-// It can verify form submission
+import React, { useState, useEffect } from "react";
+import { Menu } from "antd";
+import AuthLayout from "layouts/AuthLayout";
+import LoginForm from "components/auth/LoginForm";
+import RegisterForm from "components/auth/RegisterForm";
+import { useSearchParams } from "react-router-dom";
+import "./Auth.css";
 
-import React, { useState, useEffect } from 'react';
-import { Menu } from 'antd';
-import { AuthLayout } from '@root/layouts';
-import { LoginForm, RegisterForm } from '@root/components';
-import { useLocation } from 'react-router-dom';
-import './Auth.css';
-
-// Switch the order so "Sign Up" is first
 const labels = ["Sign Up", "Login"];
-const items = labels.map((label, index) => ({ 
+const items = labels.map((label, index) => ({
   key: index + 1,
   label: label,
 }));
 
 const Auth = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialForm = searchParams.get("tab") || "signup";
+  const [isLogin, setIsLogin] = useState(initialForm === "login");
 
-  // Update window dimensions on resize
   useEffect(() => {
-      const handleResize = () => {
-          setWindowWidth(window.innerWidth);
-          setWindowHeight(window.innerHeight);
-      };
-
-      window.addEventListener('resize', handleResize);
-      
-      // Cleanup listener on component unmount
-      return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
-  const location = useLocation();
-
-  // Set initial form based on navigation state or default to Sign Up
-  const initialForm = location.state?.form === 'login' ? 'login' : 'signup';
-  const [isLogin, setIsLogin] = useState(initialForm === 'login');
-
-  const onLogin = (values) => {
-    console.log('Received login form: ', values);
-  };
-
-  const onRegister = (values) => {
-    console.log('Received register form: ', values);
-  };
+    const tab = searchParams.get("tab");
+    setIsLogin(tab === "login");
+  }, [searchParams]);
 
   const handleMenuClick = (e) => {
-    setIsLogin(e.key === "2"); // Set isLogin to true if "Login" is selected, false otherwise
+    setSearchParams({ tab: e.key === "2" ? "login" : "signup" });
   };
 
   const menu = (
@@ -58,11 +33,15 @@ const Auth = () => {
       mode="horizontal"
       items={items}
       onClick={handleMenuClick}
-      selectedKeys={[isLogin ? "2" : "1"]} // Highlight the active menu item
+      selectedKeys={[isLogin ? "2" : "1"]}
     />
   );
 
-  const children = isLogin ? <LoginForm onFinish={onLogin} /> : <RegisterForm onFinish={onRegister} />;
+  const children = isLogin ? (
+    <LoginForm/>
+  ) : (
+    <RegisterForm/>
+  );
 
   return (
     <div id="auth">

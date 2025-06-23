@@ -1,8 +1,22 @@
-import React from 'react';
-import { CalendarOutlined, DashboardOutlined, ExclamationCircleFilled, ExclamationCircleOutlined, FundViewOutlined, HistoryOutlined, PhoneOutlined, QuestionCircleOutlined, ReadOutlined, SearchOutlined, SmileOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
-import { useState } from 'react';
-import './DashboardSider.css'
+import React from "react";
+import { useAcl } from "context/AclContext";
+import { ROLE_ADMIN } from "config/permissions";
+import {
+  CalendarOutlined,
+  DashboardOutlined,
+  ExclamationCircleFilled,
+  ExclamationCircleOutlined,
+  FundViewOutlined,
+  HistoryOutlined,
+  PhoneOutlined,
+  QuestionCircleOutlined,
+  ReadOutlined,
+  SearchOutlined,
+  SmileOutlined,
+} from "@ant-design/icons";
+import { Menu } from "antd";
+import { useState } from "react";
+import "./DashboardSider.css";
 
 const subMenuMarginLeft = 16;
 const getLevelKeys = (items1) => {
@@ -21,78 +35,83 @@ const getLevelKeys = (items1) => {
   return key;
 };
 
-const DashboardSider = ({ onSelectKey }) => {
-  const [stateOpenKeys, setStateOpenKeys] = useState(['2', '23']);
+const DashboardSider = ({ onSelectKey, selectedKey }) => {
+  const {hasPermission} = useAcl();
+  const [stateOpenKeys, setStateOpenKeys] = useState(["2", "23"]);
   const items = [
+    ...(hasPermission(ROLE_ADMIN)
+      ? [
+          {
+            key: "management",
+            label: "Management",
+            icon: <DashboardOutlined className="icon" />,
+          },
+        ]
+      : []),
     {
-      key: '1',
-      label: 'Summary',
-      icon: <DashboardOutlined className='icon'/>,
+      key: "reservation",
+      label: "Reservation",
+      icon: <CalendarOutlined className="icon" />,
     },
     {
-      key: '2',
-      label:  'Reservation',
-      icon: <CalendarOutlined className='icon'/>,
-    },
-    {
-      key: '3',
-      label:  'History',
-      icon: <HistoryOutlined className='icon'/>,
-    },
-    {
-      key: 'sub2',
-      label: 'Status',
-      icon: <FundViewOutlined className='icon'/>,
+      key: "activity",
+      label: "Activity",
+      icon: <HistoryOutlined className="icon" />,
       children: [
         {
-          key: '4',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Space</span>,
+          key: "recent",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Recent</span>,
         },
         {
-          key: '5',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Equipment</span>,
+          key: "history",
+          label: (
+            <span style={{ marginLeft: subMenuMarginLeft }}>History</span>
+          ),
+        },
+      ]
+    },
+    {
+      key: "resources",
+      label: "Resources",
+      icon: <ReadOutlined className="icon" />,
+      children: [
+        {
+          key: "courses",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
+        },
+        {
+          key: "space",
+          label: <span style={{ marginLeft: subMenuMarginLeft }}>Space</span>,
+        },
+        {
+          key: "equipment",
+          label: (
+            <span style={{ marginLeft: subMenuMarginLeft }}>Equipment</span>
+          ),
         },
       ],
     },
     {
-      key: 'sub3',
-      label: 'Resources',
-      icon: <ReadOutlined className='icon'/>,
-      children: [
-        {
-          key: '6',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Guides</span>,
-        },
-        {
-          key: '7',
-          label:  <span style={{ marginLeft: subMenuMarginLeft }}>Courses</span>,
-        },
-      ],
+      type: "divider",
     },
     {
-      type: 'divider',
+      key: "report",
+      label: "Report",
+      icon: <PhoneOutlined className="icon" />,
     },
     {
-      key: '8',
-      label: 'Teams',
-      icon: <SmileOutlined className='icon'/>,
-    },
-    {
-      key: '9',
-      label: 'Report',
-      icon: <ExclamationCircleOutlined className='icon'/>,
-    },
-    {
-      key: '10',
-      label: 'Contact',
-      icon: <PhoneOutlined className='icon'/>,
+      key: "support",
+      label: "Support",
+      icon: <ExclamationCircleOutlined className="icon" />,
     },
   ];
 
   const levelKeys = getLevelKeys(items);
 
   const onOpenChange = (openKeys) => {
-    const currentOpenKey = openKeys.find((key) => stateOpenKeys.indexOf(key) === -1);
+    const currentOpenKey = openKeys.find(
+      (key) => stateOpenKeys.indexOf(key) === -1,
+    );
     // open
     if (currentOpenKey !== undefined) {
       const repeatIndex = openKeys
@@ -116,12 +135,18 @@ const DashboardSider = ({ onSelectKey }) => {
       mode="inline"
       openKeys={stateOpenKeys}
       onOpenChange={onOpenChange}
+      selectedKeys={[selectedKey]}
       style={{
-        width: '100%',
-        minHeight: '40px'
+        width: "100%",
+        minHeight: "40px",
+        height: "100%",
       }}
       items={items}
-      onSelect={({ key }) => { if (onSelectKey) { onSelectKey(key); } }}
+      onSelect={({ key }) => {
+        if (onSelectKey) {
+          onSelectKey(key);
+        }
+      }}
     />
   );
 };

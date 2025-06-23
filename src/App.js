@@ -1,38 +1,32 @@
-// This is the main entry point of the application
-// TODO: Add conditional branches for authentication
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { ConfigProvider } from "antd";
+import { UserProvider } from "context/UserContext";
+import { NotificationProvider } from "context/NotificationContext";
+import { AclProvider } from "context/AclContext";
+import AppRoutes from "routes/AppRoutes";
 
-// Pages
-import HomePage from "./pages/Home/HomePage";
-import Auth from "./pages/Auth/Auth";
-import Dashboard from "./pages/Dashboard/Dashboard";
-
-// Mock authentication check (replace with real auth logic)
-const isAuthenticated = true; // Replace with actual authentication logic
+const customTheme = {
+  token: {
+    fontFamily: "Montserrat, sans-serif",
+    borderRadius: 8,
+  },
+};
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Redirect logged-in users to the dashboard if they try to access the home page */}
-        <Route 
-          path="/" 
-          element={isAuthenticated ? <Navigate to="/dashboard" /> : <HomePage />} 
-        />
-
-        {/* Auth page route */}
-        <Route path="/auth" element={<Auth />} />
-
-        {/* Dashboard route, only accessible if authenticated */}
-        <Route 
-          path="/dashboard" 
-          element={isAuthenticated ? <Dashboard /> : <Navigate to="/auth" />} 
-        />
-      </Routes>
-    </BrowserRouter>
+    <ConfigProvider theme={customTheme}>
+      <UserProvider>
+        <AclProvider>
+          <BrowserRouter>
+            <NotificationProvider>
+              <AppRoutes />
+            </NotificationProvider>
+          </BrowserRouter>
+        </AclProvider>
+      </UserProvider>
+    </ConfigProvider>
   );
 };
 
 export default App;
-
